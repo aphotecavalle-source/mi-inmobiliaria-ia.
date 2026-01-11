@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
-import { Play, Image as ImageIcon, MapPin, ChevronRight, User, Sparkles, MessageCircle, X, FileText, Info } from 'lucide-react';
+import { Play, Image as ImageIcon, MapPin, ChevronRight, User, Sparkles, MessageCircle, X, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const PropertyVisualizer = () => {
+  const navigate = useNavigate();
+
   // ==========================================
-  // CONFIGURACIÓN: PALETA "PIEDRA Y LINO"
+  // CONFIGURACIÓN: ESTÉTICA REFINADA
   // ==========================================
   const brandConfig = {
     agentName: "Rebeca Quintanilla",
     agentPhone: "525554045659", 
     brandColor: "#B4AD9E", 
     textColor: "#57534E",
-    lightStone: "#A8A29E",
     logoUrl: "/fotospropiedades/logo.png", 
-    logoText: "BOUTIQUE RE",
+    logoText: "HOME", // CAMBIADO: Ahora el texto de navegación es HOME
   };
 
   const propertyData = {
@@ -38,7 +40,7 @@ const PropertyVisualizer = () => {
 
   const [activeRoom, setActiveRoom] = useState(propertyData.rooms[0]);
   const [viewMode, setViewMode] = useState('images');
-  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el Popup
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleWhatsApp = () => {
     const message = encodeURIComponent(`Hola, me interesa la propiedad "${propertyData.title}".`);
@@ -48,38 +50,26 @@ const PropertyVisualizer = () => {
   return (
     <div className="min-h-screen bg-[#F9F8F6] font-sans text-[#78716C] pb-20">
       
-      {/* --- POPUP DE INFORMACIÓN (MODAL) --- */}
+      {/* POPUP DE INFORMACIÓN */}
       <AnimatePresence>
         {isModalOpen && (
-          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-6">
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
             <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setIsModalOpen(false)}
               className="absolute inset-0 bg-[#57534E]/20 backdrop-blur-sm"
             />
             <motion.div 
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
               className="relative bg-white w-full max-w-lg p-8 md:p-12 shadow-2xl rounded-sm border border-stone-100"
             >
-              <button 
-                onClick={() => setIsModalOpen(false)}
-                className="absolute top-6 right-6 text-stone-300 hover:text-stone-500 transition-colors"
-              >
+              <button onClick={() => setIsModalOpen(false)} className="absolute top-6 right-6 text-stone-300 hover:text-stone-500">
                 <X size={20} />
               </button>
-
               <div className="space-y-8">
                 <h2 className="text-[10px] font-bold tracking-[0.4em] text-stone-300 uppercase">Ficha Técnica</h2>
                 <h3 className="text-2xl font-light tracking-[0.1em] text-[#57534E] uppercase">{propertyData.title}</h3>
-                
-                <p className="text-sm leading-relaxed text-stone-500 font-light">
-                  {propertyData.description}
-                </p>
-
+                <p className="text-sm leading-relaxed text-stone-500 font-light">{propertyData.description}</p>
                 <div className="grid grid-cols-2 gap-y-6 border-t border-stone-50 pt-8">
                   {Object.entries(propertyData.specs).map(([key, value]) => (
                     <div key={key}>
@@ -88,53 +78,46 @@ const PropertyVisualizer = () => {
                     </div>
                   ))}
                 </div>
-
-                <button 
-                  onClick={handleWhatsApp}
-                  style={{ backgroundColor: brandConfig.brandColor }}
-                  className="w-full py-4 text-white text-[10px] font-bold tracking-[0.3em] uppercase rounded-sm shadow-sm"
-                >
-                  Solicitar Dossier Completo
-                </button>
               </div>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
 
-      {/* Botón WhatsApp Flotante */}
-      <motion.button
-        whileHover={{ y: -2 }}
-        onClick={handleWhatsApp}
-        style={{ backgroundColor: brandConfig.brandColor }}
-        className="fixed bottom-10 right-10 z-[100] text-white px-8 py-4 rounded-sm shadow-sm flex items-center gap-4 opacity-90"
-      >
-        <span className="text-[10px] font-bold tracking-[0.4em] uppercase">CONTACTAR</span>
-        <MessageCircle size={16} />
-      </motion.button>
-
       <header className="bg-white/50 backdrop-blur-sm sticky top-0 z-50 border-b border-stone-100 p-8 md:p-14">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-end md:items-center gap-8">
-          <div className="space-y-4">
-            <h1 className="text-3xl md:text-5xl font-light tracking-[0.2em] text-[#57534E] uppercase">
-              {propertyData.title}
-            </h1>
-            
-            <div className="flex flex-wrap items-center gap-6 border-l border-stone-200 pl-6">
-              <p className="flex items-center text-[#A8A29E] text-[10px] md:text-[11px] font-bold tracking-[0.3em] uppercase">
-                <MapPin size={12} className="mr-2" /> {propertyData.location}
-              </p>
-              <div className="flex items-center gap-4">
-                <p className="text-[10px] md:text-[11px] font-bold tracking-[0.3em] uppercase text-[#A8A29E]">
-                  / {brandConfig.agentName}
+          
+          <div className="space-y-6">
+            {/* BOTÓN HOME (REEMPLAZA A BOUTIQUE RE) */}
+            <button 
+              onClick={() => navigate('/')} 
+              className="group flex flex-col items-start transition-all"
+            >
+              <img src={brandConfig.logoUrl} alt="Logo" className="h-8 md:h-10 w-auto opacity-80 group-hover:opacity-100 transition-opacity mb-2" />
+              <span className="text-[10px] font-bold tracking-[0.5em] text-stone-300 group-hover:text-[#B4AD9E] transition-colors uppercase">
+                {brandConfig.logoText}
+              </span>
+            </button>
+
+            <div className="space-y-4">
+              <h1 className="text-3xl md:text-5xl font-light tracking-[0.2em] text-[#57534E] uppercase leading-tight">
+                {propertyData.title}
+              </h1>
+              <div className="flex flex-wrap items-center gap-6 border-l border-stone-200 pl-6">
+                <p className="flex items-center text-[#A8A29E] text-[10px] md:text-[11px] font-bold tracking-[0.3em] uppercase">
+                  <MapPin size={12} className="mr-2" /> {propertyData.location}
                 </p>
-                {/* BOTÓN FICHA: Minimalista y elegante */}
-                <button 
-                  onClick={() => setIsModalOpen(true)}
-                  className="flex items-center gap-2 px-3 py-1 border border-stone-200 text-[#B4AD9E] text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-stone-50 transition-colors rounded-sm"
-                >
-                  <FileText size={12} /> FICHA
-                </button>
+                <div className="flex items-center gap-4">
+                  <p className="text-[10px] md:text-[11px] font-bold tracking-[0.3em] uppercase text-[#A8A29E]">
+                    / {brandConfig.agentName}
+                  </p>
+                  <button 
+                    onClick={() => setIsModalOpen(true)}
+                    className="flex items-center gap-2 px-3 py-1 border border-stone-200 text-[#B4AD9E] text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-stone-50 transition-colors rounded-sm"
+                  >
+                    <FileText size={12} /> FICHA
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -161,8 +144,6 @@ const PropertyVisualizer = () => {
       </header>
 
       <main className="max-w-6xl mx-auto p-6 md:p-14 grid grid-cols-1 lg:grid-cols-6 gap-20">
-        
-        {/* Navegación lateral */}
         <aside className="lg:col-span-1 space-y-12">
           <div className="flex flex-col space-y-10">
             {propertyData.rooms.map((room) => (
@@ -186,14 +167,12 @@ const PropertyVisualizer = () => {
           </div>
         </aside>
 
-        {/* Visualizador Reducido */}
         <section className="lg:col-span-5 flex justify-center">
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
               <motion.div 
                 key={activeRoom.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                 className="bg-white p-2 rounded-sm border border-stone-50 shadow-sm w-full max-w-4xl"
               >
                 <div className="relative overflow-hidden h-[350px] md:h-[500px] rounded-sm">
@@ -203,7 +182,6 @@ const PropertyVisualizer = () => {
                   <div className="absolute top-10 right-10 z-10 text-[#A8A29E] text-[9px] font-bold tracking-[0.5em] uppercase border-b border-stone-100 pb-1">
                     02 / PROPUESTA
                   </div>
-                  
                   <ReactCompareSlider
                     itemOne={<ReactCompareSliderImage src={activeRoom.before} />}
                     itemTwo={<ReactCompareSliderImage src={activeRoom.after} />}
@@ -225,6 +203,17 @@ const PropertyVisualizer = () => {
           Mariana Hagerman Concept
         </p>
       </footer>
+
+      {/* Botón WhatsApp Flotante */}
+      <motion.button
+        whileHover={{ y: -2 }}
+        onClick={handleWhatsApp}
+        style={{ backgroundColor: brandConfig.brandColor }}
+        className="fixed bottom-10 right-10 z-[100] text-white px-8 py-4 rounded-sm shadow-sm flex items-center gap-4 opacity-90"
+      >
+        <span className="text-[10px] font-bold tracking-[0.4em] uppercase">CONTACTAR</span>
+        <MessageCircle size={16} />
+      </motion.button>
     </div>
   );
 };
