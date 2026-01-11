@@ -1,215 +1,164 @@
-import React, { useState } from 'react';
+
+     
+
+  
+            
+           
+     
+        
+             
+    import React, { useState } from 'react';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
-import { Play, Image as ImageIcon, MapPin, ChevronRight, User, Sparkles, MessageCircle } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Image as ImageIcon, MapPin, Sparkles, MessageCircle, Home, Maximize2, BedDouble, Bath } from 'lucide-react';
 
 const PropertyVisualizer = () => {
   // ==========================================
-  // CONFIGURACIÓN MARCA BLANCA (Personaliza aquí)
+  // CONFIGURACIÓN DE MARCA
   // ==========================================
   const brandConfig = {
     agentName: "Rebeca Quintanilla",
-    agentPhone: "525512345678", 
+    agentPhone: "525554045659", // Número actualizado
     brandColor: "#606C5D",      
-    // RUTA DEL LOGO: Pon aquí el nombre de tu archivo de imagen
     logoUrl: "/fotospropiedades/logo.png", 
-    logoText: "BOUTIQUE RE", // Este texto aparece si la imagen no carga
+    logoText: "BOUTIQUE RE",
   };
 
   const propertyData = {
     title: "Casa en el Bosque",
-    location: "Valle de Bravo #10524",
+    location: "Valle de Bravo, Edo. de México",
+    price: "$12,500,000 MXN",
+    specs: { beds: 4, baths: 3.5, sqft: "350m²" },
     rooms: [
       {
         id: 1,
         name: "Estancia Principal",
         before: "/fotospropiedades/Estancia1A.JPEG", 
         after: "/fotospropiedades/Estancia2.JPEG",
-        videoUrl: "/fotospropiedades/estancia.mp4"
       },
-      {
-        id: 2,
-        name: "Recámara",
-        before: "/fotospropiedades/a1.jpg",
-        after: "/fotospropiedades/recamara2.JPG",
-        videoUrl: "/fotospropiedades/recamara.mp4"
-      },
-      {
-        id: 3,
-        name: "Terraza", 
-        before:  "/fotospropiedades/Terraza1.JPG",
-        after: "/fotospropiedades/Terraza2.JPEG",
-        videoUrl: "/fotospropiedades/terraza.mp4"
-      },
-      {
-        id: 4,
-        name: "Family room", 
-        before:  "/fotospropiedades/Sala1.JPEG", 
-        after: "/fotospropiedades/Sala2.JPEG",
-        videoUrl: "/fotospropiedades/family.mp4"
-      }
+      // Puedes agregar más habitaciones aquí siguiendo el mismo formato
     ]
   };
 
   const [activeRoom, setActiveRoom] = useState(propertyData.rooms[0]);
-  const [viewMode, setViewMode] = useState('images');
 
+  // ==========================================
+  // FUNCIÓN INTELIGENTE DE WHATSAPP
+  // ==========================================
   const handleWhatsApp = () => {
-    const message = encodeURIComponent(`Hola ${brandConfig.agentName}, me interesa la propiedad "${propertyData.title}" que vi en el visualizador.`);
-    window.open(`https://wa.me/${brandConfig.agentPhone}?text=${message}`, '_blank');
+    const message = `¡Hola! Me interesa la propiedad "${propertyData.title}" que vi en tu visualizador inteligente. ¿Podrías darme más información?`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${brandConfig.agentPhone}?text=${encodedMessage}`, '_blank');
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F8F6] font-sans text-stone-800 pb-20">
-      
-      {/* Botón WhatsApp */}
-      <motion.button
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={handleWhatsApp}
-        style={{ backgroundColor: brandConfig.brandColor }}
-        className="fixed bottom-6 right-6 z-[100] flex items-center gap-3 text-white px-6 py-4 rounded-full shadow-2xl"
-      >
-        <MessageCircle size={20} fill="currentColor" />
-        <span className="font-bold text-sm tracking-tighter">CONTACTAR AGENTE</span>
-      </motion.button>
-
-      <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-4 md:p-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div className="flex flex-col items-start">
-            
-            {/* LOGO DE IMAGEN */}
-            <div className="mb-3">
-              {brandConfig.logoUrl ? (
-                <img 
-                  src={brandConfig.logoUrl} 
-                  alt="Logo Inmobiliaria" 
-                  className="h-8 md:h-12 w-auto object-contain"
-                  onError={(e) => { e.target.style.display = 'none'; }} // Si no encuentra la imagen, la oculta
-                />
-              ) : (
-                <div className="text-[10px] font-black tracking-[0.3em] text-stone-400 uppercase">
-                  {brandConfig.logoText}
-                </div>
-              )}
-            </div>
-
-            <h1 className="text-xl md:text-3xl font-extrabold tracking-tight text-stone-900 leading-tight">
-              {propertyData.title}
-            </h1>
-            <div className="flex flex-wrap items-center gap-2 md:gap-4 mt-1">
-              <p className="flex items-center text-stone-400 text-[10px] md:text-xs font-medium">
-                <MapPin size={10} className="mr-1" /> {propertyData.location}
-              </p>
-              <span className="hidden md:block text-stone-200">|</span>
-              <p style={{ color: brandConfig.brandColor }} className="flex items-center text-[10px] md:text-xs font-bold uppercase tracking-wider">
-                <User size={10} className="mr-1" /> {brandConfig.agentName}
-              </p>
-            </div>
+    <div className="min-h-screen bg-white font-sans text-slate-900 pb-20">
+      {/* Header / Logo */}
+      <nav className="p-6 flex justify-between items-center max-w-7xl mx-auto">
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center">
+            <Home size={20} />
           </div>
-          
-          <div className="flex w-full md:w-auto bg-stone-100 p-1 rounded-xl border border-stone-200">
-            <button 
-              onClick={() => setViewMode('images')}
-              style={{ color: viewMode === 'images' ? brandConfig.brandColor : '' }}
-              className={`flex-1 md:flex-none px-4 md:px-6 py-2.5 rounded-lg flex justify-center items-center text-[11px] md:text-xs transition-all duration-300 ${
-                viewMode === 'images' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'
-              }`}
-            >
-              <ImageIcon size={14} className="mr-2" /> FOTOS 
-            </button>
-            <button 
-              onClick={() => setViewMode('video')}
-              style={{ color: viewMode === 'video' ? brandConfig.brandColor : '' }}
-              className={`flex-1 md:flex-none px-4 md:px-6 py-2.5 rounded-lg flex justify-center items-center text-[11px] md:text-xs transition-all duration-300 ${
-                viewMode === 'video' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'
-              }`}
-            >
-              <Play size={14} className="mr-2" /> VIDEO 
-            </button>
-          </div>
+          <span className="font-serif font-bold text-xl tracking-tight">{brandConfig.logoText}</span>
         </div>
-      </header>
+        <button 
+          onClick={handleWhatsApp}
+          className="hidden md:block border border-slate-200 px-6 py-2 rounded-full text-sm font-medium hover:bg-slate-50 transition-all"
+        >
+          Contactar Agente
+        </button>
+      </nav>
 
-      <main className="max-w-6xl mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-12">
-        <aside className="order-2 lg:order-1 lg:col-span-1 space-y-2 md:space-y-3">
-          <h3 className="text-lg md:text-2xl font-extrabold tracking-tight text-stone-900 mb-4 md:mb-6">
-            Explorar Espacios
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 md:gap-3">
+      <main className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 pt-8">
+        
+        {/* Columna Izquierda: Visualizador */}
+        <div className="lg:col-span-8 space-y-6">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-slate-100 aspect-[4/3] md:aspect-video">
+            <ReactCompareSlider
+              itemOne={<ReactCompareSliderImage src={activeRoom.before} alt="Antes" />}
+              itemTwo={<ReactCompareSliderImage src={activeRoom.after} alt="Después" />}
+              style={{ width: '100%', height: '100%' }}
+            />
+            <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
+              <Sparkles size={16} className="text-amber-500" />
+              <span className="text-sm font-bold uppercase tracking-wider">Propuesta IA: {activeRoom.name}</span>
+            </div>
+          </div>
+
+          {/* Selector de Habitaciones */}
+          <div className="flex gap-4 overflow-x-auto pb-4">
             {propertyData.rooms.map((room) => (
               <button
                 key={room.id}
-                onClick={() => { 
-                  setActiveRoom(room); 
-                  setViewMode('images');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className={`w-full group text-left p-3 md:p-4 rounded-xl md:rounded-2xl transition-all duration-300 ${
-                  activeRoom.id === room.id && viewMode === 'images'
-                    ? 'bg-white border border-stone-200 shadow-lg scale-[1.01]'
-                    : 'bg-stone-50 md:bg-transparent border border-transparent'
+                onClick={() => setActiveRoom(room)}
+                className={`flex-shrink-0 px-6 py-3 rounded-2xl font-medium transition-all ${
+                  activeRoom.id === room.id 
+                  ? 'bg-slate-900 text-white shadow-lg' 
+                  : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                 }`}
               >
-                <div className="flex justify-between items-center">
-                  <span className={`text-xs md:text-sm tracking-tight ${activeRoom.id === room.id ? 'font-bold' : 'font-medium text-stone-500'}`}
-                        style={{ color: activeRoom.id === room.id ? brandConfig.brandColor : '' }}>
-                    {room.name}
-                  </span>
-                  <ChevronRight size={14} style={{ color: activeRoom.id === room.id ? brandConfig.brandColor : '#D1D5DB' }} />
-                </div>
+                {room.name}
               </button>
             ))}
           </div>
-        </aside>
+        </div>
 
-        <section className="order-1 lg:order-2 lg:col-span-3">
-          <AnimatePresence mode="wait">
-            {viewMode === 'images' ? (
-              <motion.div 
-                key={activeRoom.id + "-img"}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="bg-white p-1.5 md:p-2 rounded-[1.5rem] md:rounded-[2.5rem] shadow-xl md:shadow-2xl border border-stone-100"
-              >
-                <div className="relative rounded-[1.2rem] md:rounded-[2rem] overflow-hidden h-[350px] md:h-[550px]">
-                  <div className="absolute top-3 left-3 md:top-6 md:left-6 z-10 bg-black/40 backdrop-blur-md text-white px-4 py-1.5 md:px-5 md:py-2 rounded-full text-[9px] md:text-[11px] font-black tracking-[0.2em] uppercase">
-                    HOY
-                  </div>
-                  <div style={{ backgroundColor: brandConfig.brandColor }} className="absolute top-3 right-3 md:top-6 md:right-6 z-10 text-white px-4 py-1.5 md:px-5 md:py-2 rounded-full text-[9px] md:text-[11px] font-black tracking-[0.2em] shadow-lg uppercase flex items-center gap-1 md:gap-2 border border-white/20">
-                    <Sparkles size={12} /> MAÑANA
-                  </div>
-                  <ReactCompareSlider
-                    itemOne={<ReactCompareSliderImage src={activeRoom.before} alt="Hoy" />}
-                    itemTwo={<ReactCompareSliderImage src={activeRoom.after} alt="Mañana" />}
-                    className="h-full w-full"
-                  />
-                </div>
-                <div className="py-6 md:p-8 text-center text-stone-400">
-                  <p className="text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase italic px-4">
-                    Visualización de {activeRoom.name}
-                  </p>
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div 
-                key={activeRoom.id + "-vid"}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="bg-stone-950 rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl overflow-hidden aspect-video border-[6px] md:border-[10px] border-white"
-              >
-                <video key={activeRoom.videoUrl} controls autoPlay className="w-full h-full object-cover" src={activeRoom.videoUrl} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </section>
+        {/* Columna Derecha: Información */}
+        <div className="lg:col-span-4 space-y-8">
+          <div>
+            <div className="flex items-center gap-2 text-slate-400 mb-2">
+              <MapPin size={16} />
+              <span className="text-sm uppercase tracking-widest font-medium">{propertyData.location}</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">{propertyData.title}</h1>
+            <p className="text-3xl font-light text-slate-600">{propertyData.price}</p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4 py-6 border-y border-slate-100">
+            <div className="text-center">
+              <BedDouble className="mx-auto mb-2 text-slate-400" size={20} />
+              <span className="block text-sm font-bold">{propertyData.specs.beds} Rec.</span>
+            </div>
+            <div className="text-center border-x border-slate-100">
+              <Bath className="mx-auto mb-2 text-slate-400" size={20} />
+              <span className="block text-sm font-bold">{propertyData.specs.baths} Baños</span>
+            </div>
+            <div className="text-center">
+              <Maximize2 className="mx-auto mb-2 text-slate-400" size={20} />
+              <span className="block text-sm font-bold">{propertyData.specs.sqft}</span>
+            </div>
+          </div>
+
+          <div className="bg-slate-50 p-8 rounded-3xl">
+            <h3 className="font-bold mb-4 flex items-center gap-2">
+              <Sparkles size={18} className="text-amber-500" />
+              Transformación Digital
+            </h3>
+            <p className="text-slate-600 text-sm leading-relaxed mb-6">
+              Esta propiedad ha sido procesada con nuestra IA para mostrarte el potencial real de sus espacios. Desliza la barra en la imagen para comparar el estado actual vs. la propuesta de diseño.
+            </p>
+            <button 
+              onClick={handleWhatsApp}
+              className="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-xl flex items-center justify-center gap-2"
+            >
+              Agendar Visita Personalizada
+            </button>
+          </div>
+        </div>
       </main>
 
+      {/* Footer con tu firma */}
       <footer className="max-w-6xl mx-auto p-8 md:p-12 text-center text-stone-300 text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase">
         Desarrollado por Mariana Hagerman
       </footer>
+
+      {/* Botón Flotante Inteligente de WhatsApp */}
+      <button
+        onClick={handleWhatsApp}
+        className="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white p-5 rounded-full shadow-[0_10px_40px_rgba(37,211,102,0.4)] hover:scale-110 active:scale-95 transition-all flex items-center justify-center"
+        aria-label="WhatsApp"
+      >
+        <MessageCircle size={30} fill="currentColor" />
+      </button>
     </div>
   );
 };
