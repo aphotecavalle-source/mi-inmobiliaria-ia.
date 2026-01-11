@@ -1,10 +1,3 @@
-
-     
-
-  
-            
-           
-
 import React, { useState } from 'react';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
 import { Play, Image as ImageIcon, MapPin, ChevronRight, User, Sparkles, MessageCircle } from 'lucide-react';
