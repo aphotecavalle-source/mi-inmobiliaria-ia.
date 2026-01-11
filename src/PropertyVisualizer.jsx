@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
-import { Play, Image as ImageIcon, MapPin, ChevronRight, User, Sparkles, MessageCircle, X, FileText } from 'lucide-react';
+import { Play, Image as ImageIcon, MapPin, ChevronRight, User, Sparkles, MessageCircle, X, FileText, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ const PropertyVisualizer = () => {
   const navigate = useNavigate();
 
   // ==========================================
-  // CONFIGURACIÓN: ESTÉTICA REFINADA
+  // CONFIGURACIÓN: ESTÉTICA "SPATIAL" REFINADA
   // ==========================================
   const brandConfig = {
     agentName: "Rebeca Quintanilla",
@@ -32,6 +32,10 @@ const PropertyVisualizer = () => {
       estacionamientos: "3"
     },
     rooms: [
+      // NOTA IMPORTANTE SOBRE EL ORDEN:
+      // itemOne será la imagen de la izquierda (que queda oculta al inicio).
+      // itemTwo será la imagen de la derecha (la que se ve primero).
+      // Por lo tanto: before = itemOne, after = itemTwo.
       { id: 1, name: "Estancia Principal", before: "/fotospropiedades/Estancia1A.JPEG", after: "/fotospropiedades/Estancia2.JPEG", videoUrl: "/fotospropiedades/estancia.mp4" },
       { id: 2, name: "Recámara", before: "/fotospropiedades/a1.jpg", after: "/fotospropiedades/recamara2.JPG", videoUrl: "/fotospropiedades/recamara.mp4" },
       { id: 3, name: "Terraza", before: "/fotospropiedades/Terraza1.JPG", after: "/fotospropiedades/Terraza2.JPEG", videoUrl: "/fotospropiedades/terraza.mp4" },
@@ -168,16 +172,26 @@ const PropertyVisualizer = () => {
                 className="bg-white p-2 rounded-sm border border-stone-50 shadow-sm w-full max-w-4xl"
               >
                 <div className="relative overflow-hidden h-[350px] md:h-[500px] rounded-sm">
-                  <div className="absolute top-10 left-10 z-10 text-[#A8A29E] text-[9px] font-bold tracking-[0.5em] uppercase border-b border-stone-100 pb-1">
+                  {/* Etiquetas superiores */}
+                  <div className="absolute top-10 left-10 z-10 text-[#A8A29E] text-[9px] font-bold tracking-[0.5em] uppercase border-b border-stone-100 pb-1 opacity-70">
                     01 / ACTUAL
                   </div>
-                  <div className="absolute top-10 right-10 z-10 text-[#A8A29E] text-[9px] font-bold tracking-[0.5em] uppercase border-b border-stone-100 pb-1">
+                  <div className="absolute top-10 right-10 z-10 text-[#B4AD9E] text-[9px] font-bold tracking-[0.5em] uppercase border-b border-[#B4AD9E] pb-1">
                     02 / PROPUESTA
                   </div>
+
+                  {/* NUEVA INSTRUCCIÓN INFERIOR */}
+                  <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center pointer-events-none">
+                    <p className="bg-white/80 backdrop-blur-md text-[#78716C] px-4 py-2 text-[8px] font-bold tracking-[0.3em] uppercase rounded-sm flex items-center gap-2 shadow-sm">
+                      <ArrowLeft size={10} /> DESLIZA PARA VER EL ANTES
+                    </p>
+                  </div>
+                  
                   <ReactCompareSlider
-                    itemOne={<ReactCompareSliderImage src={activeRoom.before} />}
-                    itemTwo={<ReactCompareSliderImage src={activeRoom.after} />}
+                    itemOne={<ReactCompareSliderImage src={activeRoom.before} alt="Antes" />}
+                    itemTwo={<ReactCompareSliderImage src={activeRoom.after} alt="Después" />}
                     className="h-full w-full"
+                    position={0} // <-- ESTO ES LA CLAVE: Empieza en 0% (todo a la izquierda)
                   />
                 </div>
               </motion.div>
