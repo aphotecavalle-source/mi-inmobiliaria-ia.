@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
+
+const quotes = [
+  { text: "Todo lo que puedes imaginar es real.", author: "Pablo Picasso" },
+  { text: "Cada gran sueño comienza con un soñador.", author: "Harriet Tubman" },
+  { text: "El hogar no es un lugar, es un sentimiento.", author: "Cecelia Ahern" },
+  { text: "La mejor forma de predecir el futuro es crearlo.", author: "Peter Drucker" }
+];
 
 const Home = () => {
   const [propertyCode, setPropertyCode] = useState('');
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const navigate = useNavigate();
+
+  // Rotación cada 7 segundos para dar tiempo a leer las frases grandes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
+    }, 7000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleAccess = (e) => {
     e.preventDefault();
@@ -15,81 +31,76 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F8F6] flex flex-col items-center justify-center p-6 text-[#78716C]">
+    <div className="min-h-screen bg-[#F9F8F6] flex flex-col items-center justify-center p-6 text-[#78716C] overflow-hidden">
       
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-        className="max-w-3xl w-full text-center space-y-24"
-      >
-        {/* LA CITA DE PICASSO - PROTAGONISTA */}
-        <div className="space-y-6 px-4 min-h-[120px] flex flex-col justify-center">
-          <motion.p 
-            // Animación de bucle (Entrar y Salir)
-            animate={{ opacity: [0, 1, 1, 0] }}
-            transition={{
-              duration: 10, // Duración total del ciclo (aparecer, quedarse, desaparecer)
-              ease: "easeInOut",
-              times: [0, 0.2, 0.8, 1], // Porcentajes del tiempo para cada estado de opacidad
-              repeat: Infinity, // Repetir para siempre
-              repeatDelay: 1 // Espera 1 segundo antes de empezar de nuevo
-            }}
-            className="text-xl md:text-3xl font-serif italic tracking-[0.1em] text-[#B4AD9E] leading-relaxed"
-          >
-            "Todo lo que puedes imaginar es real."
-          </motion.p>
-          <motion.span 
-             animate={{ opacity: [0, 1, 1, 0] }}
-             transition={{
-               duration: 10,
-               ease: "easeInOut",
-               times: [0, 0.2, 0.8, 1],
-               repeat: Infinity,
-               repeatDelay: 1
-             }}
-            className="block text-[9px] tracking-[0.4em] uppercase text-stone-300"
-          >
-            — Pablo Picasso
-          </motion.span>
+      <div className="max-w-5xl w-full text-center space-y-20 relative z-10">
+        
+        {/* CONTENEDOR DE CITAS XXL */}
+        <div className="h-[350px] md:h-[400px] flex flex-col justify-center items-center relative px-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentQuoteIndex}
+              initial={{ opacity: 0, scale: 0.98, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 1.02, y: -20 }}
+              transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
+              className="absolute w-full flex flex-col items-center"
+            >
+              {/* Tipografía Serif Extra Grande */}
+              <p className="text-4xl md:text-7xl font-serif italic tracking-tight text-[#B4AD9E] leading-[1.1] max-w-4xl mx-auto">
+                "{quotes[currentQuoteIndex].text}"
+              </p>
+              
+              {/* Autor Sutil */}
+              <motion.span 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="block text-[10px] md:text-[12px] tracking-[0.5em] uppercase text-stone-300 mt-10"
+              >
+                — {quotes[currentQuoteIndex].author}
+              </motion.span>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        {/* MARCA Y TÍTULO SUTIL */}
-        <div className="space-y-4">
-          <span className="text-[9px] font-bold tracking-[0.5em] text-[#D1CDC7] uppercase">
-            Boutique Real Estate
-          </span>
-          {/* Título más pequeño y en una línea */}
-          <h1 className="text-xl md:text-3xl font-light tracking-[0.3em] text-[#57534E] uppercase">
-            Lo que podría ser
-          </h1>
-        </div>
-
-        {/* Buscador de Clave */}
-        <form onSubmit={handleAccess} className="space-y-12 pt-8">
-          <div className="relative border-b border-stone-200 pb-3 mx-auto max-w-xs transition-all focus-within:border-[#B4AD9E]">
-            <input 
-              type="text" 
-              placeholder="INGRESA CLAVE"
-              value={propertyCode}
-              onChange={(e) => setPropertyCode(e.target.value)}
-              className="w-full bg-transparent text-center text-[11px] tracking-[0.5em] font-medium placeholder:text-stone-300 outline-none uppercase py-2"
-            />
-          </div>
-          
-          <button 
-            type="submit"
-            className="group flex items-center gap-5 mx-auto text-[10px] font-bold tracking-[0.5em] text-[#78716C] hover:text-[#B4AD9E] transition-colors"
+        {/* MENSAJE DE ACCESO */}
+        <div className="space-y-12">
+          <motion.h1 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="text-[10px] md:text-[12px] font-bold tracking-[0.5em] text-[#A8A29E] uppercase"
           >
-            ACCEDER <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-          </button>
-        </form>
-      </motion.div>
+            VISUALIZA LA PROPIEDAD AQUÍ
+          </motion.h1>
 
-      {/* Footer */}
+          {/* Buscador de Clave Minimalista */}
+          <form onSubmit={handleAccess} className="space-y-10">
+            <div className="relative border-b border-stone-200 pb-3 mx-auto max-w-[280px] md:max-w-xs transition-all focus-within:border-[#B4AD9E]">
+              <input 
+                type="text" 
+                placeholder="INGRESA CLAVE"
+                value={propertyCode}
+                onChange={(e) => setPropertyCode(e.target.value)}
+                className="w-full bg-transparent text-center text-[12px] tracking-[0.6em] font-medium placeholder:text-stone-200 outline-none uppercase py-2"
+              />
+            </div>
+            
+            <button 
+              type="submit"
+              className="group flex items-center gap-5 mx-auto text-[10px] font-bold tracking-[0.5em] text-[#78716C] hover:text-[#B4AD9E] transition-all"
+            >
+              ACCEDER <ChevronRight size={16} className="group-hover:translate-x-2 transition-transform" />
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* Tu firma al pie */}
       <footer className="absolute bottom-12 text-center w-full px-4">
-        <p className="text-[#D1CDC7] text-[8px] font-bold tracking-[0.6em] uppercase">
-          Mariana Hagerman Concept • 2026
+        <p className="text-[#D1CDC7] text-[8px] font-bold tracking-[0.7em] uppercase">
+          Mariana Hagerman Concept
         </p>
       </footer>
     </div>
