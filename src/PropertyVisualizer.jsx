@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
-import { Play, Image as ImageIcon, MapPin, ChevronRight, User, Sparkles, MessageCircle, X, FileText, ArrowLeftRight } from 'lucide-react';
+import { MapPin, X, FileText, ArrowLeftRight, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,9 +11,6 @@ const PropertyVisualizer = () => {
     agentName: "Rebeca Quintanilla",
     agentPhone: "525554045659", 
     brandColor: "#B4AD9E", 
-    textColor: "#57534E",
-    logoUrl: "/fotospropiedades/logo.png", 
-    logoText: "HOME",
   };
 
   const propertyData = {
@@ -46,7 +43,7 @@ const PropertyVisualizer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F8F6] font-sans text-[#78716C] pb-20">
+    <div className="min-h-screen bg-[#F9F8F6] font-sans text-[#78716C] pb-10">
       
       {/* MODAL DE INFORMACIÓN */}
       <AnimatePresence>
@@ -85,40 +82,57 @@ const PropertyVisualizer = () => {
         )}
       </AnimatePresence>
 
-      <header className="bg-white/50 backdrop-blur-sm sticky top-0 z-50 border-b border-stone-100 p-8 md:p-14">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-end md:items-center gap-8">
-          <div className="space-y-6">
-            <button onClick={() => navigate('/')} className="group flex flex-col items-start transition-all">
-              <img src={brandConfig.logoUrl} alt="Logo" className="h-8 md:h-10 w-auto opacity-80 group-hover:opacity-100 transition-opacity mb-2" />
-              <span className="text-[10px] font-bold tracking-[0.5em] text-stone-300 group-hover:text-[#B4AD9E] transition-colors uppercase">{brandConfig.logoText}</span>
+      {/* CABECERA COMPACTA */}
+      <header className="bg-white/50 backdrop-blur-sm sticky top-0 z-50 border-b border-stone-100 px-8 py-6 md:px-14 md:py-8">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          
+          <div className="space-y-3">
+            {/* TÍTULO FUNCIONAL: REDIRIGE AL HOME */}
+            <button 
+              onClick={() => navigate('/')}
+              className="group text-left transition-all"
+            >
+              <h1 className="text-2xl md:text-3xl font-light tracking-[0.2em] text-[#57534E] uppercase leading-none group-hover:text-[#B4AD9E] transition-colors">
+                {propertyData.title}
+              </h1>
+              <span className="text-[7px] tracking-[0.4em] text-stone-300 uppercase opacity-0 group-hover:opacity-100 transition-opacity">
+                Volver al inicio
+              </span>
             </button>
-            <div className="space-y-4">
-              <h1 className="text-3xl md:text-5xl font-light tracking-[0.2em] text-[#57534E] uppercase leading-tight">{propertyData.title}</h1>
-              <div className="flex flex-wrap items-center gap-6 border-l border-stone-200 pl-6">
-                <p className="flex items-center text-[#A8A29E] text-[10px] md:text-[11px] font-bold tracking-[0.3em] uppercase"><MapPin size={12} className="mr-2" /> {propertyData.location}</p>
-                <div className="flex items-center gap-4">
-                  <p className="text-[10px] md:text-[11px] font-bold tracking-[0.3em] uppercase text-[#A8A29E]">/ {brandConfig.agentName}</p>
-                  <button onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 px-3 py-1 border border-stone-200 text-[#B4AD9E] text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-stone-50 transition-colors rounded-sm">
-                    <FileText size={12} /> FICHA
-                  </button>
-                </div>
-              </div>
+            
+            <div className="flex flex-wrap items-center gap-4 text-[#A8A29E]">
+              <p className="flex items-center text-[9px] font-bold tracking-[0.2em] uppercase">
+                <MapPin size={10} className="mr-2 opacity-60" /> {propertyData.location}
+              </p>
+              <span className="opacity-30">|</span>
+              <p className="text-[9px] font-bold tracking-[0.2em] uppercase italic">
+                {brandConfig.agentName}
+              </p>
+              <button 
+                onClick={() => setIsModalOpen(true)} 
+                className="ml-2 flex items-center gap-2 px-2 py-0.5 border border-stone-200 text-[#B4AD9E] text-[8px] font-bold tracking-[0.1em] uppercase hover:bg-white transition-colors rounded-sm"
+              >
+                <FileText size={10} /> FICHA
+              </button>
             </div>
           </div>
+
+          {/* SELECTOR DE MODO COMPACTO */}
           <div className="flex bg-stone-50 p-1 rounded-sm border border-stone-100">
-            <button onClick={() => setViewMode('images')} className={`px-8 py-2 text-[10px] tracking-[0.3em] font-bold transition-all ${viewMode === 'images' ? 'bg-white text-[#78716C] shadow-sm' : 'text-stone-300'}`}>FOTOGRAFÍA</button>
-            <button onClick={() => setViewMode('video')} className={`px-8 py-2 text-[10px] tracking-[0.3em] font-bold transition-all ${viewMode === 'video' ? 'bg-white text-[#78716C] shadow-sm' : 'text-stone-300'}`}>VIDEO</button>
+            <button onClick={() => setViewMode('images')} className={`px-4 py-1.5 text-[9px] tracking-[0.2em] font-bold transition-all ${viewMode === 'images' ? 'bg-white text-[#78716C] shadow-sm' : 'text-stone-300'}`}>FOTOGRAFÍA</button>
+            <button onClick={() => setViewMode('video')} className={`px-4 py-1.5 text-[9px] tracking-[0.2em] font-bold transition-all ${viewMode === 'video' ? 'bg-white text-[#78716C] shadow-sm' : 'text-stone-300'}`}>VIDEO</button>
           </div>
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto p-6 md:p-14 grid grid-cols-1 lg:grid-cols-6 gap-20">
-        <aside className="lg:col-span-1 space-y-12">
-          <div className="flex flex-col space-y-10">
+      {/* CUERPO PRINCIPAL CON MENOS MARGEN SUPERIOR */}
+      <main className="max-w-6xl mx-auto p-6 md:p-10 grid grid-cols-1 lg:grid-cols-6 gap-10 md:gap-16">
+        <aside className="lg:col-span-1">
+          <div className="flex flex-col space-y-6 md:space-y-8">
             {propertyData.rooms.map((room) => (
               <button key={room.id} onClick={() => { setActiveRoom(room); setViewMode('images'); }} className="text-left group relative">
-                <span className={`block text-[11px] md:text-[12px] tracking-[0.3em] uppercase transition-all duration-700 ${activeRoom.id === room.id && viewMode === 'images' ? 'text-[#57534E] font-bold' : 'text-[#D1CDC7] hover:text-[#78716C]'}`}>{room.name}</span>
-                {activeRoom.id === room.id && <motion.div layoutId="line" className="absolute -left-5 top-1/2 w-2 h-[1px] bg-[#B4AD9E]" />}
+                <span className={`block text-[10px] md:text-[11px] tracking-[0.2em] uppercase transition-all duration-700 ${activeRoom.id === room.id && viewMode === 'images' ? 'text-[#57534E] font-bold' : 'text-[#D1CDC7] hover:text-[#78716C]'}`}>{room.name}</span>
+                {activeRoom.id === room.id && <motion.div layoutId="line" className="absolute -left-4 top-1/2 w-2 h-[1px] bg-[#B4AD9E]" />}
               </button>
             ))}
           </div>
@@ -127,9 +141,8 @@ const PropertyVisualizer = () => {
         <section className="lg:col-span-5 flex flex-col items-center">
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
-              <motion.div key={activeRoom.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full max-w-4xl space-y-8">
-                
-                <div className="bg-white p-2 rounded-sm border border-stone-50 shadow-sm overflow-hidden h-[350px] md:h-[500px]">
+              <motion.div key={activeRoom.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full max-w-4xl space-y-6">
+                <div className="bg-white p-1.5 rounded-sm border border-stone-50 shadow-sm overflow-hidden h-[300px] md:h-[500px]">
                   <ReactCompareSlider
                     itemOne={<ReactCompareSliderImage src={activeRoom.before} />}
                     itemTwo={<ReactCompareSliderImage src={activeRoom.after} />}
@@ -137,18 +150,15 @@ const PropertyVisualizer = () => {
                     className="h-full w-full"
                   />
                 </div>
-
-                {/* NUEVA ETIQUETA REFINADA */}
                 <div className="flex justify-center">
-                  <p className="text-[#A8A29E] text-[10px] font-medium tracking-[0.2em] italic flex items-center gap-3">
-                    <ArrowLeftRight size={12} className="opacity-40" /> 
+                  <p className="text-[#A8A29E] text-[9px] font-medium tracking-[0.15em] italic flex items-center gap-3">
+                    <ArrowLeftRight size={10} className="opacity-40" /> 
                     desliza para ver el estado actual de la propiedad
                   </p>
                 </div>
-                
               </motion.div>
             ) : (
-              <div className="bg-stone-50 aspect-video w-full max-w-4xl flex items-center justify-center rounded-sm border border-stone-100">
+              <div className="bg-stone-50 aspect-video w-full max-w-4xl flex items-center justify-center rounded-sm border border-stone-100 shadow-inner">
                 <video key={activeRoom.videoUrl} controls autoPlay className="w-full h-full object-cover opacity-80" src={activeRoom.videoUrl} />
               </div>
             )}
@@ -156,19 +166,19 @@ const PropertyVisualizer = () => {
         </section>
       </main>
 
-      <footer className="max-w-6xl mx-auto p-20 text-center border-t border-stone-100 mt-20">
-        <p className="text-[#D1CDC7] text-[9px] font-bold tracking-[0.6em] uppercase">Mariana Hagerman Concept</p>
+      <footer className="max-w-6xl mx-auto p-10 text-center border-t border-stone-100 mt-10">
+        <p className="text-[#D1CDC7] text-[8px] font-bold tracking-[0.5em] uppercase">Mariana Hagerman Concept</p>
       </footer>
 
-      {/* BOTÓN DE CONTACTO MÁS PEQUEÑO */}
+      {/* BOTÓN DE CONTACTO REFINADO */}
       <motion.button 
-        whileHover={{ y: -2 }} 
+        whileHover={{ y: -1 }} 
         onClick={handleWhatsApp} 
         style={{ backgroundColor: brandConfig.brandColor }} 
-        className="fixed bottom-8 right-8 z-[100] text-white px-6 py-3 rounded-sm shadow-sm flex items-center gap-3 opacity-95 transition-all"
+        className="fixed bottom-6 right-6 z-[100] text-white px-5 py-2.5 rounded-sm shadow-md flex items-center gap-3 opacity-95 transition-all"
       >
-        <span className="text-[9px] font-bold tracking-[0.3em] uppercase">CONTACTAR</span>
-        <MessageCircle size={14} />
+        <span className="text-[8px] font-bold tracking-[0.2em] uppercase">CONTACTAR</span>
+        <MessageCircle size={12} />
       </motion.button>
     </div>
   );
