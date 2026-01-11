@@ -21,7 +21,7 @@ const PropertyVisualizer = () => {
 
   const propertyData = {
     title: "CASA EN EL BOSQUE",
-    precio: "$12,500,000 MXN", // NUEVO CAMPO: Precio
+    precio: "$12,500,000 MXN",
     location: "Valle de Bravo #10524",
     description: "Una propiedad única que fusiona la arquitectura contemporánea con el entorno natural de Valle de Bravo. Espacios diseñados para capturar la luz cenital y ofrecer vistas ininterrumpidas al bosque.",
     specs: {
@@ -70,8 +70,7 @@ const PropertyVisualizer = () => {
               <div className="space-y-8">
                 <div className="flex justify-between items-start">
                    <h2 className="text-[10px] font-bold tracking-[0.4em] text-stone-300 uppercase">Ficha Técnica</h2>
-                   {/* Precio destacado en el popup */}
-                   <span className="text-[11px] font-bold tracking-[0.1em] text-[#B4AD9E]">{propertyData.precio}</span>
+                   <span className="text-[11px] font-bold tracking-[0.15em] text-[#B4AD9E]">{propertyData.precio}</span>
                 </div>
                 
                 <h3 className="text-2xl font-light tracking-[0.1em] text-[#57534E] uppercase leading-tight">{propertyData.title}</h3>
