@@ -1,18 +1,2 @@
 @import "tailwindcss";
 
-@theme {
-  /* Aquí le decimos a Tailwind v4 cómo se llaman tus nuevas fuentes */
-  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
-
-  /* También podemos definir colores de lujo aquí */
-  --color-luxury-gold: #c5a059;
-  --color-soft-gray: #f8f9fa;
-}
-
-/* Un toque extra para que el fondo se vea premium */
-body {
-  background-color: var(--color-soft-gray);
-  color: #1a1a1a;
-  -webkit-font-smoothing: antialiased;
-}
