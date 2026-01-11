@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
-import { Play, Image as ImageIcon, MapPin, ChevronRight, User, Sparkles, MessageCircle, X, FileText, ArrowLeft } from 'lucide-react';
+import { Play, Image as ImageIcon, MapPin, ChevronRight, User, Sparkles, MessageCircle, X, FileText, ArrowLeftRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 const PropertyVisualizer = () => {
   const navigate = useNavigate();
 
-  // ==========================================
-  // CONFIGURACIÓN: ESTÉTICA "SPATIAL" REFINADA
-  // ==========================================
   const brandConfig = {
     agentName: "Rebeca Quintanilla",
     agentPhone: "525554045659", 
@@ -32,10 +29,6 @@ const PropertyVisualizer = () => {
       estacionamientos: "3"
     },
     rooms: [
-      // NOTA IMPORTANTE SOBRE EL ORDEN:
-      // itemOne será la imagen de la izquierda (que queda oculta al inicio).
-      // itemTwo será la imagen de la derecha (la que se ve primero).
-      // Por lo tanto: before = itemOne, after = itemTwo.
       { id: 1, name: "Estancia Principal", before: "/fotospropiedades/Estancia1A.JPEG", after: "/fotospropiedades/Estancia2.JPEG", videoUrl: "/fotospropiedades/estancia.mp4" },
       { id: 2, name: "Recámara", before: "/fotospropiedades/a1.jpg", after: "/fotospropiedades/recamara2.JPG", videoUrl: "/fotospropiedades/recamara.mp4" },
       { id: 3, name: "Terraza", before: "/fotospropiedades/Terraza1.JPG", after: "/fotospropiedades/Terraza2.JPEG", videoUrl: "/fotospropiedades/terraza.mp4" },
@@ -55,7 +48,7 @@ const PropertyVisualizer = () => {
   return (
     <div className="min-h-screen bg-[#F9F8F6] font-sans text-[#78716C] pb-20">
       
-      {/* POPUP DE INFORMACIÓN */}
+      {/* MODAL DE INFORMACIÓN */}
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
@@ -76,10 +69,8 @@ const PropertyVisualizer = () => {
                    <h2 className="text-[10px] font-bold tracking-[0.4em] text-stone-300 uppercase">Ficha Técnica</h2>
                    <span className="text-[11px] font-bold tracking-[0.15em] text-[#B4AD9E]">{propertyData.precio}</span>
                 </div>
-                
                 <h3 className="text-2xl font-light tracking-[0.1em] text-[#57534E] uppercase leading-tight">{propertyData.title}</h3>
                 <p className="text-sm leading-relaxed text-stone-500 font-light">{propertyData.description}</p>
-                
                 <div className="grid grid-cols-2 gap-y-6 border-t border-stone-50 pt-8">
                   {Object.entries(propertyData.specs).map(([key, value]) => (
                     <div key={key}>
@@ -96,53 +87,27 @@ const PropertyVisualizer = () => {
 
       <header className="bg-white/50 backdrop-blur-sm sticky top-0 z-50 border-b border-stone-100 p-8 md:p-14">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-end md:items-center gap-8">
-          
           <div className="space-y-6">
             <button onClick={() => navigate('/')} className="group flex flex-col items-start transition-all">
               <img src={brandConfig.logoUrl} alt="Logo" className="h-8 md:h-10 w-auto opacity-80 group-hover:opacity-100 transition-opacity mb-2" />
-              <span className="text-[10px] font-bold tracking-[0.5em] text-stone-300 group-hover:text-[#B4AD9E] transition-colors uppercase">
-                {brandConfig.logoText}
-              </span>
+              <span className="text-[10px] font-bold tracking-[0.5em] text-stone-300 group-hover:text-[#B4AD9E] transition-colors uppercase">{brandConfig.logoText}</span>
             </button>
-
             <div className="space-y-4">
-              <h1 className="text-3xl md:text-5xl font-light tracking-[0.2em] text-[#57534E] uppercase leading-tight">
-                {propertyData.title}
-              </h1>
+              <h1 className="text-3xl md:text-5xl font-light tracking-[0.2em] text-[#57534E] uppercase leading-tight">{propertyData.title}</h1>
               <div className="flex flex-wrap items-center gap-6 border-l border-stone-200 pl-6">
-                <p className="flex items-center text-[#A8A29E] text-[10px] md:text-[11px] font-bold tracking-[0.3em] uppercase">
-                  <MapPin size={12} className="mr-2" /> {propertyData.location}
-                </p>
+                <p className="flex items-center text-[#A8A29E] text-[10px] md:text-[11px] font-bold tracking-[0.3em] uppercase"><MapPin size={12} className="mr-2" /> {propertyData.location}</p>
                 <div className="flex items-center gap-4">
-                  <p className="text-[10px] md:text-[11px] font-bold tracking-[0.3em] uppercase text-[#A8A29E]">
-                    / {brandConfig.agentName}
-                  </p>
-                  <button 
-                    onClick={() => setIsModalOpen(true)}
-                    className="flex items-center gap-2 px-3 py-1 border border-stone-200 text-[#B4AD9E] text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-stone-50 transition-colors rounded-sm"
-                  >
+                  <p className="text-[10px] md:text-[11px] font-bold tracking-[0.3em] uppercase text-[#A8A29E]">/ {brandConfig.agentName}</p>
+                  <button onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 px-3 py-1 border border-stone-200 text-[#B4AD9E] text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-stone-50 transition-colors rounded-sm">
                     <FileText size={12} /> FICHA
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          
           <div className="flex bg-stone-50 p-1 rounded-sm border border-stone-100">
-            <button onClick={() => setViewMode('images')}
-              className={`px-8 py-2 text-[10px] tracking-[0.3em] font-bold transition-all ${
-                viewMode === 'images' ? 'bg-white text-[#78716C] shadow-sm' : 'text-stone-300'
-              }`}
-            >
-              FOTOGRAFÍA
-            </button>
-            <button onClick={() => setViewMode('video')}
-              className={`px-8 py-2 text-[10px] tracking-[0.3em] font-bold transition-all ${
-                viewMode === 'video' ? 'bg-white text-[#78716C] shadow-sm' : 'text-stone-300'
-              }`}
-            >
-              VIDEO
-            </button>
+            <button onClick={() => setViewMode('images')} className={`px-8 py-2 text-[10px] tracking-[0.3em] font-bold transition-all ${viewMode === 'images' ? 'bg-white text-[#78716C] shadow-sm' : 'text-stone-300'}`}>FOTOGRAFÍA</button>
+            <button onClick={() => setViewMode('video')} className={`px-8 py-2 text-[10px] tracking-[0.3em] font-bold transition-all ${viewMode === 'video' ? 'bg-white text-[#78716C] shadow-sm' : 'text-stone-300'}`}>VIDEO</button>
           </div>
         </div>
       </header>
@@ -152,48 +117,36 @@ const PropertyVisualizer = () => {
           <div className="flex flex-col space-y-10">
             {propertyData.rooms.map((room) => (
               <button key={room.id} onClick={() => { setActiveRoom(room); setViewMode('images'); }} className="text-left group relative">
-                <span className={`block text-[11px] md:text-[12px] tracking-[0.3em] uppercase transition-all duration-700 ${
-                  activeRoom.id === room.id && viewMode === 'images' ? 'text-[#57534E] font-bold' : 'text-[#D1CDC7] hover:text-[#78716C]'
-                }`}>
-                  {room.name}
-                </span>
-                {activeRoom.id === room.id && (
-                  <motion.div layoutId="line" className="absolute -left-5 top-1/2 w-2 h-[1px] bg-[#B4AD9E]" />
-                )}
+                <span className={`block text-[11px] md:text-[12px] tracking-[0.3em] uppercase transition-all duration-700 ${activeRoom.id === room.id && viewMode === 'images' ? 'text-[#57534E] font-bold' : 'text-[#D1CDC7] hover:text-[#78716C]'}`}>{room.name}</span>
+                {activeRoom.id === room.id && <motion.div layoutId="line" className="absolute -left-5 top-1/2 w-2 h-[1px] bg-[#B4AD9E]" />}
               </button>
             ))}
           </div>
         </aside>
 
-        <section className="lg:col-span-5 flex justify-center">
+        <section className="lg:col-span-5 flex flex-col items-center">
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
-              <motion.div key={activeRoom.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                className="bg-white p-2 rounded-sm border border-stone-50 shadow-sm w-full max-w-4xl"
-              >
-                <div className="relative overflow-hidden h-[350px] md:h-[500px] rounded-sm">
-                  {/* Etiquetas superiores */}
-                  <div className="absolute top-10 left-10 z-10 text-[#A8A29E] text-[9px] font-bold tracking-[0.5em] uppercase border-b border-stone-100 pb-1 opacity-70">
-                    01 / ACTUAL
-                  </div>
-                  <div className="absolute top-10 right-10 z-10 text-[#B4AD9E] text-[9px] font-bold tracking-[0.5em] uppercase border-b border-[#B4AD9E] pb-1">
-                    02 / PROPUESTA
-                  </div>
-
-                  {/* NUEVA INSTRUCCIÓN INFERIOR */}
-                  <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center pointer-events-none">
-                    <p className="bg-white/80 backdrop-blur-md text-[#78716C] px-4 py-2 text-[8px] font-bold tracking-[0.3em] uppercase rounded-sm flex items-center gap-2 shadow-sm">
-                      <ArrowLeft size={10} /> DESLIZA PARA VER EL ANTES
-                    </p>
-                  </div>
-                  
+              <motion.div key={activeRoom.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full max-w-4xl space-y-6">
+                
+                {/* Visualizador Sin Etiquetas Internas */}
+                <div className="bg-white p-2 rounded-sm border border-stone-50 shadow-sm overflow-hidden h-[350px] md:h-[500px]">
                   <ReactCompareSlider
-                    itemOne={<ReactCompareSliderImage src={activeRoom.before} alt="Antes" />}
-                    itemTwo={<ReactCompareSliderImage src={activeRoom.after} alt="Después" />}
+                    itemOne={<ReactCompareSliderImage src={activeRoom.before} />}
+                    itemTwo={<ReactCompareSliderImage src={activeRoom.after} />}
+                    position={0}
                     className="h-full w-full"
-                    position={0} // <-- ESTO ES LA CLAVE: Empieza en 0% (todo a la izquierda)
                   />
                 </div>
+
+                {/* INSTRUCCIÓN EXTERNA (Fuera de la imagen) */}
+                <div className="flex justify-center">
+                  <p className="text-[#A8A29E] text-[9px] font-bold tracking-[0.5em] uppercase flex items-center gap-3">
+                    <ArrowLeftRight size={12} className="opacity-50" /> 
+                    DESLIZA PARA VER EL ANTES
+                  </p>
+                </div>
+                
               </motion.div>
             ) : (
               <div className="bg-stone-50 aspect-video w-full max-w-4xl flex items-center justify-center rounded-sm border border-stone-100">
@@ -205,18 +158,10 @@ const PropertyVisualizer = () => {
       </main>
 
       <footer className="max-w-6xl mx-auto p-20 text-center border-t border-stone-100 mt-20">
-        <p className="text-[#D1CDC7] text-[9px] font-bold tracking-[0.6em] uppercase">
-          Mariana Hagerman Concept
-        </p>
+        <p className="text-[#D1CDC7] text-[9px] font-bold tracking-[0.6em] uppercase">Mariana Hagerman Concept</p>
       </footer>
 
-      {/* Botón WhatsApp Flotante */}
-      <motion.button
-        whileHover={{ y: -2 }}
-        onClick={handleWhatsApp}
-        style={{ backgroundColor: brandConfig.brandColor }}
-        className="fixed bottom-10 right-10 z-[100] text-white px-8 py-4 rounded-sm shadow-sm flex items-center gap-4 opacity-90"
-      >
+      <motion.button whileHover={{ y: -2 }} onClick={handleWhatsApp} style={{ backgroundColor: brandConfig.brandColor }} className="fixed bottom-10 right-10 z-[100] text-white px-8 py-4 rounded-sm shadow-sm flex items-center gap-4 opacity-90 transition-all">
         <span className="text-[10px] font-bold tracking-[0.4em] uppercase">CONTACTAR</span>
         <MessageCircle size={16} />
       </motion.button>
