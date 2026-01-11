@@ -16,11 +16,12 @@ const PropertyVisualizer = () => {
     brandColor: "#B4AD9E", 
     textColor: "#57534E",
     logoUrl: "/fotospropiedades/logo.png", 
-    logoText: "HOME", // CAMBIADO: Ahora el texto de navegación es HOME
+    logoText: "HOME",
   };
 
   const propertyData = {
     title: "CASA EN EL BOSQUE",
+    precio: "$12,500,000 MXN", // NUEVO CAMPO: Precio
     location: "Valle de Bravo #10524",
     description: "Una propiedad única que fusiona la arquitectura contemporánea con el entorno natural de Valle de Bravo. Espacios diseñados para capturar la luz cenital y ofrecer vistas ininterrumpidas al bosque.",
     specs: {
@@ -67,9 +68,15 @@ const PropertyVisualizer = () => {
                 <X size={20} />
               </button>
               <div className="space-y-8">
-                <h2 className="text-[10px] font-bold tracking-[0.4em] text-stone-300 uppercase">Ficha Técnica</h2>
-                <h3 className="text-2xl font-light tracking-[0.1em] text-[#57534E] uppercase">{propertyData.title}</h3>
+                <div className="flex justify-between items-start">
+                   <h2 className="text-[10px] font-bold tracking-[0.4em] text-stone-300 uppercase">Ficha Técnica</h2>
+                   {/* Precio destacado en el popup */}
+                   <span className="text-[11px] font-bold tracking-[0.1em] text-[#B4AD9E]">{propertyData.precio}</span>
+                </div>
+                
+                <h3 className="text-2xl font-light tracking-[0.1em] text-[#57534E] uppercase leading-tight">{propertyData.title}</h3>
                 <p className="text-sm leading-relaxed text-stone-500 font-light">{propertyData.description}</p>
+                
                 <div className="grid grid-cols-2 gap-y-6 border-t border-stone-50 pt-8">
                   {Object.entries(propertyData.specs).map(([key, value]) => (
                     <div key={key}>
@@ -88,11 +95,7 @@ const PropertyVisualizer = () => {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-end md:items-center gap-8">
           
           <div className="space-y-6">
-            {/* BOTÓN HOME (REEMPLAZA A BOUTIQUE RE) */}
-            <button 
-              onClick={() => navigate('/')} 
-              className="group flex flex-col items-start transition-all"
-            >
+            <button onClick={() => navigate('/')} className="group flex flex-col items-start transition-all">
               <img src={brandConfig.logoUrl} alt="Logo" className="h-8 md:h-10 w-auto opacity-80 group-hover:opacity-100 transition-opacity mb-2" />
               <span className="text-[10px] font-bold tracking-[0.5em] text-stone-300 group-hover:text-[#B4AD9E] transition-colors uppercase">
                 {brandConfig.logoText}
@@ -123,16 +126,14 @@ const PropertyVisualizer = () => {
           </div>
           
           <div className="flex bg-stone-50 p-1 rounded-sm border border-stone-100">
-            <button 
-              onClick={() => setViewMode('images')}
+            <button onClick={() => setViewMode('images')}
               className={`px-8 py-2 text-[10px] tracking-[0.3em] font-bold transition-all ${
                 viewMode === 'images' ? 'bg-white text-[#78716C] shadow-sm' : 'text-stone-300'
               }`}
             >
               FOTOGRAFÍA
             </button>
-            <button 
-              onClick={() => setViewMode('video')}
+            <button onClick={() => setViewMode('video')}
               className={`px-8 py-2 text-[10px] tracking-[0.3em] font-bold transition-all ${
                 viewMode === 'video' ? 'bg-white text-[#78716C] shadow-sm' : 'text-stone-300'
               }`}
@@ -147,15 +148,9 @@ const PropertyVisualizer = () => {
         <aside className="lg:col-span-1 space-y-12">
           <div className="flex flex-col space-y-10">
             {propertyData.rooms.map((room) => (
-              <button
-                key={room.id}
-                onClick={() => { setActiveRoom(room); setViewMode('images'); }}
-                className="text-left group relative"
-              >
+              <button key={room.id} onClick={() => { setActiveRoom(room); setViewMode('images'); }} className="text-left group relative">
                 <span className={`block text-[11px] md:text-[12px] tracking-[0.3em] uppercase transition-all duration-700 ${
-                  activeRoom.id === room.id && viewMode === 'images'
-                    ? 'text-[#57534E] font-bold'
-                    : 'text-[#D1CDC7] hover:text-[#78716C]'
+                  activeRoom.id === room.id && viewMode === 'images' ? 'text-[#57534E] font-bold' : 'text-[#D1CDC7] hover:text-[#78716C]'
                 }`}>
                   {room.name}
                 </span>
@@ -170,9 +165,7 @@ const PropertyVisualizer = () => {
         <section className="lg:col-span-5 flex justify-center">
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
-              <motion.div 
-                key={activeRoom.id}
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+              <motion.div key={activeRoom.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                 className="bg-white p-2 rounded-sm border border-stone-50 shadow-sm w-full max-w-4xl"
               >
                 <div className="relative overflow-hidden h-[350px] md:h-[500px] rounded-sm">
