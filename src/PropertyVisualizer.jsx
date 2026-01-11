@@ -208,7 +208,7 @@ const PropertyVisualizer = () => {
       </main>
 
       <footer className="max-w-6xl mx-auto p-8 md:p-12 text-center text-stone-300 text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase">
-        Desarrollado por Mariana Hagerman • {brandConfig.agentName}
+        Desarrollado por Mariana Hagerman 
       </footer>
     </div>
   );
