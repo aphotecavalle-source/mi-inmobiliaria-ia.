@@ -127,9 +127,8 @@ const PropertyVisualizer = () => {
         <section className="lg:col-span-5 flex flex-col items-center">
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
-              <motion.div key={activeRoom.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full max-w-4xl space-y-6">
+              <motion.div key={activeRoom.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full max-w-4xl space-y-8">
                 
-                {/* Visualizador Sin Etiquetas Internas */}
                 <div className="bg-white p-2 rounded-sm border border-stone-50 shadow-sm overflow-hidden h-[350px] md:h-[500px]">
                   <ReactCompareSlider
                     itemOne={<ReactCompareSliderImage src={activeRoom.before} />}
@@ -139,11 +138,11 @@ const PropertyVisualizer = () => {
                   />
                 </div>
 
-                {/* INSTRUCCIÓN EXTERNA (Fuera de la imagen) */}
+                {/* NUEVA ETIQUETA REFINADA */}
                 <div className="flex justify-center">
-                  <p className="text-[#A8A29E] text-[9px] font-bold tracking-[0.5em] uppercase flex items-center gap-3">
-                    <ArrowLeftRight size={12} className="opacity-50" /> 
-                    DESLIZA PARA VER EL ANTES
+                  <p className="text-[#A8A29E] text-[10px] font-medium tracking-[0.2em] italic flex items-center gap-3">
+                    <ArrowLeftRight size={12} className="opacity-40" /> 
+                    desliza para ver el estado actual de la propiedad
                   </p>
                 </div>
                 
@@ -161,9 +160,15 @@ const PropertyVisualizer = () => {
         <p className="text-[#D1CDC7] text-[9px] font-bold tracking-[0.6em] uppercase">Mariana Hagerman Concept</p>
       </footer>
 
-      <motion.button whileHover={{ y: -2 }} onClick={handleWhatsApp} style={{ backgroundColor: brandConfig.brandColor }} className="fixed bottom-10 right-10 z-[100] text-white px-8 py-4 rounded-sm shadow-sm flex items-center gap-4 opacity-90 transition-all">
-        <span className="text-[10px] font-bold tracking-[0.4em] uppercase">CONTACTAR</span>
-        <MessageCircle size={16} />
+      {/* BOTÓN DE CONTACTO MÁS PEQUEÑO */}
+      <motion.button 
+        whileHover={{ y: -2 }} 
+        onClick={handleWhatsApp} 
+        style={{ backgroundColor: brandConfig.brandColor }} 
+        className="fixed bottom-8 right-8 z-[100] text-white px-6 py-3 rounded-sm shadow-sm flex items-center gap-3 opacity-95 transition-all"
+      >
+        <span className="text-[9px] font-bold tracking-[0.3em] uppercase">CONTACTAR</span>
+        <MessageCircle size={14} />
       </motion.button>
     </div>
   );
