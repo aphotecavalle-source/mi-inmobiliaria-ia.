@@ -18,43 +18,55 @@ const Home = () => {
     <div className="min-h-screen bg-[#F9F8F6] flex flex-col items-center justify-center p-6 text-[#78716C]">
       
       <motion.div 
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        className="max-w-2xl w-full text-center space-y-24"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="max-w-3xl w-full text-center space-y-24"
       >
-        {/* LA CITA DE PICASSO */}
-        <div className="space-y-5 px-4">
+        {/* LA CITA DE PICASSO - PROTAGONISTA */}
+        <div className="space-y-6 px-4 min-h-[120px] flex flex-col justify-center">
           <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 2 }}
-            className="text-[12px] md:text-[14px] font-serif italic tracking-[0.15em] text-[#B4AD9E] leading-relaxed"
+            // Animación de bucle (Entrar y Salir)
+            animate={{ opacity: [0, 1, 1, 0] }}
+            transition={{
+              duration: 10, // Duración total del ciclo (aparecer, quedarse, desaparecer)
+              ease: "easeInOut",
+              times: [0, 0.2, 0.8, 1], // Porcentajes del tiempo para cada estado de opacidad
+              repeat: Infinity, // Repetir para siempre
+              repeatDelay: 1 // Espera 1 segundo antes de empezar de nuevo
+            }}
+            className="text-xl md:text-3xl font-serif italic tracking-[0.1em] text-[#B4AD9E] leading-relaxed"
           >
             "Todo lo que puedes imaginar es real."
           </motion.p>
           <motion.span 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 2 }}
-            className="block text-[8px] tracking-[0.4em] uppercase text-stone-300"
+             animate={{ opacity: [0, 1, 1, 0] }}
+             transition={{
+               duration: 10,
+               ease: "easeInOut",
+               times: [0, 0.2, 0.8, 1],
+               repeat: Infinity,
+               repeatDelay: 1
+             }}
+            className="block text-[9px] tracking-[0.4em] uppercase text-stone-300"
           >
             — Pablo Picasso
           </motion.span>
         </div>
 
-        {/* NUEVO TÍTULO EVOCADOR */}
+        {/* MARCA Y TÍTULO SUTIL */}
         <div className="space-y-4">
           <span className="text-[9px] font-bold tracking-[0.5em] text-[#D1CDC7] uppercase">
             Boutique Real Estate
           </span>
-          <h1 className="text-4xl md:text-6xl font-light tracking-[0.3em] text-[#57534E] leading-tight uppercase">
-            Lo que <br/> podría ser
+          {/* Título más pequeño y en una línea */}
+          <h1 className="text-xl md:text-3xl font-light tracking-[0.3em] text-[#57534E] uppercase">
+            Lo que podría ser
           </h1>
         </div>
 
         {/* Buscador de Clave */}
-        <form onSubmit={handleAccess} className="space-y-12">
+        <form onSubmit={handleAccess} className="space-y-12 pt-8">
           <div className="relative border-b border-stone-200 pb-3 mx-auto max-w-xs transition-all focus-within:border-[#B4AD9E]">
             <input 
               type="text" 
