@@ -113,4 +113,54 @@ const PropertyVisualizer = () => {
 
       <main className="max-w-6xl mx-auto p-6 md:p-10 grid grid-cols-1 lg:grid-cols-6 gap-10 md:gap-16">
         <aside className="lg:col-span-1">
-          <div className="flex flex-col space-y
+          <div className="flex flex-col space-y-6 md:space-y-10">
+            {propertyData.rooms.map((room) => (
+              <button key={room.id} onClick={() => { setActiveRoom(room); setViewMode('images'); }} className="text-left group relative">
+                <span className={`block text-[11px] md:text-[12px] tracking-[0.2em] uppercase transition-all duration-700 ${activeRoom.id === room.id && viewMode === 'images' ? 'text-[#57534E] font-bold' : 'text-[#D1CDC7] hover:text-[#78716C]'}`}>{room.name}</span>
+                {activeRoom.id === room.id && <motion.div layoutId="line" className="absolute -left-4 top-1/2 w-2 h-[1px] bg-[#B4AD9E]" />}
+              </button>
+            ))}
+          </div>
+        </aside>
+
+        <section className="lg:col-span-5 flex flex-col items-center">
+          <AnimatePresence mode="wait">
+            {viewMode === 'images' ? (
+              <motion.div key={activeRoom.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full max-w-4xl space-y-8">
+                <div className="bg-white p-1.5 rounded-sm border border-stone-50 shadow-sm overflow-hidden h-[350px] md:h-[550px]">
+                  <ReactCompareSlider
+                    itemOne={<ReactCompareSliderImage src={activeRoom.before} />}
+                    itemTwo={<ReactCompareSliderImage src={activeRoom.after} />}
+                    position={0}
+                    className="h-full w-full"
+                  />
+                </div>
+                <div className="flex justify-center">
+                  <p className="text-[#A8A29E] text-[10px] font-medium tracking-[0.15em] italic flex items-center gap-3">
+                    <ArrowLeftRight size={11} className="opacity-40" /> 
+                    desliza para ver el estado actual de la propiedad
+                  </p>
+                </div>
+              </motion.div>
+            ) : (
+              <div className="bg-stone-50 aspect-video w-full max-w-4xl flex items-center justify-center rounded-sm border border-stone-100 shadow-inner">
+                <video key={activeRoom.videoUrl} controls autoPlay className="w-full h-full object-cover opacity-80" src={activeRoom.videoUrl} />
+              </div>
+            )}
+          </AnimatePresence>
+        </section>
+      </main>
+
+      <footer className="max-w-6xl mx-auto p-12 text-center border-t border-stone-100 mt-10">
+        <p className="text-[#D1CDC7] text-[8px] font-bold tracking-[0.5em] uppercase">Mariana Hagerman Concept</p>
+      </footer>
+
+      <motion.button whileHover={{ y: -1 }} onClick={handleWhatsApp} style={{ backgroundColor: brandConfig.brandColor }} className="fixed bottom-8 right-8 z-[100] text-white px-6 py-3 rounded-sm shadow-md flex items-center gap-3 opacity-95 transition-all">
+        <span className="text-[9px] font-bold tracking-[0.3em] uppercase">CONTACTAR</span>
+        <MessageCircle size={14} />
+      </motion.button>
+    </div>
+  );
+};
+
+export default PropertyVisualizer;
