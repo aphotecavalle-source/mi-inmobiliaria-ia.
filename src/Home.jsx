@@ -30,80 +30,79 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFCFB] flex flex-col justify-between p-6 md:p-12 text-[#57534E] font-light">
+    <div className="min-h-screen bg-[#F9F8F6] flex flex-col justify-between p-8 md:p-16 text-[#4A4540]">
       
-      {/* HEADER: ESTILO MARCA DE AGUA EDITORIAL */}
-      <header className="flex justify-between items-start w-full">
-        <motion.div 
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          className="max-w-[150px] md:max-w-none"
-        >
-          <p className="text-[9px] md:text-[11px] tracking-[0.8em] text-[#B4AD9E] uppercase leading-loose">
-            Plataforma de <br/> Staging Inmobiliario
-          </p>
+      {/* 1. HEADER: DECLARACIÓN DE MARCA (Más legible y con peso) */}
+      <header className="w-full flex justify-between items-center border-b border-stone-200 pb-8">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <h1 className="text-[12px] md:text-[14px] tracking-[0.5em] text-[#8F887A] uppercase font-bold">
+            Tu plataforma de staging inmobiliario
+          </h1>
         </motion.div>
-        
-        <div className="text-right">
-          <p className="text-[8px] tracking-[0.5em] text-[#D1CDC7] uppercase">M. Hagerman Concept</p>
-        </div>
+        <span className="hidden md:block text-[10px] tracking-[0.3em] text-[#B4AD9E] uppercase font-medium">
+          M. Hagerman Concept
+        </span>
       </header>
 
-      {/* CENTRAL: POESÍA VISUAL (ASIMÉTRICA) */}
-      <main className="flex-1 flex flex-col justify-center items-center md:items-start md:pl-20">
-        <div className="h-[250px] relative w-full max-w-3xl">
+      {/* 2. CENTER: QUOTES (Equilibrio de tamaño y contraste) */}
+      <main className="flex-1 flex flex-col justify-center items-center py-20">
+        <div className="h-[200px] relative w-full max-w-4xl flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentQuoteIndex}
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
-              transition={{ duration: 1.5, ease: "circOut" }}
-              className="absolute inset-0 flex flex-col justify-center"
+              initial={{ opacity: 0, scale: 0.99 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.01 }}
+              transition={{ duration: 1.2 }}
+              className="absolute w-full text-center"
             >
-              <h2 className="text-3xl md:text-6xl font-serif italic text-[#78716C] leading-[1.1] mb-6">
-                {quotes[currentQuoteIndex].text}
+              <h2 className="text-3xl md:text-5xl font-serif italic text-[#57534E] leading-tight mb-8">
+                "{quotes[currentQuoteIndex].text}"
               </h2>
-              <div className="flex items-center gap-4">
-                <div className="w-8 h-[1px] bg-[#B4AD9E]" />
-                <span className="text-[10px] tracking-[0.4em] uppercase text-[#B4AD9E]">
+              <div className="flex justify-center items-center gap-4">
+                <div className="w-6 h-[1px] bg-[#B4AD9E]" />
+                <span className="text-[11px] tracking-[0.4em] uppercase text-[#B4AD9E] font-bold">
                   {quotes[currentQuoteIndex].author}
                 </span>
+                <div className="w-6 h-[1px] bg-[#B4AD9E]" />
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
       </main>
 
-      {/* FOOTER: ACCESO MINIMALISTA (TIPO CONCIERGE) */}
-      <footer className="w-full flex flex-col md:flex-row justify-between items-end gap-12">
-        <div className="w-full md:max-w-md">
-          <form onSubmit={handleAccess} className="group relative">
-            <p className="text-[8px] tracking-[0.4em] text-[#B4AD9E] uppercase mb-4 opacity-0 group-focus-within:opacity-100 transition-opacity">
+      {/* 3. FOOTER: ACCESO CON ALTO CONTRASTE */}
+      <footer className="w-full max-w-2xl mx-auto space-y-12">
+        <div className="text-center space-y-8">
+          <div className="inline-block relative">
+            <h3 className="text-[11px] md:text-[13px] tracking-[0.6em] text-[#4A4540] uppercase font-bold">
               Visualiza la propiedad
-            </p>
-            <div className="flex items-center border-b border-stone-200 py-2 group-focus-within:border-[#B4AD9E] transition-colors">
+            </h3>
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-[#B4AD9E]" />
+          </div>
+
+          <form onSubmit={handleAccess} className="relative mt-8">
+            <div className="flex items-center border-b-2 border-stone-300 py-4 focus-within:border-[#8F887A] transition-colors">
               <input 
                 type="text" 
                 placeholder="INGRESA CLAVE"
                 value={propertyCode}
                 onChange={(e) => setPropertyCode(e.target.value)}
-                className="flex-1 bg-transparent text-[11px] tracking-[0.6em] outline-none uppercase placeholder:text-stone-300 text-[#57534E]"
+                className="flex-1 bg-transparent text-center text-[14px] md:text-[16px] tracking-[0.8em] outline-none uppercase font-bold text-[#4A4540] placeholder:text-stone-200"
               />
               <button 
                 type="submit"
-                className="ml-4 hover:translate-x-2 transition-transform duration-500"
+                className="absolute right-0 p-2 hover:translate-x-2 transition-transform duration-500"
               >
-                <ArrowRight size={20} strokeWidth={1} className="text-[#B4AD9E]" />
+                <ArrowRight size={24} strokeWidth={1.5} className="text-[#8F887A]" />
               </button>
             </div>
           </form>
         </div>
 
-        <div className="hidden md:block">
-          <p className="text-[9px] tracking-[0.8em] text-[#D1CDC7] uppercase vertical-text transform rotate-180" style={{writingMode: 'vertical-rl'}}>
-            Est. 2024
-          </p>
-        </div>
+        <p className="text-[9px] tracking-[0.8em] text-[#B4AD9E] uppercase text-center opacity-60">
+          Experiencia Inmersiva de Diseño
+        </p>
       </footer>
 
     </div>
