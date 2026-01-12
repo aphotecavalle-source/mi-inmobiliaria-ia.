@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
-// 1. LISTA DE FRASES (Indispensable que esté aquí)
 const quotes = [
   { text: "El hogar es nuestro rincón del mundo, nuestro primer universo.", author: "Gaston Bachelard" },
   { text: "Todo lo que puedes imaginar es real.", author: "Picasso" },
@@ -16,7 +15,6 @@ const Landing = () => {
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const navigate = useNavigate();
 
-  // Rotación de frases
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
@@ -34,27 +32,18 @@ const Landing = () => {
   return (
     <div className="min-h-screen bg-[#A3836B] flex flex-col justify-between p-8 md:p-16 text-white overflow-hidden font-light">
       
-      {/* HEADER: TIPOGRAFÍA ACTUAL */}
       <header className="w-full flex justify-between items-start border-b border-white/20 pb-12">
-        <motion.div 
-          initial={{ opacity: 0, y: -10 }} 
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-2"
-        >
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="space-y-2">
           <h1 className="text-[14px] md:text-[16px] tracking-[0.8em] text-white/90 font-extralight lowercase">
             tu plataforma de <span className="font-normal italic">staging</span> inmobiliario
           </h1>
-          <p className="text-[8px] tracking-[0.4em] text-white/40 uppercase">Selected Works 2026</p>
+          <p className="text-[8px] tracking-[0.4em] text-white/40 uppercase">Selected Works 2024</p>
         </motion.div>
-        
         <div className="text-right hidden md:block border-l border-white/30 pl-4">
-          <p className="text-[10px] tracking-[0.5em] text-white/80 uppercase font-bold">
-            M. Hagerman
-          </p>
+          <p className="text-[10px] tracking-[0.5em] text-white/80 uppercase font-bold">M. Hagerman</p>
         </div>
       </header>
 
-      {/* CENTRAL: QUOTES EDITORIALES */}
       <main className="flex-1 flex flex-col justify-center items-center py-12">
         <div className="h-[280px] relative w-full max-w-5xl flex items-center justify-center text-center">
           <AnimatePresence mode="wait">
@@ -79,13 +68,11 @@ const Landing = () => {
         </div>
       </main>
 
-      {/* FOOTER: ACCESO MINIMALISTA */}
       <footer className="w-full max-w-2xl mx-auto space-y-16 mb-4">
         <div className="text-center space-y-12">
           <h3 className="text-[10px] md:text-[11px] tracking-[0.8em] text-white/70 uppercase font-light">
             Visualiza la propiedad
           </h3>
-
           <form onSubmit={handleAccess} className="relative group">
             <div className="flex items-center border-b border-white/30 py-6 focus-within:border-white transition-all duration-700">
               <input 
@@ -95,24 +82,19 @@ const Landing = () => {
                 onChange={(e) => setPropertyCode(e.target.value)}
                 className="flex-1 bg-transparent text-center text-[18px] md:text-[22px] tracking-[1.2em] outline-none uppercase font-extralight text-white placeholder:text-white/20"
               />
-              <button 
-                type="submit"
-                className="absolute right-0 hover:translate-x-4 transition-transform duration-700"
-              >
+              <button type="submit" className="absolute right-0 hover:translate-x-4 transition-transform duration-700">
                 <ArrowRight size={36} strokeWidth={0.5} className="text-white/80" />
               </button>
             </div>
           </form>
         </div>
-
         <div className="flex justify-between items-center opacity-30 text-[8px] tracking-[0.5em] uppercase px-4">
            <p>Curated Interior Design</p>
-           <p>© 2026</p>
+           <p>© 2024</p>
         </div>
       </footer>
-
     </div>
   );
 };
 
-export default Landing;
+export default Landing; // <--- ESTO ES LO QUE DEBE DECIR AL FINAL
