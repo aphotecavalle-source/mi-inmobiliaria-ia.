@@ -1,13 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Landing'; // <--- CAMBIAMOS 'Home' POR 'Landing'
+import Landing from './Landing'; // Importamos el archivo Landing.jsx
 import PropertyVisualizer from './PropertyVisualizer';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* Usamos Landing como la página principal */}
+        <Route path="/" element={<Landing />} />
         <Route path="/propiedad/:id" element={<PropertyVisualizer />} />
       </Routes>
     </Router>
