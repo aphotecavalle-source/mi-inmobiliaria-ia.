@@ -1,12 +1,14 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 
+// LISTA ACTUALIZADA: BACHELARD PRIMERO PARA VERIFICAR EL CAMBIO
 const quotes = [
+  { text: "El hogar es nuestro rincón del mundo, nuestro primer universo.", author: "Gaston Bachelard" },
   { text: "Todo lo que puedes imaginar es real.", author: "Pablo Picasso" },
   { text: "Cada gran sueño comienza con un soñador.", author: "Harriet Tubman" },
-  { text: "El hogar no es un lugar, es un sentimiento.", author: "Cecelia Ahern" },
   { text: "La mejor forma de predecir el futuro es crearlo.", author: "Peter Drucker" }
 ];
 
@@ -15,7 +17,7 @@ const Home = () => {
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const navigate = useNavigate();
 
-  // Rotación cada 7 segundos para dar tiempo a leer las frases grandes
+  // Rotación cada 7 segundos
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
@@ -35,8 +37,8 @@ const Home = () => {
       
       <div className="max-w-5xl w-full text-center space-y-20 relative z-10">
         
-        {/* CONTENEDOR DE CITAS XXL */}
-        <div className="h-[350px] md:h-[400px] flex flex-col justify-center items-center relative px-4">
+        {/* CARRUSEL DE CITAS XXL */}
+        <div className="h-[350px] md:h-[450px] flex flex-col justify-center items-center relative px-4">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentQuoteIndex}
@@ -46,12 +48,12 @@ const Home = () => {
               transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
               className="absolute w-full flex flex-col items-center"
             >
-              {/* Tipografía Serif Extra Grande */}
+              {/* Texto de la cita: Tamaño Máximo */}
               <p className="text-4xl md:text-7xl font-serif italic tracking-tight text-[#B4AD9E] leading-[1.1] max-w-4xl mx-auto">
                 "{quotes[currentQuoteIndex].text}"
               </p>
               
-              {/* Autor Sutil */}
+              {/* Autor */}
               <motion.span 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -64,7 +66,7 @@ const Home = () => {
           </AnimatePresence>
         </div>
 
-        {/* MENSAJE DE ACCESO */}
+        {/* MENSAJE DE ACCESO Y BUSCADOR */}
         <div className="space-y-12">
           <motion.h1 
             initial={{ opacity: 0 }}
@@ -72,10 +74,9 @@ const Home = () => {
             transition={{ delay: 0.5 }}
             className="text-[10px] md:text-[12px] font-bold tracking-[0.5em] text-[#A8A29E] uppercase"
           >
-            VISUALIZA LA PROPIEDAD AQUÍ
+            VISUALIZA TU PROPIEDAD AQUÍ
           </motion.h1>
 
-          {/* Buscador de Clave Minimalista */}
           <form onSubmit={handleAccess} className="space-y-10">
             <div className="relative border-b border-stone-200 pb-3 mx-auto max-w-[280px] md:max-w-xs transition-all focus-within:border-[#B4AD9E]">
               <input 
