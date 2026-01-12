@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 
-// LISTA ACTUALIZADA: BACHELARD PRIMERO PARA VERIFICAR EL CAMBIO
 const quotes = [
   { text: "El hogar es nuestro rincón del mundo, nuestro primer universo.", author: "Gaston Bachelard" },
   { text: "Todo lo que puedes imaginar es real.", author: "Pablo Picasso" },
@@ -17,7 +15,6 @@ const Home = () => {
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const navigate = useNavigate();
 
-  // Rotación cada 7 segundos
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
@@ -33,32 +30,29 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F8F6] flex flex-col items-center justify-center p-6 text-[#78716C] overflow-hidden">
+    <div className="min-h-screen bg-[#F9F8F6] flex flex-col items-center justify-center p-6 text-[#57534E] overflow-hidden">
       
-      <div className="max-w-5xl w-full text-center space-y-20 relative z-10">
+      <div className="max-w-5xl w-full text-center space-y-12 md:space-y-16 relative z-10">
         
-        {/* CARRUSEL DE CITAS XXL */}
-        <div className="h-[350px] md:h-[450px] flex flex-col justify-center items-center relative px-4">
+        {/* CARRUSEL DE CITAS */}
+        <div className="h-[300px] md:h-[400px] flex flex-col justify-center items-center relative px-4">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentQuoteIndex}
-              initial={{ opacity: 0, scale: 0.98, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 1.02, y: -20 }}
-              transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
               className="absolute w-full flex flex-col items-center"
             >
-              {/* Texto de la cita: Tamaño Máximo */}
-              <p className="text-4xl md:text-7xl font-serif italic tracking-tight text-[#B4AD9E] leading-[1.1] max-w-4xl mx-auto">
+              <p className="text-4xl md:text-7xl font-serif italic tracking-tight text-[#8F887A] leading-[1.1] max-w-4xl mx-auto">
                 "{quotes[currentQuoteIndex].text}"
               </p>
-              
-              {/* Autor */}
               <motion.span 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-                className="block text-[10px] md:text-[12px] tracking-[0.5em] uppercase text-stone-300 mt-10"
+                transition={{ delay: 0.6 }}
+                className="block text-[10px] md:text-[12px] tracking-[0.5em] uppercase text-[#78716C] mt-10 font-medium"
               >
                 — {quotes[currentQuoteIndex].author}
               </motion.span>
@@ -66,41 +60,52 @@ const Home = () => {
           </AnimatePresence>
         </div>
 
-        {/* MENSAJE DE ACCESO Y BUSCADOR */}
-        <div className="space-y-12">
+        {/* FRASE INTERMEDIA - PLATAFORMA */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="py-4"
+        >
+          <p className="text-[11px] md:text-[13px] tracking-[0.6em] text-[#8F887A] uppercase font-light">
+            Tu plataforma de staging inmobiliario
+          </p>
+        </motion.div>
+
+        {/* SECCIÓN DE ACCESO */}
+        <div className="space-y-10">
           <motion.h1 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="text-[10px] md:text-[12px] font-bold tracking-[0.5em] text-[#A8A29E] uppercase"
+            transition={{ delay: 1.2 }}
+            className="text-[10px] md:text-[11px] font-bold tracking-[0.5em] text-[#78716C] uppercase"
           >
-            VISUALIZA TU PROPIEDAD AQUÍ
+            VISUALIZA LA PROPIEDAD
           </motion.h1>
 
           <form onSubmit={handleAccess} className="space-y-10">
-            <div className="relative border-b border-stone-200 pb-3 mx-auto max-w-[280px] md:max-w-xs transition-all focus-within:border-[#B4AD9E]">
+            <div className="relative border-b border-stone-400 pb-3 mx-auto max-w-[280px] md:max-w-xs transition-all focus-within:border-[#8F887A]">
               <input 
                 type="text" 
                 placeholder="INGRESA CLAVE"
                 value={propertyCode}
                 onChange={(e) => setPropertyCode(e.target.value)}
-                className="w-full bg-transparent text-center text-[12px] tracking-[0.6em] font-medium placeholder:text-stone-200 outline-none uppercase py-2"
+                className="w-full bg-transparent text-center text-[12px] tracking-[0.6em] font-bold text-[#57534E] placeholder:text-stone-300 outline-none uppercase py-2"
               />
             </div>
             
             <button 
               type="submit"
-              className="group flex items-center gap-5 mx-auto text-[10px] font-bold tracking-[0.5em] text-[#78716C] hover:text-[#B4AD9E] transition-all"
+              className="group flex items-center gap-5 mx-auto text-[10px] font-bold tracking-[0.5em] text-[#57534E] hover:text-[#8F887A] transition-all"
             >
-              ACCEDER <ChevronRight size={16} className="group-hover:translate-x-2 transition-transform" />
+              ACCEDER <ChevronRight size={16} className="group-hover:translate-x-2 transition-transform text-[#8F887A]" />
             </button>
           </form>
         </div>
       </div>
 
-      {/* Tu firma al pie */}
       <footer className="absolute bottom-12 text-center w-full px-4">
-        <p className="text-[#D1CDC7] text-[8px] font-bold tracking-[0.7em] uppercase">
+        <p className="text-[#A8A29E] text-[9px] font-bold tracking-[0.7em] uppercase">
           Mariana Hagerman Concept
         </p>
       </footer>
