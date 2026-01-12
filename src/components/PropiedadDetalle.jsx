@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 const PropiedadDetalle = () => {
@@ -13,7 +14,6 @@ const PropiedadDetalle = () => {
     <div className="container" style={{ marginTop: '40px' }}>
       <div className="card-propiedad" style={{ marginBottom: '50px', padding: '40px' }}>
         
-        {/* Cabecera de la Propiedad */}
         <div style={{ marginBottom: '30px' }}>
           <span className="small-detail" style={{ color: 'var(--color-arena)', fontWeight: '700' }}>
             PROYECTO DESTACADO
@@ -26,7 +26,6 @@ const PropiedadDetalle = () => {
           </p>
         </div>
 
-        {/* Imagen Principal */}
         <div style={{ marginBottom: '40px' }}>
           <img 
             src={propiedad.imagenPrincipal} 
@@ -36,14 +35,12 @@ const PropiedadDetalle = () => {
           />
         </div>
 
-        {/* Descripción */}
         <div style={{ maxWidth: '700px', marginBottom: '60px' }}>
           <p style={{ color: 'var(--color-texto-secundario)', fontSize: '1.2rem', lineHeight: '1.8' }}>
             {propiedad.descripcion}
           </p>
         </div>
 
-        {/* Sección de Video */}
         <div className="video-section" style={{ marginTop: '50px', borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '40px' }}>
           <h3 className="small-detail" style={{ marginBottom: '25px', textAlign: 'center' }}>
             RECORRIDO CINEMÁTICO
