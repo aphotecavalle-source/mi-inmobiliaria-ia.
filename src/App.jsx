@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Home'; // Asegúrate que el archivo se llame Home.jsx con H mayúscula
+import Home from './Landing'; // <--- CAMBIAMOS 'Home' POR 'Landing'
 import PropertyVisualizer from './PropertyVisualizer';
 
 function App() {
