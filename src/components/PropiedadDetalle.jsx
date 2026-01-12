@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const PropiedadDetalle = () => {
@@ -62,7 +61,6 @@ const PropiedadDetalle = () => {
             ></iframe>
           </div>
         </div>
-
       </div>
     </div>
   );
