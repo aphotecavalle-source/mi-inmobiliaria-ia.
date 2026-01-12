@@ -9,38 +9,21 @@ function App() {
   return (
     <div className="App">
       <Header />
-      
       <main>
         {!mostrarDetalle ? (
-          /* --- LANDING PAGE (PORTADA) --- */
           <div style={{ textAlign: 'center', padding: '100px 20px' }}>
-            <h1 className="editorial-text" style={{ fontSize: '4rem', marginBottom: '10px' }}>
-              Casa en el Bosque
-            </h1>
-            <p className="small-detail" style={{ letterSpacing: '0.3em', marginBottom: '40px' }}>
-              VALLE DE BRAVO
-            </p>
-            <button className="btn-visualiza" onClick={() => setMostrarDetalle(true)}>
-              Visualiza la propiedad
-            </button>
+            <h1 className="editorial-text" style={{ fontSize: '4rem' }}>Casa en el Bosque</h1>
+            <p className="small-detail" style={{ marginBottom: '40px' }}>VALLE DE BRAVO</p>
+            <button className="btn-visualiza" onClick={() => setMostrarDetalle(true)}>Visualiza la propiedad</button>
           </div>
         ) : (
-          /* --- PÁGINA DE DETALLE (FOTOS Y VIDEOS) --- */
           <div>
-            <button 
-              onClick={() => setMostrarDetalle(false)} 
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '20px 40px', color: var(--color-arena), fontWeight: 'bold' }}
-            >
-              ← REGRESAR
-            </button>
+            <button onClick={() => setMostrarDetalle(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '20px 40px', color: 'var(--color-arena)', fontWeight: 'bold' }}>← REGRESAR</button>
             <PropiedadDetalle />
           </div>
         )}
       </main>
-      
-      <footer style={{ textAlign: 'center', padding: '80px 0', opacity: 0.5 }} className="small-detail">
-        M. HAGERMAN &copy; 2026
-      </footer>
+      <footer style={{ textAlign: 'center', padding: '80px 0', opacity: 0.5 }} className="small-detail">M. HAGERMAN &copy; 2026</footer>
     </div>
   );
 }
