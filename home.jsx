@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 
-// LISTA DEFINITIVA: PICASSO -> TUBMAN -> BACHELARD -> DRUCKER
+// LISTA ACTUALIZADA: BACHELARD PRIMERO PARA VERIFICAR EL CAMBIO
 const quotes = [
+  { text: "El hogar es nuestro rincón del mundo, nuestro primer universo.", author: "Gaston Bachelard" },
   { text: "Todo lo que puedes imaginar es real.", author: "Pablo Picasso" },
   { text: "Cada gran sueño comienza con un soñador.", author: "Harriet Tubman" },
-  { text: "El hogar es nuestro rincón del mundo, nuestro primer universo.", author: "Gaston Bachelard" },
   { text: "La mejor forma de predecir el futuro es crearlo.", author: "Peter Drucker" }
 ];
 
@@ -16,6 +16,7 @@ const Home = () => {
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
   const navigate = useNavigate();
 
+  // Rotación cada 7 segundos
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
@@ -32,8 +33,10 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-[#F9F8F6] flex flex-col items-center justify-center p-6 text-[#78716C] overflow-hidden">
+      
       <div className="max-w-5xl w-full text-center space-y-20 relative z-10">
         
+        {/* CARRUSEL DE CITAS XXL */}
         <div className="h-[350px] md:h-[450px] flex flex-col justify-center items-center relative px-4">
           <AnimatePresence mode="wait">
             <motion.div
@@ -44,9 +47,12 @@ const Home = () => {
               transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
               className="absolute w-full flex flex-col items-center"
             >
+              {/* Texto de la cita: Tamaño Máximo */}
               <p className="text-4xl md:text-7xl font-serif italic tracking-tight text-[#B4AD9E] leading-[1.1] max-w-4xl mx-auto">
                 "{quotes[currentQuoteIndex].text}"
               </p>
+              
+              {/* Autor */}
               <motion.span 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -59,12 +65,15 @@ const Home = () => {
           </AnimatePresence>
         </div>
 
+        {/* MENSAJE DE ACCESO Y BUSCADOR */}
         <div className="space-y-12">
           <motion.h1 
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
             className="text-[10px] md:text-[12px] font-bold tracking-[0.5em] text-[#A8A29E] uppercase"
           >
-            VISUALIZA LA PROPIEDAD AQUÍ
+            VISUALIZA TU PROPIEDAD AQUÍ
           </motion.h1>
 
           <form onSubmit={handleAccess} className="space-y-10">
@@ -77,13 +86,18 @@ const Home = () => {
                 className="w-full bg-transparent text-center text-[12px] tracking-[0.6em] font-medium placeholder:text-stone-200 outline-none uppercase py-2"
               />
             </div>
-            <button type="submit" className="group flex items-center gap-5 mx-auto text-[10px] font-bold tracking-[0.5em] text-[#78716C] hover:text-[#B4AD9E] transition-all">
+            
+            <button 
+              type="submit"
+              className="group flex items-center gap-5 mx-auto text-[10px] font-bold tracking-[0.5em] text-[#78716C] hover:text-[#B4AD9E] transition-all"
+            >
               ACCEDER <ChevronRight size={16} className="group-hover:translate-x-2 transition-transform" />
             </button>
           </form>
         </div>
       </div>
 
+      {/* Tu firma al pie */}
       <footer className="absolute bottom-12 text-center w-full px-4">
         <p className="text-[#D1CDC7] text-[8px] font-bold tracking-[0.7em] uppercase">
           Mariana Hagerman Concept
