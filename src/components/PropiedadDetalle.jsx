@@ -1,44 +1,41 @@
 import React from 'react';
 
 const PropiedadDetalle = () => {
-  // Datos de ejemplo con el estilo que buscas
   const propiedad = {
-    nombre: "Casa Bruma",
-    ubicacion: "Valle de Bravo, México",
-    descripcion: "Un refugio que integra la calidez del estilo escandinavo con texturas naturales y una iluminación diseñada para generar paz y plenitud.",
-    imagen: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" // Imagen de ejemplo tipo DSLR
+    nombre: "Casa en el Bosque",
+    descripcion: "Un proyecto de staging virtual donde la calidez escandinava se fusiona con el entorno forestal. Tonos arena, texturas orgánicas y un diseño pensado para la paz.",
+    imagenPrincipal: "URL_DE_TU_FOTO_CASA_BOSQUE", // Reemplaza con tu link
+    videoUrl: "URL_DE_TU_VIDEO" // Si tienes un video en YouTube o Drive
   };
 
   return (
-    <section className="container" style={{ marginTop: '40px' }}>
-      <div className="card-propiedad">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px', alignItems: 'center' }}>
-          
-          <div className="image-container">
-            <img src={propiedad.imagen} alt={propiedad.nombre} className="img-dslr" />
-          </div>
+    <div className="container">
+      <div className="card-propiedad" style={{ marginBottom: '50px' }}>
+        <h2 className="editorial-text" style={{ fontSize: '2.5rem', marginBottom: '20px' }}>{propiedad.nombre}</h2>
+        <p style={{ color: 'var(--color-texto-secundario)', marginBottom: '40px', maxWidth: '600px' }}>
+          {propiedad.descripcion}
+        </p>
 
-          <div className="info-vivienda">
-            <span className="small-detail" style={{ color: 'var(--color-arena)', fontWeight: '700' }}>
-              PROYECTO DESTACADO
-            </span>
-            <h2 className="editorial-text" style={{ fontSize: '2.8rem', margin: '15px 0' }}>
-              {propiedad.nombre}
-            </h2>
-            <p className="small-detail" style={{ marginBottom: '20px', fontSize: '0.9rem' }}>
-              {propiedad.ubicacion.toUpperCase()}
-            </p>
-            <p style={{ color: 'var(--color-texto-secundario)', marginBottom: '30px', fontSize: '1.1rem' }}>
-              {propiedad.descripcion}
-            </p>
-            <button className="btn-visualiza">
-              Visualiza la propiedad
-            </button>
+        {/* CONTENEDOR DE IMAGEN */}
+        <div style={{ marginBottom: '40px' }}>
+          <img src={propiedad.imagenPrincipal} alt="Casa en el Bosque" className="img-dslr" />
+        </div>
+
+        {/* SECCIÓN DE VIDEO (Si tienes el link de video) */}
+        <div className="video-section" style={{ marginTop: '50px' }}>
+          <h3 className="small-detail" style={{ marginBottom: '20px' }}>RECORRIDO CINEMÁTICO</h3>
+          <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden' }}>
+            <iframe 
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: '8px' }}
+              src={propiedad.videoUrl} 
+              title="Video House Tour"
+              frameBorder="0" 
+              allowFullScreen
+            ></iframe>
           </div>
-          
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
