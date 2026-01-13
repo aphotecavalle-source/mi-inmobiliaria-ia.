@@ -6,44 +6,61 @@ import PropertyVisualizer from './PropertyVisualizer';
 function App() {
   const [mostrarVisualizador, setMostrarVisualizador] = useState(false);
 
+  // URL de la imagen de internet seleccionada para ti
+  const imagenBosque = "http://googleusercontent.com/image_collection/image_retrieval/16464980154844483187";
+
   return (
-    <div className="App" style={{ backgroundColor: '#e2ede7', minHeight: '100vh' }}>
+    <div className="App" style={{ backgroundColor: '#e2ede7', minHeight: '100vh', paddingBottom: '40px' }}>
       {!mostrarVisualizador && <Header />}
       
       <main>
         {!mostrarVisualizador ? (
-          /* --- LANDING PAGE: DISEÑO DE FICHA --- */
+          /* --- LANDING PAGE: FICHA HORIZONTAL --- */
           <div style={{ padding: '0 20px 60px', display: 'flex', justifyContent: 'center' }}>
             
             <div style={{ 
               backgroundColor: 'white', 
-              maxWidth: '700px', // Ventana más chica y controlada
+              maxWidth: '1000px', // Un poco más ancha para el formato horizontal
               width: '100%',
+              display: 'flex', // Activa el formato horizontal
+              flexDirection: 'row',
+              flexWrap: 'wrap', // Para que en celular se ponga una arriba de otra
               boxShadow: '0 30px 60px rgba(0,0,0,0.05)',
-              border: '1px solid rgba(0,0,0,0.05)'
+              border: '1px solid rgba(0,0,0,0.05)',
+              borderRadius: '0px' // Esquinas rectas
             }}>
               
-              {/* IMAGEN INTEGRADA EN LA FICHA */}
-              <div style={{ width: '100%', height: '400px', overflow: 'hidden' }}>
+              {/* IMAGEN A LA IZQUIERDA */}
+              <div style={{ flex: '1.2', minWidth: '300px', height: '500px', overflow: 'hidden' }}>
                 <img 
-                  src="https://images.unsplash.com/photo-1449156001437-3a1661dcda2e?q=80&w=2070" 
+                  src={imagenBosque} 
                   alt="Casa en el Bosque" 
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               </div>
 
-              {/* CONTENIDO DE LA FICHA */}
-              <div style={{ padding: '50px 40px', textAlign: 'center' }}>
-                <h1 className="editorial-text" style={{ fontSize: '3.5rem', marginBottom: '10px' }}>
-                  Casa en el Bosque
+              {/* CONTENIDO A LA DERECHA */}
+              <div style={{ 
+                flex: '1', 
+                padding: '60px 50px', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                justifyContent: 'center',
+                textAlign: 'left', // Alineado a la izquierda para look editorial
+                minWidth: '300px'
+              }}>
+                <h1 className="editorial-text" style={{ fontSize: '3.8rem', marginBottom: '10px', lineHeight: '1' }}>
+                  Casa en <br /> el Bosque
                 </h1>
                 <p className="small-detail" style={{ marginBottom: '40px', letterSpacing: '0.4em', color: 'var(--color-arena)' }}>
                   VALLE DE BRAVO
                 </p>
                 
-                <button className="btn-visualiza" onClick={() => setMostrarVisualizador(true)}>
-                  Visualiza la propiedad
-                </button>
+                <div style={{ borderTop: '1px solid #eee', paddingTop: '30px' }}>
+                  <button className="btn-visualiza" onClick={() => setMostrarVisualizador(true)} style={{ width: '100%' }}>
+                    Visualiza la propiedad
+                  </button>
+                </div>
               </div>
 
             </div>
