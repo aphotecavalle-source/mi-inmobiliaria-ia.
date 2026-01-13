@@ -8,7 +8,7 @@ function App() {
 
   // NUEVA IMAGEN: Foto cinematográfica de cabaña moderna (DSLR)
   // He añadido un parámetro extra al final (?v=2) para engañar al caché
-  const fotoPortada = "https://images.unsplash.com/photo-1449156001437-3a1661dcda2e?q=80&w=2070&auto=format&v=2";
+  const fotoPortada = "https://images.unsplash.com/photo-1449156001437-3a1661dcda2e?q=80&w=2070&auto=format&v=2&v=3";
 
   const infoPropiedad = {
     titulo: "Casa en el Bosque",
