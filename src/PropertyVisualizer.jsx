@@ -76,7 +76,7 @@ const PropertyVisualizer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#e2ede7] text-[#2a2a2a] pb-20" style={{ fontFamily: 'var(--fuente-sans)' }}>
+    <div className="min-h-screen bg-[#e2ede7] text-[#2a2a2a]" style={{ fontFamily: 'var(--fuente-sans)' }}>
       
       {/* MODAL FICHA TÉCNICA */}
       <AnimatePresence>
@@ -95,32 +95,15 @@ const PropertyVisualizer = () => {
               <button onClick={() => setShowFicha(false)} className="absolute top-4 right-4 text-stone-400 hover:text-black">
                 <X size={24} />
               </button>
-              
               <h2 className="editorial-text text-3xl mb-2">{propertyData.title}</h2>
               <p className="text-[#c5b097] font-bold text-xl mb-6">{propertyData.precio}</p>
-              
-              <div className="grid grid-cols-2 gap-6 mb-8 border-y border-stone-100 py-6">
-                <div>
-                  <p className="text-[9px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-1">Terreno</p>
-                  <p className="font-medium text-sm">{propertyData.detalles.terreno}</p>
-                </div>
-                <div>
-                  <p className="text-[9px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-1">Construcción</p>
-                  <p className="font-medium text-sm">{propertyData.detalles.construccion}</p>
-                </div>
-                <div>
-                  <p className="text-[9px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-1">Habitaciones</p>
-                  <p className="font-medium text-sm">{propertyData.detalles.recamaras}</p>
-                </div>
-                <div>
-                  <p className="text-[9px] font-bold text-stone-400 uppercase tracking-[0.2em] mb-1">Baños</p>
-                  <p className="font-medium text-sm">{propertyData.detalles.baños}</p>
-                </div>
+              <div className="grid grid-cols-2 gap-6 mb-8 border-y border-stone-100 py-6 text-sm">
+                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Terreno</p>{propertyData.detalles.terreno}</div>
+                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Construcción</p>{propertyData.detalles.construccion}</div>
+                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Habitaciones</p>{propertyData.detalles.recamaras}</div>
+                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Baños</p>{propertyData.detalles.baños}</div>
               </div>
-              
-              <p className="text-sm text-stone-500 leading-relaxed italic">
-                "{propertyData.detalles.descripcion}"
-              </p>
+              <p className="text-sm text-stone-500 italic leading-relaxed">"{propertyData.detalles.descripcion}"</p>
             </motion.div>
           </motion.div>
         )}
@@ -168,7 +151,7 @@ const PropertyVisualizer = () => {
             <div className="flex bg-stone-100 p-1 border border-stone-200">
               <button 
                 onClick={() => setViewMode('images')}
-                className={`px-6 py-2.5 flex items-center text-[10px] tracking-widest transition-all ${
+                className={`px-6 py-2.5 flex items-center text-[10px] tracking-widest ${
                   viewMode === 'images' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'
                 }`}
                 style={{ color: viewMode === 'images' ? 'var(--color-arena)' : '' }}
@@ -177,7 +160,7 @@ const PropertyVisualizer = () => {
               </button>
               <button 
                 onClick={() => setViewMode('video')}
-                className={`px-6 py-2.5 flex items-center text-[10px] tracking-widest transition-all ${
+                className={`px-6 py-2.5 flex items-center text-[10px] tracking-widest ${
                   viewMode === 'video' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'
                 }`}
                 style={{ color: viewMode === 'video' ? 'var(--color-arena)' : '' }}
@@ -191,7 +174,7 @@ const PropertyVisualizer = () => {
 
       <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-4 gap-12 mt-8">
         <aside className="order-2 lg:order-1 lg:col-span-1">
-          <h3 className="editorial-text text-2xl mb-6">Explorar Espacios</h3>
+          <h3 className="editorial-text text-2xl mb-6 text-stone-900">Explorar Espacios</h3>
           <div className="grid grid-cols-1 gap-2">
             {propertyData.rooms.map((room) => (
               <button
@@ -226,7 +209,6 @@ const PropertyVisualizer = () => {
                     Desliza para ver el estado actual de la propiedad
                   </p>
                 </div>
-                
                 <div className="relative overflow-hidden h-[400px] md:h-[650px]">
                   <ReactCompareSlider
                     position={0}
@@ -248,11 +230,7 @@ const PropertyVisualizer = () => {
           </AnimatePresence>
         </section>
       </main>
-
-      {/* FOOTER ACTUALIZADO CON TU NOMBRE */}
-      <footer className="text-center p-20 text-stone-400 text-[9px] font-bold tracking-[0.3em] uppercase">
-        © 2026 MARIANA HAGERMAN
-      </footer>
+      {/* QUITAMOS EL FOOTER DE AQUÍ PORQUE YA ESTÁ EN APP.JSX */}
     </div>
   );
 };
