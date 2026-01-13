@@ -19,7 +19,7 @@ const Header = () => {
           fontSize: '1.2rem',
           fontWeight: 'normal'
         }}>
-          curated by M. Hagerman
+          curated by Mariana Hagerman
         </span>
       </div>
       <div style={{ 
