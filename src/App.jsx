@@ -92,7 +92,7 @@ function App() {
       </main>
 
       <footer className="text-center p-20 text-stone-400 text-[9px] font-bold tracking-[0.3em] uppercase">
-        © 2026 MARIANA HAGERMAN
+        © 2026 HAGERMAN HOME STAGING
       </footer>
     </div>
   );
