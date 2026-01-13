@@ -43,7 +43,7 @@ function App() {
                   src={fotoPortada} 
                   alt={infoPropiedad.titulo} 
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  onError={(e) => { e.target.src = "https://via.placeholder.com/800x600?text=Imagen+Arquitectura"; }}
+                  onError={(e) => { e.target.src = "https://plus.unsplash.com/premium_photo-1686090450800-d6ca456243c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"; }}
                 />
               </div>
 
