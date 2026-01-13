@@ -6,8 +6,9 @@ import PropertyVisualizer from './PropertyVisualizer';
 function App() {
   const [mostrarVisualizador, setMostrarVisualizador] = useState(false);
 
-  // Imagen de alta calidad: Cabaña moderna en el bosque (DSLR Style)
-  const fotoPortada = "https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=2070&auto=format&fit=crop";
+  // NUEVA IMAGEN: Foto cinematográfica de cabaña moderna (DSLR)
+  // He añadido un parámetro extra al final (?v=2) para engañar al caché
+  const fotoPortada = "https://images.unsplash.com/photo-1449156001437-3a1661dcda2e?q=80&w=2070&auto=format&v=2";
 
   const infoPropiedad = {
     titulo: "Casa en el Bosque",
@@ -22,7 +23,6 @@ function App() {
       
       <main>
         {!mostrarVisualizador ? (
-          /* --- LANDING PAGE: FICHA HORIZONTAL EDITORIAL --- */
           <div style={{ padding: '0 20px', display: 'flex', justifyContent: 'center' }}>
             
             <div style={{ 
@@ -34,20 +34,21 @@ function App() {
               flexWrap: 'wrap',
               boxShadow: '0 40px 80px rgba(0,0,0,0.06)',
               borderRadius: '0px',
-              border: '1px solid rgba(0,0,0,0.03)'
+              border: '1px solid rgba(0,0,0,0.03)',
+              overflow: 'hidden'
             }}>
               
-              {/* IMAGEN IZQUIERDA */}
               <div style={{ flex: '1.2', minWidth: '350px', height: '500px', overflow: 'hidden' }}>
                 <img 
                   src={fotoPortada} 
                   alt={infoPropiedad.titulo} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  onError={(e) => { e.target.src = "https://plus.unsplash.com/premium_photo-1686090450800-d6ca456243c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"; }}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  onError={(e) => { 
+                    e.target.src = "https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=2070"; 
+                  }}
                 />
               </div>
 
-              {/* CONTENIDO DERECHO */}
               <div style={{ 
                 flex: '1', 
                 padding: '70px 60px', 
@@ -60,7 +61,6 @@ function App() {
                   Casa en <br /> el Bosque
                 </h1>
                 
-                {/* FICHA TÉCNICA RESUMIDA (Ubicación, Agente e ID) */}
                 <div style={{ 
                   display: 'flex', 
                   flexDirection: 'column', 
@@ -88,7 +88,6 @@ function App() {
             </div>
           </div>
         ) : (
-          /* --- VISUALIZADOR INTERACTIVO --- */
           <PropertyVisualizer alRegresar={() => setMostrarVisualizador(false)} />
         )}
       </main>
