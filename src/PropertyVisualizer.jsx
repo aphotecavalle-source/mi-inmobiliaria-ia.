@@ -7,7 +7,6 @@ import {
   Image as ImageIcon, 
   Play, 
   ChevronRight, 
-  Sparkles,
   Info,
   X,
   Hash
@@ -26,7 +25,7 @@ const PropertyVisualizer = () => {
   const propertyData = {
     title: "Casa en el Bosque",
     location: "Valle de Bravo, México",
-    refId: "VDB-10524", // Número de propiedad
+    refId: "VDB-10524",
     precio: "$14,500,000 MXN",
     detalles: {
       terreno: "1,200 m²",
@@ -72,7 +71,7 @@ const PropertyVisualizer = () => {
   const [viewMode, setViewMode] = useState('images');
 
   const handleWhatsApp = () => {
-    const message = encodeURIComponent(`Hola ${brandConfig.agentName}, me interesa la propiedad "${propertyData.title}" (ID: ${propertyData.refId}) que vi en el visualizador.`);
+    const message = encodeURIComponent(`Hola ${brandConfig.agentName}, me interesa la propiedad "${propertyData.title}" (ID: ${propertyData.refId}).`);
     window.open(`https://wa.me/${brandConfig.agentPhone}?text=${message}`, '_blank');
   };
 
@@ -135,7 +134,7 @@ const PropertyVisualizer = () => {
         className="fixed bottom-6 right-6 z-[100] flex items-center gap-3 text-white px-6 py-4 rounded-full shadow-2xl"
       >
         <MessageCircle size={20} fill="currentColor" />
-        <span className="font-bold text-[10px] tracking-widest">WHATSAPP AGENTE</span>
+        <span className="font-bold text-[10px] tracking-widest uppercase">WhatsApp Agente</span>
       </motion.button>
 
       <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 p-6">
@@ -224,18 +223,11 @@ const PropertyVisualizer = () => {
               >
                 <div className="mb-4 text-center">
                   <p className="text-[9px] font-bold tracking-[0.3em] text-stone-400 uppercase">
-                    Desliza para ver el estado actual
+                    Desliza para ver el estado actual de la propiedad
                   </p>
                 </div>
                 
                 <div className="relative overflow-hidden h-[400px] md:h-[650px]">
-                  <div className="absolute top-6 right-6 z-10 bg-black/40 backdrop-blur-md text-white px-5 py-2 text-[9px] font-black tracking-widest uppercase">
-                    ESTADO ACTUAL
-                  </div>
-                  <div style={{ backgroundColor: 'var(--color-arena)' }} className="absolute top-6 left-6 z-10 text-white px-5 py-2 text-[9px] font-black tracking-widest shadow-lg uppercase flex items-center gap-2">
-                    <Sparkles size={12} /> PROPUESTA STAGING
-                  </div>
-                  
                   <ReactCompareSlider
                     position={0}
                     itemOne={<ReactCompareSliderImage src={activeRoom.before} />}
@@ -257,8 +249,9 @@ const PropertyVisualizer = () => {
         </section>
       </main>
 
+      {/* FOOTER ACTUALIZADO CON TU NOMBRE */}
       <footer className="text-center p-20 text-stone-400 text-[9px] font-bold tracking-[0.3em] uppercase">
-        © 2026 {brandConfig.agentName}
+        © 2026 MARIANA HAGERMAN
       </footer>
     </div>
   );
