@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+  import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   MessageCircle, 
@@ -33,7 +33,7 @@ const PropertyVisualizer = () => {
       recamaras: "4",
       baños: "4.5",
       estacionamientos: "3",
-      descripcion: "Residencia de lujo con acabados naturales, vistas panorámicas al bosque y diseño de iluminación inteligente. Espacios abiertos que integran el interior con la naturaleza."
+      descripcion: "Residencia de lujo con acabados naturales, vistas panorámicas al bosque y diseño de iluminación inteligente."
     },
     rooms: [
       {
@@ -76,7 +76,7 @@ const PropertyVisualizer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#e2ede7] text-[#2a2a2a]" style={{ fontFamily: 'var(--fuente-sans)' }}>
+    <div className="min-h-screen bg-[#e2ede7] text-[#2a2a2a] pb-32" style={{ fontFamily: 'var(--fuente-sans)' }}>
       
       {/* MODAL FICHA TÉCNICA */}
       <AnimatePresence>
@@ -109,21 +109,20 @@ const PropertyVisualizer = () => {
         )}
       </AnimatePresence>
 
-      {/* Botón WhatsApp */}
+      {/* BOTÓN WHATSAPP - Ajustado para no encimarse */}
       <motion.button
         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
         onClick={handleWhatsApp}
         style={{ backgroundColor: 'var(--color-arena)' }}
-        className="fixed bottom-6 right-6 z-[100] flex items-center gap-3 text-white px-6 py-4 rounded-full shadow-2xl"
+        className="fixed bottom-10 right-10 z-[100] flex items-center gap-3 text-white px-8 py-5 rounded-full shadow-2xl"
       >
         <MessageCircle size={20} fill="currentColor" />
-        <span className="font-bold text-[10px] tracking-widest uppercase">WhatsApp Agente</span>
+        <span className="font-bold text-[11px] tracking-widest uppercase">Contactar Agente</span>
       </motion.button>
 
       <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 p-6">
-        <div className="max-w-6xl mx-auto flex flex-col gap-6">
+        <div className="max-w-5xl mx-auto flex flex-col gap-6">
           
-          {/* LÍNEA SUPERIOR: Agente, ID y Ficha */}
           <div className="flex flex-wrap items-center gap-4 md:gap-8 text-[10px] font-bold tracking-[0.2em] uppercase border-b border-stone-50 pb-4">
             <div className="flex items-center" style={{ color: 'var(--color-arena)' }}>
               <User size={12} className="mr-2" /> {brandConfig.agentName}
@@ -139,11 +138,10 @@ const PropertyVisualizer = () => {
             </button>
           </div>
 
-          {/* LÍNEA PRINCIPAL: Título y Controles */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
-              <h1 className="editorial-text text-4xl md:text-5xl mb-1">{propertyData.title}</h1>
-              <p className="flex items-center text-stone-400 text-[10px] font-bold tracking-widest uppercase">
+              <h1 className="editorial-text text-3xl md:text-4xl mb-1">{propertyData.title}</h1>
+              <p className="flex items-center text-stone-400 text-[9px] font-bold tracking-widest uppercase">
                 <MapPin size={10} className="mr-2" /> {propertyData.location}
               </p>
             </div>
@@ -151,7 +149,7 @@ const PropertyVisualizer = () => {
             <div className="flex bg-stone-100 p-1 border border-stone-200">
               <button 
                 onClick={() => setViewMode('images')}
-                className={`px-6 py-2.5 flex items-center text-[10px] tracking-widest ${
+                className={`px-5 py-2 flex items-center text-[9px] tracking-widest transition-all ${
                   viewMode === 'images' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'
                 }`}
                 style={{ color: viewMode === 'images' ? 'var(--color-arena)' : '' }}
@@ -160,7 +158,7 @@ const PropertyVisualizer = () => {
               </button>
               <button 
                 onClick={() => setViewMode('video')}
-                className={`px-6 py-2.5 flex items-center text-[10px] tracking-widest ${
+                className={`px-5 py-2 flex items-center text-[9px] tracking-widest transition-all ${
                   viewMode === 'video' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'
                 }`}
                 style={{ color: viewMode === 'video' ? 'var(--color-arena)' : '' }}
@@ -172,24 +170,24 @@ const PropertyVisualizer = () => {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-4 gap-12 mt-8">
+      <main className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-4 gap-8 mt-4">
         <aside className="order-2 lg:order-1 lg:col-span-1">
-          <h3 className="editorial-text text-2xl mb-6 text-stone-900">Explorar Espacios</h3>
+          <h3 className="editorial-text text-xl mb-6 text-stone-900">Espacios</h3>
           <div className="grid grid-cols-1 gap-2">
             {propertyData.rooms.map((room) => (
               <button
                 key={room.id}
                 onClick={() => { setActiveRoom(room); setViewMode('images'); }}
-                className={`w-full text-left p-5 transition-all border-b border-stone-200 ${
+                className={`w-full text-left p-4 transition-all border-b border-stone-200 ${
                   activeRoom.id === room.id ? 'bg-white shadow-sm' : 'bg-transparent'
                 }`}
               >
                 <div className="flex justify-between items-center">
-                  <span className={`text-[10px] tracking-widest uppercase ${activeRoom.id === room.id ? 'font-bold' : 'font-medium text-stone-400'}`}
+                  <span className={`text-[9px] tracking-widest uppercase ${activeRoom.id === room.id ? 'font-bold' : 'font-medium text-stone-400'}`}
                         style={{ color: activeRoom.id === room.id ? 'var(--color-arena)' : '' }}>
                     {room.name}
                   </span>
-                  <ChevronRight size={14} />
+                  <ChevronRight size={12} />
                 </div>
               </button>
             ))}
@@ -202,14 +200,15 @@ const PropertyVisualizer = () => {
               <motion.div 
                 key={activeRoom.id + "-img"}
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                className="bg-white p-2 shadow-2xl border border-stone-100"
+                className="bg-white p-2 shadow-xl border border-stone-100"
               >
                 <div className="mb-4 text-center">
                   <p className="text-[9px] font-bold tracking-[0.3em] text-stone-400 uppercase">
                     Desliza para ver el estado actual de la propiedad
                   </p>
                 </div>
-                <div className="relative overflow-hidden h-[400px] md:h-[650px]">
+                {/* VENTANA REDUCIDA: h-[300px] md:h-[480px] */}
+                <div className="relative overflow-hidden h-[300px] md:h-[480px]">
                   <ReactCompareSlider
                     position={0}
                     itemOne={<ReactCompareSliderImage src={activeRoom.before} />}
@@ -222,7 +221,7 @@ const PropertyVisualizer = () => {
               <motion.div 
                 key={activeRoom.id + "-vid"}
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                className="bg-stone-950 shadow-2xl overflow-hidden aspect-video border-[15px] border-white"
+                className="bg-stone-950 shadow-xl overflow-hidden aspect-video border-[10px] border-white"
               >
                 <video key={activeRoom.videoUrl} controls autoPlay className="w-full h-full object-cover" src={activeRoom.videoUrl} />
               </motion.div>
@@ -230,7 +229,6 @@ const PropertyVisualizer = () => {
           </AnimatePresence>
         </section>
       </main>
-      {/* QUITAMOS EL FOOTER DE AQUÍ PORQUE YA ESTÁ EN APP.JSX */}
     </div>
   );
 };
