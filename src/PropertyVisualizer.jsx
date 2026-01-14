@@ -9,15 +9,14 @@ import {
   ChevronRight, 
   Info,
   X,
-  ArrowLeft, // Ya no lo usaremos, pero lo dejo por si acaso
-  Maximize2 // <--- NUEVO ICONO PARA EL ZOOM
+  Hash,
+  Maximize2 // Icono para el zoom
 } from 'lucide-react';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
 
 const PropertyVisualizer = ({ alRegresar }) => {
   const [showFicha, setShowFicha] = useState(false);
-  // NUEVO ESTADO: Controla si el modal de zoom está abierto
-  const [showZoomModal, setShowZoomModal] = useState(false);
+  const [showZoomModal, setShowZoomModal] = useState(false); // Estado para el zoom
 
   const brandConfig = {
     agentName: "REBECA QUINTANILLA",
@@ -58,35 +57,26 @@ const PropertyVisualizer = ({ alRegresar }) => {
   return (
     <div className="min-h-screen bg-[#e2ede7] text-[#2a2a2a] pb-32" style={{ fontFamily: 'var(--fuente-sans)' }}>
       
-      {/* --- NUEVO: MODAL DE ZOOM (FOTO STAGING GRANDE) --- */}
+      {/* MODAL DE ZOOM (IMAGEN COMPLETA) */}
       <AnimatePresence>
         {showZoomModal && (
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[300] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
-            onClick={() => setShowZoomModal(false)} // Cierra al hacer clic fuera
+            className="fixed inset-0 z-[300] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setShowZoomModal(false)}
           >
-            <div className="relative w-full h-full flex items-center justify-center max-w-5xl mx-auto">
-               {/* Botón de cerrar el zoom */}
-               <button 
-                 onClick={() => setShowZoomModal(false)} 
-                 className="absolute top-4 right-4 text-white/80 hover:text-white bg-black/40 rounded-full p-2 transition-all"
-               >
-                 <X size={24} />
-               </button>
-               
-               {/* La imagen GRANDE (Solo mostramos la del 'after' / staging) */}
-               <motion.img 
-                 initial={{ scale: 0.9 }} animate={{ scale: 1 }}
-                 src={activeRoom.after} 
-                 alt={`${activeRoom.name} - Staging`}
-                 className="max-h-full max-w-full object-contain shadow-2xl"
-               />
-            </div>
+            <button className="absolute top-6 right-6 text-white/70 hover:text-white z-50">
+              <X size={32} />
+            </button>
+            <motion.img 
+              initial={{ scale: 0.9 }} animate={{ scale: 1 }}
+              src={activeRoom.after} 
+              className="max-h-full max-w-full object-contain shadow-2xl"
+              alt="Zoom Staging"
+            />
           </motion.div>
         )}
       </AnimatePresence>
-
 
       {/* MODAL FICHA TÉCNICA */}
       <AnimatePresence>
@@ -116,7 +106,7 @@ const PropertyVisualizer = ({ alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* BOTÓN WHATSAPP */}
+      {/* BOTÓN WHATSAPP MINIMALISTA */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -134,8 +124,6 @@ const PropertyVisualizer = ({ alRegresar }) => {
       <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 p-6">
         <div className="max-w-5xl mx-auto flex flex-col gap-6">
           <div className="flex flex-wrap items-center gap-4 md:gap-8 text-[10px] font-bold tracking-[0.2em] uppercase border-b border-stone-50 pb-4">
-            {/* CAMBIO 1: SE ELIMINÓ EL BOTÓN "VOLVER" DE AQUÍ */}
-            
             <div className="flex items-center" style={{ color: '#c5b097' }}><User size={12} className="mr-2" /> {brandConfig.agentName}</div>
             <div className="flex items-center text-stone-400 ml-auto gap-4">
               <Info size={12} /> 
@@ -144,15 +132,12 @@ const PropertyVisualizer = ({ alRegresar }) => {
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-left">
-            {/* CAMBIO 2: EL TÍTULO AHORA ES EL BOTÓN DE VOLVER */}
-            <div 
-              onClick={alRegresar} 
-              className="cursor-pointer group" // Cursor de mano y grupo para efecto hover
-            >
-              <h1 className="editorial-text text-3xl md:text-4xl mb-1 group-hover:opacity-70 transition-opacity">
+            {/* TÍTULO COMO BOTÓN DE REGRESO */}
+            <div onClick={alRegresar} className="cursor-pointer group">
+              <h1 className="editorial-text text-3xl md:text-4xl mb-1 group-hover:opacity-60 transition-opacity">
                 {propertyData.title}
               </h1>
-              <p className="flex items-center text-stone-400 text-[9px] font-bold tracking-widest uppercase group-hover:opacity-70 transition-opacity">
+              <p className="flex items-center text-stone-400 text-[9px] font-bold tracking-widest uppercase">
                 <MapPin size={10} className="mr-2" /> {propertyData.location}
               </p>
             </div>
@@ -168,7 +153,6 @@ const PropertyVisualizer = ({ alRegresar }) => {
       {/* CUERPO DE LA PÁGINA */}
       <main className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-4 gap-8 mt-4 text-left">
         
-        {/* ASIDE: ESPACIOS */}
         <aside className="order-2 lg:order-1 lg:col-span-1">
           <h3 className="editorial-text text-xl mb-6 text-stone-900">Espacios</h3>
           <div className="grid grid-cols-1 gap-2">
@@ -187,30 +171,25 @@ const PropertyVisualizer = ({ alRegresar }) => {
           </div>
         </aside>
 
-        {/* SECTION: VISUALIZADOR */}
         <section className="order-1 lg:order-2 lg:col-span-3">
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
-              // Agregamos 'relative' aquí para posicionar el botón de zoom
-              <motion.div key={activeRoom.id + "-img"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white p-2 shadow-xl border border-stone-100 relative">
+              <motion.div key={activeRoom.id + "-img"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white p-2 shadow-xl border border-stone-100 relative group">
                 
-                {/* --- NUEVO: BOTÓN DE ZOOM SOBRE LA IMAGEN --- */}
+                {/* BOTÓN DE MAXIMIZAR IMAGEN */}
                 <button 
                   onClick={() => setShowZoomModal(true)}
-                  className="absolute top-5 right-5 z-20 bg-white/90 text-stone-500 p-2 rounded-full hover:bg-white hover:text-[#c5b097] transition-all shadow-sm"
-                  title="Ampliar imagen de staging"
+                  className="absolute top-16 right-5 z-20 bg-white/80 p-2 rounded-full text-stone-500 hover:text-black shadow-md transition-all"
                 >
                   <Maximize2 size={18} />
                 </button>
 
-                {/* LETRERO FINO EDITORIAL */}
                 <div className="mb-4 text-center">
                   <p className="text-[9px] font-bold tracking-[0.3em] text-stone-400 uppercase italic">
                     Desliza para ver el estado actual de la propiedad
                   </p>
                 </div>
                 
-                {/* SLIDER */}
                 <div className="relative overflow-hidden aspect-video w-full bg-[#f8f8f8]">
                   <ReactCompareSlider 
                     position={0} 
@@ -229,4 +208,11 @@ const PropertyVisualizer = ({ alRegresar }) => {
         </section>
       </main>
 
-      {/* CAMBIO 3: FIRMA FINAL ELIMINADA,
+      {/* FOOTER LIMPIO SIN FIRMA */}
+      <footer className="mt-20 pb-12">
+      </footer>
+    </div>
+  );
+};
+
+export default PropertyVisualizer;
