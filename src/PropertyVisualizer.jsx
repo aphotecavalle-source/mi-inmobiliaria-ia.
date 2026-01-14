@@ -10,19 +10,19 @@ import {
   Info,
   X,
   Hash,
-  Smartphone,
-  ArrowLeft
+  Smartphone
 } from 'lucide-react';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
 
 const PropertyVisualizer = ({ alRegresar }) => {
   const [showFicha, setShowFicha] = useState(false);
   const [showRotateOverlay, setShowRotateOverlay] = useState(false);
-  const [isLandscape, setIsLandscape] = useState(false);
+  const [isMobileLandscape, setIsMobileLandscape] = useState(false);
 
   const brandConfig = {
     agentName: "REBECA QUINTANILLA",
     agentPhone: "525512345678", 
+    brandColor: "#c5b097", 
   };
 
   const propertyData = {
@@ -39,27 +39,30 @@ const PropertyVisualizer = ({ alRegresar }) => {
       descripcion: "Residencia de lujo con acabados naturales, vistas panorámicas al bosque y diseño de iluminación inteligente."
     },
     rooms: [
-      { id: 1, name: "Estancia Principal", before: "/fotopropiedades/Estancia1A.JPEG", after: "/fotopropiedades/estanciab2.JPEG", videoUrl: "/fotopropiedades/estancia.mp4" },
-      { id: 2, name: "Recámara", before: "/fotopropiedades/recamarab1.JPG", after: "/fotopropiedades/recamarab2.JPEG", videoUrl: "/fotopropiedades/recamara.mp4" },
-      { id: 3, name: "Terraza", before: "/fotopropiedades/Terraza1.JPG", after: "/fotopropiedades/Terraza2.JPEG", videoUrl: "/fotopropiedades/terraza.mp4" },
-      { id: 4, name: "Exteriores", before: "/fotopropiedades/exteriores1.JPEG", after: "/fotopropiedades/exteriores2.JPEG", videoUrl: "/fotopropiedades/family.mp4" }, 
-      { id: 5, name: "Cocina", before: "/fotopropiedades/exteriores1.JPEG", after: "/fotopropiedades/exteriores2.JPEG", videoUrl: "/fotopropiedades/family.mp4" }
+      { id: 1, name: "Estancia Principal", before: "/fotospropiedades/Estancia1A.JPEG", after: "/fotospropiedades/estanciab2.JPEG", videoUrl: "/fotospropiedades/estancia.mp4" },
+      { id: 2, name: "Recámara", before: "/fotospropiedades/recamarab1.JPG", after: "/fotospropiedades/recamarab2.JPEG", videoUrl: "/fotopropiedades/recamara.mp4" },
+      { id: 3, name: "Terraza", before: "/fotospropiedades/Terraza1.JPG", after: "/fotospropiedades/Terraza2.JPEG", videoUrl: "/fotospropiedades/terraza.mp4" },
+      { id: 4, name: "Exteriores", before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", videoUrl: "/fotospropiedades/family.mp4" }, 
+      { id: 5, name: "Cocina", before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", videoUrl: "/fotospropiedades/family.mp4" }
     ]
   };
 
   const [activeRoom, setActiveRoom] = useState(propertyData.rooms[0]);
   const [viewMode, setViewMode] = useState('images');
 
+  // DETECCIÓN DE DISPOSITIVO Y ORIENTACIÓN
   useEffect(() => {
-    const checkOrientation = () => {
-      const portrait = window.innerHeight > window.innerWidth;
-      const mobile = window.innerWidth < 1024;
-      setIsLandscape(!portrait && mobile);
-      setShowRotateOverlay(mobile && portrait);
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 1024;
+      const isPortrait = window.innerHeight > window.innerWidth;
+      
+      setShowRotateOverlay(isMobile && isPortrait);
+      setIsMobileLandscape(isMobile && !isPortrait);
     };
-    checkOrientation();
-    window.addEventListener('resize', checkOrientation);
-    return () => window.removeEventListener('resize', checkOrientation);
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handleWhatsApp = () => {
@@ -68,125 +71,147 @@ const PropertyVisualizer = ({ alRegresar }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#A3B1AA] text-white pb-20 relative font-sans transition-all duration-500">
+    <div className="min-h-screen bg-[#e2ede7] text-[#2a2a2a] pb-32 relative" style={{ fontFamily: 'var(--fuente-sans)' }}>
       
-      {/* OVERLAY DE GIRO */}
+      {/* AVISO DE GIRO (Solo en Celular Vertical) */}
       <AnimatePresence>
         {showRotateOverlay && (
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[300] bg-[#A3B1AA]/98 backdrop-blur-xl flex flex-col items-center justify-center text-center p-8"
+            className="fixed inset-0 z-[300] bg-[#e2ede7]/98 backdrop-blur-md flex flex-col items-center justify-center text-center p-8"
             onClick={() => setShowRotateOverlay(false)}
           >
-            <motion.div animate={{ rotate: 90 }} transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut", repeatType: "reverse" }} className="mb-8 opacity-80">
+            <motion.div animate={{ rotate: 90 }} transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut", repeatType: "reverse" }} className="mb-8 text-[#c5b097]">
               <Smartphone size={64} strokeWidth={1} />
             </motion.div>
-            <h3 className="font-serif italic text-3xl mb-4 text-white">Experiencia Editorial</h3>
-            <p className="text-[10px] tracking-[0.3em] uppercase opacity-60">Gira tu dispositivo para una vista completa</p>
+            <h3 className="editorial-text text-3xl mb-4">Mejor en horizontal</h3>
+            <p className="text-[10px] tracking-[0.2em] uppercase opacity-60">Gira tu dispositivo para apreciar los espacios</p>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* HEADER: Ultra-compacto en Horizontal */}
-      <header className={`bg-[#A3B1AA]/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10 transition-all duration-500 ${isLandscape ? 'p-3' : 'p-8 md:p-12'}`}>
-        <div className="max-w-7xl mx-auto flex flex-col gap-4">
-          
-          {/* Ocultamos info secundaria en horizontal */}
-          {!isLandscape && (
-            <div className="flex justify-between items-center text-[10px] tracking-[0.4em] uppercase opacity-70 border-b border-white/10 pb-6">
-              <button onClick={alRegresar} className="flex items-center gap-2 hover:opacity-50 transition-all">
-                <ArrowLeft size={14} /> Volver
-              </button>
-              <div className="flex items-center gap-8">
-                <span className="font-bold tracking-[0.5em]">{brandConfig.agentName}</span>
-                <span className="hidden md:block">ID: {propertyData.refId}</span>
+      {/* MODAL FICHA TÉCNICA */}
+      <AnimatePresence>
+        {showFicha && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setShowFicha(false)}
+          >
+            <motion.div 
+              initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }}
+              className="bg-white p-10 max-w-lg w-full shadow-2xl relative"
+              style={{ borderRadius: '0px' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button onClick={() => setShowFicha(false)} className="absolute top-4 right-4 text-stone-400 hover:text-black"><X size={24} /></button>
+              <h2 className="editorial-text text-3xl mb-2">{propertyData.title}</h2>
+              <p className="text-[#c5b097] font-bold text-xl mb-6">{propertyData.precio}</p>
+              <div className="grid grid-cols-2 gap-6 mb-8 border-y border-stone-100 py-6 text-sm">
+                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Terreno</p>{propertyData.detalles.terreno}</div>
+                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Construcción</p>{propertyData.detalles.construccion}</div>
+                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Habitaciones</p>{propertyData.detalles.recamaras}</div>
+                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Baños</p>{propertyData.detalles.baños}</div>
               </div>
+              <p className="text-sm text-stone-500 italic leading-relaxed">"{propertyData.detalles.descripcion}"</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* BOTÓN WHATSAPP */}
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        onClick={handleWhatsApp}
+        style={{ backgroundColor: 'var(--color-arena)', borderRadius: '0px' }}
+        className={`fixed z-[100] flex items-center gap-3 text-white shadow-2xl transition-all ${isMobileLandscape ? 'bottom-4 right-4 p-4' : 'bottom-10 right-10 px-8 py-5'}`}
+      >
+        <MessageCircle size={20} fill="currentColor" />
+        {!isMobileLandscape && <span className="font-bold text-[11px] tracking-widest uppercase">Contactar Agente</span>}
+      </motion.button>
+
+      {/* HEADER: Original en PC, Compacto en Celular Horizontal */}
+      <header className={`bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 transition-all ${isMobileLandscape ? 'p-2' : 'p-6'}`}>
+        <div className="max-w-5xl mx-auto flex flex-col gap-6">
+          
+          {/* Ocultar franja superior solo en horizontal de móvil */}
+          {!isMobileLandscape && (
+            <div className="flex flex-wrap items-center gap-4 md:gap-8 text-[10px] font-bold tracking-[0.2em] uppercase border-b border-stone-50 pb-4">
+              <div className="flex items-center" style={{ color: 'var(--color-arena)' }}><User size={12} className="mr-2" /> {brandConfig.agentName}</div>
+              <div className="flex items-center text-stone-400"><Hash size={12} className="mr-1" /> ID: {propertyData.refId}</div>
+              <button onClick={() => setShowFicha(true)} className="flex items-center gap-2 text-stone-600 hover:text-black transition-colors ml-auto"><Info size={12} /> FICHA TÉCNICA</button>
             </div>
           )}
 
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-4">
-              {isLandscape && (
-                <button onClick={alRegresar} className="p-2 mr-2 opacity-70">
-                  <ArrowLeft size={20} />
-                </button>
-              )}
-              <h1 className={`font-serif italic leading-none ${isLandscape ? 'text-2xl' : 'text-4xl md:text-7xl'}`}>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div className="group cursor-pointer" onClick={alRegresar}>
+              <h1 className={`editorial-text mb-1 group-hover:opacity-60 transition-opacity ${isMobileLandscape ? 'text-xl' : 'text-3xl md:text-4xl'}`}>
                 {propertyData.title}
               </h1>
+              {!isMobileLandscape && (
+                <p className="flex items-center text-stone-400 text-[9px] font-bold tracking-widest uppercase">
+                  <MapPin size={10} className="mr-2" /> {propertyData.location}
+                </p>
+              )}
             </div>
             
-            <div className={`flex bg-white/10 p-1 border border-white/20 backdrop-blur-sm ${isLandscape ? 'scale-90' : ''}`}>
-              <button onClick={() => setViewMode('images')} className={`px-4 md:px-8 py-2 md:py-3 text-[9px] md:text-[10px] tracking-[0.3em] transition-all ${viewMode === 'images' ? 'bg-white text-[#A3B1AA] font-bold' : 'text-white'}`}>FOTOGRAFÍA</button>
-              <button onClick={() => setViewMode('video')} className={`px-4 md:px-8 py-2 md:py-3 text-[9px] md:text-[10px] tracking-[0.3em] transition-all ${viewMode === 'video' ? 'bg-white text-[#A3B1AA] font-bold' : 'text-white'}`}>VIDEO</button>
+            <div className={`flex bg-stone-100 p-1 border border-stone-200 ${isMobileLandscape ? 'scale-75 origin-right' : ''}`}>
+              <button onClick={() => setViewMode('images')} className={`px-5 py-2 flex items-center text-[9px] tracking-widest ${viewMode === 'images' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'}`} style={{ color: viewMode === 'images' ? 'var(--color-arena)' : '' }}><ImageIcon size={14} className="mr-2" /> FOTOS</button>
+              <button onClick={() => setViewMode('video')} className={`px-5 py-2 flex items-center text-[9px] tracking-widest ${viewMode === 'video' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'}`} style={{ color: viewMode === 'video' ? 'var(--color-arena)' : '' }}><Play size={14} className="mr-2" /> VIDEO</button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* CONTENIDO PRINCIPAL */}
-      <main className={`max-w-7xl mx-auto flex flex-col gap-4 transition-all ${isLandscape ? 'p-2' : 'p-8 md:p-12'}`}>
+      {/* CONTENIDO PRINCIPAL: Grid original en PC, Ajustado en móvil horizontal */}
+      <main className={`max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8 transition-all ${isMobileLandscape ? 'p-2' : 'p-6 mt-4'}`}>
         
-        {/* VISUALIZADOR */}
-        <div className={`w-full overflow-hidden shadow-2xl relative ${isLandscape ? 'h-[60vh]' : 'aspect-video'}`}>
-          <AnimatePresence mode="wait">
-            {viewMode === 'images' ? (
-              <motion.div key={activeRoom.id + "-img"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full w-full bg-white/5">
-                <ReactCompareSlider 
-                  position={50} 
-                  itemOne={<ReactCompareSliderImage src={activeRoom.before} style={{ objectFit: 'contain' }} />} 
-                  itemTwo={<ReactCompareSliderImage src={activeRoom.after} style={{ objectFit: 'contain' }} />} 
-                  className="h-full w-full" 
-                />
-              </motion.div>
-            ) : (
-              <motion.div key={activeRoom.id + "-vid"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full w-full bg-black">
-                <video key={activeRoom.videoUrl} controls autoPlay muted playsInline className="w-full h-full object-contain" src={activeRoom.videoUrl} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* NAVEGACIÓN DE ESPACIOS: En horizontal es una cinta scrollable */}
-        <div className={`w-full ${isLandscape ? 'overflow-x-auto py-2' : 'mt-8'}`}>
-          <div className={`${isLandscape ? 'flex flex-row gap-2 px-2 min-w-max' : 'grid grid-cols-1 md:grid-cols-5 gap-4'}`}>
-            {isLandscape && <span className="text-[8px] uppercase tracking-widest opacity-40 flex items-center mr-2">Espacios:</span>}
+        {/* ASIDE: BARRA LATERAL (PC) vs CINTA HORIZONTAL (Móvil Landscape) */}
+        <aside className={`${isMobileLandscape ? 'order-2 overflow-x-auto py-2' : 'order-2 lg:order-1 lg:col-span-1'}`}>
+          <h3 className={`editorial-text mb-6 text-stone-900 ${isMobileLandscape ? 'hidden' : 'text-xl'}`}>Espacios</h3>
+          <div className={`${isMobileLandscape ? 'flex flex-row gap-2' : 'grid grid-cols-1 gap-2'}`}>
             {propertyData.rooms.map((room) => (
               <button 
                 key={room.id} 
-                onClick={() => setActiveRoom(room)}
-                className={`text-left py-4 px-6 border transition-all ${isLandscape ? 'border-white/10' : 'border-white/10'} ${activeRoom.id === room.id ? 'bg-white text-[#A3B1AA] font-bold border-white' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}
+                onClick={() => { setActiveRoom(room); setViewMode('images'); }} 
+                className={`text-left p-4 transition-all border-b border-stone-200 ${activeRoom.id === room.id ? 'bg-white shadow-sm font-bold' : 'bg-transparent text-stone-400'} ${isMobileLandscape ? 'whitespace-nowrap px-6' : 'w-full'}`}
               >
                 <div className="flex justify-between items-center gap-4">
-                  <span className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase whitespace-nowrap">{room.name}</span>
-                  {!isLandscape && <ChevronRight size={14} className={activeRoom.id === room.id ? 'opacity-100' : 'opacity-0'} />}
+                  <span className="text-[9px] tracking-widest uppercase" style={{ color: activeRoom.id === room.id ? 'var(--color-arena)' : '' }}>{room.name}</span>
+                  {!isMobileLandscape && <ChevronRight size={12} />}
                 </div>
               </button>
             ))}
           </div>
-        </div>
+        </aside>
 
-        {/* INFO ADICIONAL (Solo visible si no es horizontal para ahorrar espacio) */}
-        {!isLandscape && (
-          <div className="mt-12 flex flex-col md:flex-row justify-between items-center gap-8 opacity-40">
-             <button onClick={() => setShowFicha(true)} className="flex items-center gap-3 text-[10px] tracking-[0.4em] uppercase font-bold border border-white/30 px-6 py-3 hover:bg-white hover:text-[#A3B1AA] transition-all">
-               <Info size={14} /> Detalles Técnicos
-             </button>
-             <p className="text-[9px] tracking-[0.8em] uppercase">Curated interior design by M Hagerman</p>
-          </div>
-        )}
+        {/* SECTION: VISUALIZADOR (Toma el alto necesario en PC, se ajusta en móvil) */}
+        <section className={`order-1 lg:order-2 lg:col-span-3`}>
+          <AnimatePresence mode="wait">
+            {viewMode === 'images' ? (
+              <motion.div key={activeRoom.id + "-img"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white p-2 shadow-xl border border-stone-100">
+                {!isMobileLandscape && (
+                  <div className="mb-4 text-center">
+                    <p className="text-[9px] font-bold tracking-[0.3em] text-stone-400 uppercase italic">Desliza para visualizar</p>
+                  </div>
+                )}
+                <div className={`relative overflow-hidden w-full ${isMobileLandscape ? 'h-[65vh]' : 'h-[300px] md:h-[480px]'}`}>
+                  <ReactCompareSlider 
+                    position={50} 
+                    itemOne={<ReactCompareSliderImage src={activeRoom.before} style={{ objectFit: 'contain' }} />} 
+                    itemTwo={<ReactCompareSliderImage src={activeRoom.after} style={{ objectFit: 'contain' }} />} 
+                    className="h-full w-full" 
+                  />
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div key={activeRoom.id + "-vid"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={`bg-stone-950 shadow-xl overflow-hidden aspect-video border-white ${isMobileLandscape ? 'h-[65vh]' : 'border-[10px]'}`}>
+                <video key={activeRoom.videoUrl} controls autoPlay muted playsInline className="w-full h-full object-contain" src={activeRoom.videoUrl} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </section>
       </main>
-
-      {/* BOTÓN WHATSAPP: Más discreto en Horizontal */}
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        onClick={handleWhatsApp}
-        className={`fixed z-[100] flex items-center gap-3 bg-white text-[#A3B1AA] shadow-2xl transition-all ${isLandscape ? 'bottom-4 right-4 p-3 rounded-full' : 'bottom-10 right-10 px-8 py-5 rounded-none'}`}
-      >
-        <MessageCircle size={20} fill="currentColor" />
-        {!isLandscape && <span className="font-bold text-[11px] tracking-widest uppercase">Contactar</span>}
-      </motion.button>
-
     </div>
   );
 };
