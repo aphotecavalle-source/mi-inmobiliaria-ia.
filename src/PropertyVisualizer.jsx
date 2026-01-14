@@ -17,6 +17,9 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   
   const [activeRoom, setActiveRoom] = useState(propertyData?.rooms?.[0] || null);
 
+  // NUEVO COLOR: Verde Musgo Elegante (#6b705c)
+  const mainColor = "#6b705c";
+
   const handleWhatsApp = () => {
     const message = encodeURIComponent(`Hola, me interesa la propiedad "${propertyData.title}" (ID: ${propertyData.refId}).`);
     window.open(`https://wa.me/${propertyData.agentPhone}?text=${message}`, '_blank');
@@ -44,7 +47,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                 <X size={24} />
               </button>
               <h2 className="editorial-text text-3xl mb-2">{propertyData.title}</h2>
-              <p className="text-[#c5b097] font-bold text-xl mb-6">{propertyData.precio}</p>
+              <p style={{ color: mainColor }} className="font-bold text-xl mb-6">{propertyData.precio}</p>
               <div className="grid grid-cols-2 gap-6 mb-8 border-y border-stone-100 py-6 text-sm">
                 <div><p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">Terreno</p>{propertyData.detalles?.terreno}</div>
                 <div><p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">Construcción</p>{propertyData.detalles?.construccion}</div>
@@ -61,7 +64,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
       <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 p-6">
         <div className="max-w-5xl mx-auto flex flex-col gap-6">
           <div className="flex items-center text-[11px] font-bold tracking-widest uppercase border-b border-stone-50 pb-4">
-             <span style={{ color: '#c5b097' }}>{propertyData.agentName}</span>
+             <span style={{ color: mainColor }}>{propertyData.agentName}</span>
              <button onClick={() => setShowFicha(true)} className="ml-auto flex items-center gap-2 text-stone-500 hover:text-black transition-colors">
                <Info size={14} /> FICHA TÉCNICA
              </button>
@@ -76,8 +79,8 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               </p>
             </div>
             <div className="flex bg-stone-100 p-1 border border-stone-200">
-              <button onClick={() => setViewMode('images')} className={`px-5 py-2 text-[10px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#c5b097]' : 'text-stone-400'}`}>FOTOS</button>
-              <button onClick={() => setViewMode('video')} className={`px-5 py-2 text-[10px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#c5b097]' : 'text-stone-400'}`}>VIDEO</button>
+              <button onClick={() => setViewMode('images')} className={`px-5 py-2 text-[10px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold' : 'text-stone-400'}`} style={viewMode === 'images' ? { color: mainColor } : {}}>FOTOS</button>
+              <button onClick={() => setViewMode('video')} className={`px-5 py-2 text-[10px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold' : 'text-stone-400'}`} style={viewMode === 'video' ? { color: mainColor } : {}}>VIDEO</button>
             </div>
           </div>
         </div>
@@ -86,7 +89,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
       {/* --- CONTENIDO --- */}
       <main className="max-w-6xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-4 gap-8 mt-4">
         
-        {/* ASIDE - ESPACIOS */}
         <aside className="order-2 lg:order-1 lg:col-span-1">
           <h3 className="editorial-text text-2xl mb-6 text-stone-800">Espacios</h3>
           <div className="grid grid-cols-1 gap-2">
@@ -94,7 +96,8 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               <button 
                 key={room.id} 
                 onClick={() => { setActiveRoom(room); setViewMode('images'); }} 
-                className={`w-full text-left p-4 border-b border-stone-200 transition-all ${activeRoom.id === room.id ? 'bg-white shadow-sm font-bold text-[#c5b097]' : 'text-stone-600 hover:text-stone-900'}`}
+                className={`w-full text-left p-4 border-b border-stone-200 transition-all ${activeRoom.id === room.id ? 'bg-white shadow-sm font-bold' : 'text-stone-600 hover:text-stone-900'}`}
+                style={activeRoom.id === room.id ? { color: mainColor } : {}}
               >
                 <div className="flex justify-between items-center">
                   <span className="text-[12px] tracking-widest uppercase font-medium">{room.name}</span>
@@ -105,23 +108,22 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
           </div>
         </aside>
 
-        {/* SECCIÓN VISUALIZADOR */}
         <section className="order-1 lg:order-2 lg:col-span-3">
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
               <motion.div key={activeRoom.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white p-2 shadow-xl border relative">
                 
-                {/* BOTÓN ZOOM (MUEVO A LA IZQUIERDA) */}
                 <button 
                   onClick={() => setShowZoomModal(true)} 
-                  // Cambié 'right-5' por 'left-5' aquí abajo:
-                  className="absolute top-16 left-5 z-20 bg-white/80 p-2 rounded-full shadow-md hover:text-[#c5b097] transition-all"
+                  className="absolute top-16 left-5 z-20 bg-white/80 p-2 rounded-full shadow-md transition-all"
+                  style={{ color: mainColor }}
                 >
                   <Maximize2 size={18} />
                 </button>
                 
-                <p className="text-[11px] text-center mb-4 text-[#c5b097] font-bold tracking-[0.2em] uppercase">
-                  ← Aquí podrías vivir
+                {/* NUEVA FRASE Y COLOR */}
+                <p className="text-[11px] text-center mb-4 font-bold tracking-[0.2em] uppercase" style={{ color: mainColor }}>
+                  ← Un espacio pensado para ti
                 </p>
 
                 <div className="relative aspect-video w-full bg-[#f8f8f8]">
@@ -146,8 +148,8 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </section>
       </main>
 
-      {/* WHATSAPP */}
-      <button onClick={handleWhatsApp} style={{ backgroundColor: '#c5b097' }} className="fixed bottom-6 right-6 z-[100] text-white p-4 md:px-8 md:py-5 shadow-2xl flex items-center gap-3 active:scale-95 transition-transform">
+      {/* WHATSAPP CON NUEVO COLOR */}
+      <button onClick={handleWhatsApp} style={{ backgroundColor: mainColor }} className="fixed bottom-6 right-6 z-[100] text-white p-4 md:px-8 md:py-5 shadow-2xl flex items-center gap-3 active:scale-95 transition-transform">
         <MessageCircle size={22} fill="currentColor" /> 
         <span className="hidden md:inline font-bold text-[11px] tracking-widest uppercase">Contactar Agente</span>
       </button>
