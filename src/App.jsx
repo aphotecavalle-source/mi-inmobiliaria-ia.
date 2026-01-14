@@ -6,8 +6,8 @@ import PropertyVisualizer from './PropertyVisualizer';
 function App() {
   const [mostrarVisualizador, setMostrarVisualizador] = useState(false);
 
-  // ESTA ES LA URL DE LA CABAÑA NUEVA (Verificada)
-  const fotoPortada = "/fotospropiedades/caratula.JPEG";
+  // CORRECCIÓN: Usamos 'fotopropiedades' para coincidir con tu carpeta en GitHub
+  const fotoPortada = "/fotopropiedades/caratula.JPEG";
 
   const infoPropiedad = {
     titulo: "Casa en el Bosque",
@@ -37,14 +37,12 @@ function App() {
               overflow: 'hidden'
             }}>
               
+              {/* IMAGEN DE PORTADA CON LA RUTA CORREGIDA */}
               <div style={{ flex: '1.2', minWidth: '350px', height: '500px', overflow: 'hidden' }}>
                 <img 
                   src={fotoPortada} 
                   alt={infoPropiedad.titulo} 
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  onError={(e) => { 
-                    e.target.src = "/fotospropiedades/caratula.JPEG"; 
-                  }}
                 />
               </div>
 
