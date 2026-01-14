@@ -18,14 +18,14 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   
   const [activeRoom, setActiveRoom] = useState(propertyData?.rooms?.[0] || null);
 
-  const mainColor = "#87947c"; // Sage
+  const mainColor = "#87947c"; // Muted Sage
 
   const handleWhatsApp = () => {
     const message = encodeURIComponent(`Hola, me interesa la propiedad "${propertyData.title}" (ID: ${propertyData.refId}).`);
     window.open(`https://wa.me/${propertyData.agentPhone}?text=${message}`, '_blank');
   };
 
-  if (!activeRoom) return <div className="p-20 text-center text-stone-400 font-bold tracking-widest">CARGANDO...</div>;
+  if (!activeRoom) return <div className="p-20 text-center text-stone-400 font-bold tracking-widest uppercase">Cargando...</div>;
 
   return (
     <div className="min-h-screen bg-[#f8faf9] text-[#2a2a2a] pb-32 relative text-left" style={{ fontFamily: 'var(--fuente-sans)' }}>
@@ -50,12 +50,12 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* HEADER - DISEÑO EDITORIAL */}
+      {/* HEADER */}
       <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 p-6 md:px-12 md:py-8">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
             <div onClick={alRegresar} className="cursor-pointer group flex-1">
-              <h1 className="editorial-text text-5xl md:text-7xl group-hover:opacity-60 transition-opacity uppercase tracking-tighter leading-none mb-4">
+              <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity uppercase tracking-tight leading-tight mb-4">
                 {propertyData.title}
               </h1>
               
@@ -68,7 +68,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               </div>
             </div>
 
-            <div className="flex flex-col items-end gap-6 w-full md:w-auto">
+            <div className="flex flex-col items-end gap-5 w-full md:w-auto">
               <button onClick={() => setShowFicha(true)} className="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase text-stone-500 hover:text-black transition-colors">
                  <Info size={14} /> FICHA TÉCNICA
               </button>
@@ -82,10 +82,9 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </div>
       </header>
 
-      {/* CONTENIDO PRINCIPAL - VISUALIZADOR MÁS GRANDE */}
+      {/* CONTENIDO PRINCIPAL */}
       <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-8 mt-6">
         
-        {/* ESPACIOS (OCUPA 1/5) */}
         <aside className="order-2 lg:order-1 lg:col-span-1">
           <h3 className="editorial-text text-xl mb-6 text-stone-800">Espacios</h3>
           <div className="grid grid-cols-1 gap-1">
@@ -105,7 +104,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
           </div>
         </aside>
 
-        {/* VISUALIZADOR (OCUPA 4/5) */}
         <section className="order-1 lg:order-2 lg:col-span-4">
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
@@ -135,17 +133,17 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </section>
       </main>
 
-      {/* BOTÓN WHATSAPP - MÁS DELGADO Y FINO */}
+      {/* BOTÓN CONTACTAR - DELGADO Y FINO */}
       <button 
         onClick={handleWhatsApp} 
         style={{ backgroundColor: mainColor }} 
-        className="fixed bottom-8 right-8 z-[100] text-white py-4 px-8 shadow-xl flex items-center gap-3 active:scale-95 transition-all hover:brightness-90 tracking-[0.15em] font-medium text-[11px] uppercase rounded-none"
+        className="fixed bottom-8 right-8 z-[100] text-white py-3.5 px-8 shadow-xl flex items-center gap-3 active:scale-95 transition-all hover:brightness-90 tracking-[0.15em] font-medium text-[10px] uppercase rounded-none"
       >
-        <MessageCircle size={20} fill="currentColor" /> 
+        <MessageCircle size={18} fill="currentColor" /> 
         <span className="hidden md:inline">Contactar Agente</span>
       </button>
 
-      {/* ZOOM MODAL */}
+      {/* MODAL ZOOM */}
       <AnimatePresence>
         {showZoomModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/95 flex items-center justify-center p-4" onClick={() => setShowZoomModal(false)}>
