@@ -37,8 +37,8 @@ const PropertyVisualizer = ({ alRegresar }) => {
       descripcion: "Residencia de lujo con acabados naturales, vistas panorámicas al bosque y diseño de iluminación inteligente."
     },
    rooms: [
-      { id: 1, name: "Estancia Principal", before: "/fotopropiedades/Estancia1A.JPEG", after: "/fotopropiedades/Estancia2.JPEG", videoUrl: "/fotospropiedades/estancia.mp4" },
-      { id: 2, name: "Recámara", before: "/fotospropiedades/a1.jpg", after: "/fotospropiedades/recamara2.JPG", videoUrl: "/fotopropiedades/recamara.mp4" },
+      { id: 1, name: "Estancia Principal", before: "/fotopropiedades/Estancia1A.JPEG", after: "/fotopropiedades/estancia2.JPEG", videoUrl: "/fotospropiedades/estancia.mp4" },
+      { id: 2, name: "Recámara", before: "/fotospropiedades/recamarab1.JPG", after: "/fotospropiedades/recamarab2.JPEG", videoUrl: "/fotopropiedades/recamara.mp4" },
       { id: 3, name: "Terraza", before: "/fotospropiedades/Terraza1.JPG", after: "/fotospropiedades/Terraza2.JPEG", videoUrl: "/fotospropiedades/terraza.mp4" },
       { id: 4, name: "Exteriores", before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", videoUrl: "/fotospropiedades/family.mp4" }, // <-- AGREGUÉ ESTA COMA
       { id: 5, name: "Cocina", before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", videoUrl: "/fotospropiedades/family.mp4" }
