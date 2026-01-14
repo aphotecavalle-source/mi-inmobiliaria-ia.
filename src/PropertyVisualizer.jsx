@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // <--- Novedad: useEffect añadido
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   MessageCircle, 
@@ -9,13 +9,16 @@ import {
   ChevronRight, 
   Info,
   X,
-  Hash
+  Hash,
+  Smartphone // <--- Novedad: Icono para el giro
 } from 'lucide-react';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
 
 /* RECIBIMOS LA PROPIEDAD 'alRegresar' */
 const PropertyVisualizer = ({ alRegresar }) => {
   const [showFicha, setShowFicha] = useState(false);
+  // Novedad: Estado para el aviso de giro
+  const [showRotateOverlay, setShowRotateOverlay] = useState(false);
 
   const brandConfig = {
     agentName: "REBECA QUINTANILLA",
@@ -36,11 +39,11 @@ const PropertyVisualizer = ({ alRegresar }) => {
       estacionamientos: "3",
       descripcion: "Residencia de lujo con acabados naturales, vistas panorámicas al bosque y diseño de iluminación inteligente."
     },
-   rooms: [
+    rooms: [
       { id: 1, name: "Estancia Principal", before: "/fotospropiedades/Estancia1A.JPEG", after: "/fotospropiedades/estanciab2.JPEG", videoUrl: "/fotospropiedades/estancia.mp4" },
       { id: 2, name: "Recámara", before: "/fotospropiedades/recamarab1.JPG", after: "/fotospropiedades/recamarab2.JPEG", videoUrl: "/fotopropiedades/recamara.mp4" },
       { id: 3, name: "Terraza", before: "/fotospropiedades/Terraza1.JPG", after: "/fotospropiedades/Terraza2.JPEG", videoUrl: "/fotospropiedades/terraza.mp4" },
-      { id: 4, name: "Exteriores", before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", videoUrl: "/fotospropiedades/family.mp4" }, // <-- AGREGUÉ ESTA COMA
+      { id: 4, name: "Exteriores", before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", videoUrl: "/fotospropiedades/family.mp4" }, 
       { id: 5, name: "Cocina", before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", videoUrl: "/fotospropiedades/family.mp4" }
     ]
   };
@@ -48,14 +51,47 @@ const PropertyVisualizer = ({ alRegresar }) => {
   const [activeRoom, setActiveRoom] = useState(propertyData.rooms[0]);
   const [viewMode, setViewMode] = useState('images');
 
+  // --- Novedad: Lógica de detección de orientación ---
+  useEffect(() => {
+    const checkOrientation = () => {
+      const isMobile = window.innerWidth < 768;
+      const isPortrait = window.innerHeight > window.innerWidth;
+      setShowRotateOverlay(isMobile && isPortrait);
+    };
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+    return () => window.removeEventListener('resize', checkOrientation);
+  }, []);
+
   const handleWhatsApp = () => {
     const message = encodeURIComponent(`Hola ${brandConfig.agentName}, me interesa la propiedad "${propertyData.title}" (ID: ${propertyData.refId}).`);
     window.open(`https://wa.me/${brandConfig.agentPhone}?text=${message}`, '_blank');
   };
 
   return (
-    <div className="min-h-screen bg-[#e2ede7] text-[#2a2a2a] pb-32" style={{ fontFamily: 'var(--fuente-sans)' }}>
+    <div className="min-h-screen bg-[#e2ede7] text-[#2a2a2a] pb-32 relative" style={{ fontFamily: 'var(--fuente-sans)' }}>
       
+      {/* --- Novedad: Overlay de Giro --- */}
+      <AnimatePresence>
+        {showRotateOverlay && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[300] bg-[#e2ede7]/95 backdrop-blur-md flex flex-col items-center justify-center text-center p-8"
+            onClick={() => setShowRotateOverlay(false)}
+          >
+            <motion.div
+              animate={{ rotate: 90 }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut", repeatType: "reverse" }}
+              className="mb-8 text-[#c5b097]"
+            >
+              <Smartphone size={64} strokeWidth={1} />
+            </motion.div>
+            <h3 className="editorial-text text-3xl mb-4">Mejor en horizontal</h3>
+            <p className="text-[10px] tracking-[0.2em] uppercase opacity-60">Gira tu dispositivo para apreciar mejor los espacios</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* MODAL FICHA TÉCNICA */}
       <AnimatePresence>
         {showFicha && (
@@ -85,7 +121,7 @@ const PropertyVisualizer = ({ alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* BOTÓN WHATSAPP - ESQUINAS RECTAS (rounded-none) */}
+      {/* BOTÓN WHATSAPP */}
       <motion.button
         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
         onClick={handleWhatsApp}
@@ -98,7 +134,6 @@ const PropertyVisualizer = ({ alRegresar }) => {
 
       <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 p-6">
         <div className="max-w-5xl mx-auto flex flex-col gap-6">
-          
           <div className="flex flex-wrap items-center gap-4 md:gap-8 text-[10px] font-bold tracking-[0.2em] uppercase border-b border-stone-50 pb-4">
             <div className="flex items-center" style={{ color: 'var(--color-arena)' }}><User size={12} className="mr-2" /> {brandConfig.agentName}</div>
             <div className="flex items-center text-stone-400"><Hash size={12} className="mr-1" /> ID: {propertyData.refId}</div>
@@ -107,7 +142,6 @@ const PropertyVisualizer = ({ alRegresar }) => {
 
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div className="group cursor-pointer" onClick={alRegresar}>
-              {/* TÍTULO COMO BOTÓN DE REGRESO */}
               <h1 className="editorial-text text-3xl md:text-4xl mb-1 group-hover:opacity-60 transition-opacity">
                 {propertyData.title}
               </h1>
@@ -115,7 +149,6 @@ const PropertyVisualizer = ({ alRegresar }) => {
                 <MapPin size={10} className="mr-2" /> {propertyData.location}
               </p>
             </div>
-            
             <div className="flex bg-stone-100 p-1 border border-stone-200">
               <button onClick={() => setViewMode('images')} className={`px-5 py-2 flex items-center text-[9px] tracking-widest ${viewMode === 'images' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'}`} style={{ color: viewMode === 'images' ? 'var(--color-arena)' : '' }}><ImageIcon size={14} className="mr-2" /> FOTOS</button>
               <button onClick={() => setViewMode('video')} className={`px-5 py-2 flex items-center text-[9px] tracking-widest ${viewMode === 'video' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'}`} style={{ color: viewMode === 'video' ? 'var(--color-arena)' : '' }}><Play size={14} className="mr-2" /> VIDEO</button>
@@ -139,13 +172,20 @@ const PropertyVisualizer = ({ alRegresar }) => {
             {viewMode === 'images' ? (
               <motion.div key={activeRoom.id + "-img"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white p-2 shadow-xl border border-stone-100">
                 <div className="mb-4 text-center"><p className="text-[9px] font-bold tracking-[0.3em] text-stone-400 uppercase">Desliza para ver el estado actual de la propiedad</p></div>
-                <div className="relative overflow-hidden h-[300px] md:h-[480px]">
-                  <ReactCompareSlider position={0} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} className="h-full w-full" />
+                
+                {/* Novedad: aspect-video y object-fit contain para que no se corte en móvil */}
+                <div className="relative overflow-hidden aspect-video w-full">
+                  <ReactCompareSlider 
+                    position={50} 
+                    itemOne={<ReactCompareSliderImage src={activeRoom.before} style={{ objectFit: 'contain', width: '100%', height: '100%' }} />} 
+                    itemTwo={<ReactCompareSliderImage src={activeRoom.after} style={{ objectFit: 'contain', width: '100%', height: '100%' }} />} 
+                    className="h-full w-full" 
+                  />
                 </div>
               </motion.div>
             ) : (
               <motion.div key={activeRoom.id + "-vid"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-stone-950 shadow-xl overflow-hidden aspect-video border-[10px] border-white">
-                <video key={activeRoom.videoUrl} controls autoPlay className="w-full h-full object-cover" src={activeRoom.videoUrl} />
+                <video key={activeRoom.videoUrl} controls autoPlay className="w-full h-full object-contain" src={activeRoom.videoUrl} />
               </motion.div>
             )}
           </AnimatePresence>
