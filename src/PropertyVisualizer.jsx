@@ -17,18 +17,18 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   
   const [activeRoom, setActiveRoom] = useState(propertyData?.rooms?.[0] || null);
 
-  // NUEVO COLOR: Verde Musgo Elegante (#6b705c)
-  const mainColor = "#6b705c";
+  // COLOR: Verde Bosque Atenuado (Muted Sage - #87947c)
+  const mainColor = "#87947c";
 
   const handleWhatsApp = () => {
     const message = encodeURIComponent(`Hola, me interesa la propiedad "${propertyData.title}" (ID: ${propertyData.refId}).`);
     window.open(`https://wa.me/${propertyData.agentPhone}?text=${message}`, '_blank');
   };
 
-  if (!activeRoom) return <div className="p-20 text-center text-stone-500">Cargando datos...</div>;
+  if (!activeRoom) return <div className="p-20 text-center text-stone-400">Cargando visualizador...</div>;
 
   return (
-    <div className="min-h-screen bg-[#f4f7f5] text-[#2a2a2a] pb-32 relative text-left" style={{ fontFamily: 'var(--fuente-sans)' }}>
+    <div className="min-h-screen bg-[#f8faf9] text-[#2a2a2a] pb-32 relative text-left" style={{ fontFamily: 'var(--fuente-sans)' }}>
       
       {/* --- MODAL FICHA TÉCNICA --- */}
       <AnimatePresence>
@@ -115,13 +115,13 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                 
                 <button 
                   onClick={() => setShowZoomModal(true)} 
-                  className="absolute top-16 left-5 z-20 bg-white/80 p-2 rounded-full shadow-md transition-all"
+                  className="absolute top-16 left-5 z-20 bg-white/80 p-2 rounded-full shadow-md transition-all hover:scale-110"
                   style={{ color: mainColor }}
                 >
                   <Maximize2 size={18} />
                 </button>
                 
-                {/* NUEVA FRASE Y COLOR */}
+                {/* FRASE ACTUALIZADA */}
                 <p className="text-[11px] text-center mb-4 font-bold tracking-[0.2em] uppercase" style={{ color: mainColor }}>
                   ← Un espacio pensado para ti
                 </p>
@@ -145,26 +145,4 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               </motion.div>
             )}
           </AnimatePresence>
-        </section>
-      </main>
-
-      {/* WHATSAPP CON NUEVO COLOR */}
-      <button onClick={handleWhatsApp} style={{ backgroundColor: mainColor }} className="fixed bottom-6 right-6 z-[100] text-white p-4 md:px-8 md:py-5 shadow-2xl flex items-center gap-3 active:scale-95 transition-transform">
-        <MessageCircle size={22} fill="currentColor" /> 
-        <span className="hidden md:inline font-bold text-[11px] tracking-widest uppercase">Contactar Agente</span>
-      </button>
-
-      {/* MODAL ZOOM */}
-      <AnimatePresence>
-        {showZoomModal && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/95 flex items-center justify-center p-4" onClick={() => setShowZoomModal(false)}>
-            <button className="absolute top-6 right-6 text-white"><X size={32} /></button>
-            <img src={activeRoom.after} className="max-h-full max-w-full object-contain" alt="Zoom" />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
-
-export default PropertyVisualizer;
+        </
