@@ -29,6 +29,7 @@ export const catalogoPropiedades = {
     agentName: "MARIANA HAGERMAN",
     agentPhone: "525500000000",
     precio: "$22,000,000 MXN",
+    // ! RECUERDA: Cambia esta foto por la del rancho cuando la subas a GitHub
     fotoPortada: "/fotospropiedades/caratula.JPEG", 
     detalles: {
       terreno: "5,000 m²",
@@ -37,8 +38,15 @@ export const catalogoPropiedades = {
       baños: "6",
       descripcion: "Espectacular rancho con caballerizas y vistas al lago."
     },
+    // ! IMPORTANTE: Añadí esta lista de fotos para que el visualizador funcione
     rooms: [
-      { id: 1, name: "Sala Principal", before: "/fotospropiedades/Estancia1A.JPEG", after: "/fotospropiedades/estanciab2.JPEG", videoUrl: "/fotospropiedades/estancia.mp4" }
+      { 
+        id: 1, 
+        name: "Sala Principal", 
+        before: "/fotospropiedades/Estancia1A.JPEG", 
+        after: "/fotospropiedades/estanciab2.JPEG", 
+        videoUrl: "/fotospropiedades/estancia.mp4" 
+      }
     ]
-  }
-};
+  } // <-- Esta llave cierra el rancho
+}; // <-- Esta llave cierra todo el catálogo
