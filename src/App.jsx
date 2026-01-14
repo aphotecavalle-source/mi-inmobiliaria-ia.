@@ -43,7 +43,7 @@ function App() {
                   alt={infoPropiedad.titulo} 
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   onError={(e) => { 
-                    e.target.src = "https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=2070"; 
+                    e.target.src = "/fotospropiedad/caratula.JPEG"; 
                   }}
                 />
               </div>
