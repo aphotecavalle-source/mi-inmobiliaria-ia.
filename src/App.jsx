@@ -6,8 +6,8 @@ import PropertyVisualizer from './PropertyVisualizer';
 function App() {
   const [mostrarVisualizador, setMostrarVisualizador] = useState(false);
 
-  // CORRECCIÓN: Usamos 'fotopropiedades' para coincidir con tu carpeta en GitHub
-  const fotoPortada = "/fotopropiedades/caratula.JPEG";
+  // CORRECCIÓN: Usamos 'fotospropiedades' para coincidir con tu carpeta en GitHub
+  const fotoPortada = "/fotospropiedades/caratula.JPEG";
 
   const infoPropiedad = {
     titulo: "Casa en el Bosque",
