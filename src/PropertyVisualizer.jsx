@@ -10,7 +10,8 @@ import {
   Info,
   X,
   Hash,
-  Smartphone
+  Smartphone,
+  ArrowLeft
 } from 'lucide-react';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
 
@@ -50,16 +51,13 @@ const PropertyVisualizer = ({ alRegresar }) => {
   const [activeRoom, setActiveRoom] = useState(propertyData.rooms[0]);
   const [viewMode, setViewMode] = useState('images');
 
-  // DETECCIÓN DE DISPOSITIVO Y ORIENTACIÓN
   useEffect(() => {
     const handleResize = () => {
       const isMobile = window.innerWidth < 1024;
       const isPortrait = window.innerHeight > window.innerWidth;
-      
       setShowRotateOverlay(isMobile && isPortrait);
       setIsMobileLandscape(isMobile && !isPortrait);
     };
-
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -73,7 +71,7 @@ const PropertyVisualizer = ({ alRegresar }) => {
   return (
     <div className="min-h-screen bg-[#e2ede7] text-[#2a2a2a] pb-32 relative" style={{ fontFamily: 'var(--fuente-sans)' }}>
       
-      {/* AVISO DE GIRO (Solo en Celular Vertical) */}
+      {/* AVISO DE GIRO */}
       <AnimatePresence>
         {showRotateOverlay && (
           <motion.div 
@@ -100,18 +98,17 @@ const PropertyVisualizer = ({ alRegresar }) => {
           >
             <motion.div 
               initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }}
-              className="bg-white p-10 max-w-lg w-full shadow-2xl relative"
-              style={{ borderRadius: '0px' }}
+              className="bg-white p-10 max-w-lg w-full shadow-2xl relative rounded-none"
               onClick={(e) => e.stopPropagation()}
             >
               <button onClick={() => setShowFicha(false)} className="absolute top-4 right-4 text-stone-400 hover:text-black"><X size={24} /></button>
               <h2 className="editorial-text text-3xl mb-2">{propertyData.title}</h2>
               <p className="text-[#c5b097] font-bold text-xl mb-6">{propertyData.precio}</p>
               <div className="grid grid-cols-2 gap-6 mb-8 border-y border-stone-100 py-6 text-sm">
-                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Terreno</p>{propertyData.detalles.terreno}</div>
-                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Construcción</p>{propertyData.detalles.construccion}</div>
-                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Habitaciones</p>{propertyData.detalles.recamaras}</div>
-                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest">Baños</p>{propertyData.detalles.baños}</div>
+                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest text-xs">Terreno</p>{propertyData.detalles.terreno}</div>
+                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest text-xs">Construcción</p>{propertyData.detalles.construccion}</div>
+                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest text-xs">Habitaciones</p>{propertyData.detalles.recamaras}</div>
+                <div><p className="text-[9px] font-bold text-stone-400 uppercase tracking-widest text-xs">Baños</p>{propertyData.detalles.baños}</div>
               </div>
               <p className="text-sm text-stone-500 italic leading-relaxed">"{propertyData.detalles.descripcion}"</p>
             </motion.div>
@@ -130,11 +127,9 @@ const PropertyVisualizer = ({ alRegresar }) => {
         {!isMobileLandscape && <span className="font-bold text-[11px] tracking-widest uppercase">Contactar Agente</span>}
       </motion.button>
 
-      {/* HEADER: Original en PC, Compacto en Celular Horizontal */}
+      {/* HEADER */}
       <header className={`bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 transition-all ${isMobileLandscape ? 'p-2' : 'p-6'}`}>
         <div className="max-w-5xl mx-auto flex flex-col gap-6">
-          
-          {/* Ocultar franja superior solo en horizontal de móvil */}
           {!isMobileLandscape && (
             <div className="flex flex-wrap items-center gap-4 md:gap-8 text-[10px] font-bold tracking-[0.2em] uppercase border-b border-stone-50 pb-4">
               <div className="flex items-center" style={{ color: 'var(--color-arena)' }}><User size={12} className="mr-2" /> {brandConfig.agentName}</div>
@@ -163,10 +158,9 @@ const PropertyVisualizer = ({ alRegresar }) => {
         </div>
       </header>
 
-      {/* CONTENIDO PRINCIPAL: Grid original en PC, Ajustado en móvil horizontal */}
+      {/* CONTENIDO PRINCIPAL */}
       <main className={`max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8 transition-all ${isMobileLandscape ? 'p-2' : 'p-6 mt-4'}`}>
         
-        {/* ASIDE: BARRA LATERAL (PC) vs CINTA HORIZONTAL (Móvil Landscape) */}
         <aside className={`${isMobileLandscape ? 'order-2 overflow-x-auto py-2' : 'order-2 lg:order-1 lg:col-span-1'}`}>
           <h3 className={`editorial-text mb-6 text-stone-900 ${isMobileLandscape ? 'hidden' : 'text-xl'}`}>Espacios</h3>
           <div className={`${isMobileLandscape ? 'flex flex-row gap-2' : 'grid grid-cols-1 gap-2'}`}>
@@ -185,19 +179,21 @@ const PropertyVisualizer = ({ alRegresar }) => {
           </div>
         </aside>
 
-        {/* SECTION: VISUALIZADOR (Toma el alto necesario en PC, se ajusta en móvil) */}
         <section className={`order-1 lg:order-2 lg:col-span-3`}>
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
               <motion.div key={activeRoom.id + "-img"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white p-2 shadow-xl border border-stone-100">
-                {!isMobileLandscape && (
-                  <div className="mb-4 text-center">
-                    <p className="text-[9px] font-bold tracking-[0.3em] text-stone-400 uppercase italic">Desliza para visualizar</p>
-                  </div>
-                )}
+                {/* LETRERO FINO EDITORIAL (Nueva instrucción) */}
+                <div className="mb-4 text-center">
+                  <p className="text-[9px] font-bold tracking-[0.3em] text-stone-400 uppercase italic">
+                    Desliza para ver el estado actual de la propiedad
+                  </p>
+                </div>
+                
+                {/* SLIDER AL 0% (Empieza a la izquierda con el staging visible) */}
                 <div className={`relative overflow-hidden w-full ${isMobileLandscape ? 'h-[65vh]' : 'h-[300px] md:h-[480px]'}`}>
                   <ReactCompareSlider 
-                    position={50} 
+                    position={0} 
                     itemOne={<ReactCompareSliderImage src={activeRoom.before} style={{ objectFit: 'contain' }} />} 
                     itemTwo={<ReactCompareSliderImage src={activeRoom.after} style={{ objectFit: 'contain' }} />} 
                     className="h-full w-full" 
