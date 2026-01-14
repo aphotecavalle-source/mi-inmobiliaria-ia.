@@ -17,7 +17,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   
   const [activeRoom, setActiveRoom] = useState(propertyData?.rooms?.[0] || null);
 
-  // COLOR: Verde Bosque Atenuado (Muted Sage - #87947c)
+  // COLOR: Verde Bosque Atenuado (Muted Sage)
   const mainColor = "#87947c";
 
   const handleWhatsApp = () => {
@@ -121,7 +121,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                   <Maximize2 size={18} />
                 </button>
                 
-                {/* FRASE ACTUALIZADA */}
                 <p className="text-[11px] text-center mb-4 font-bold tracking-[0.2em] uppercase" style={{ color: mainColor }}>
                   ← Un espacio pensado para ti
                 </p>
@@ -145,4 +144,26 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               </motion.div>
             )}
           </AnimatePresence>
-        </
+        </section>
+      </main>
+
+      {/* BOTÓN WHATSAPP */}
+      <button onClick={handleWhatsApp} style={{ backgroundColor: mainColor }} className="fixed bottom-6 right-6 z-[100] text-white p-4 md:px-8 md:py-5 shadow-2xl flex items-center gap-3 active:scale-95 transition-transform hover:brightness-95">
+        <MessageCircle size={22} fill="currentColor" /> 
+        <span className="hidden md:inline font-bold text-[11px] tracking-widest uppercase">Contactar Agente</span>
+      </button>
+
+      {/* MODAL ZOOM */}
+      <AnimatePresence>
+        {showZoomModal && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/95 flex items-center justify-center p-4" onClick={() => setShowZoomModal(false)}>
+            <button className="absolute top-6 right-6 text-white hover:text-stone-300 transition-colors"><X size={32} /></button>
+            <img src={activeRoom.after} className="max-h-[90vh] max-w-[90vw] object-contain shadow-2xl" alt="Zoom" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export default PropertyVisualizer;
