@@ -7,7 +7,7 @@ export const catalogoPropiedades = {
     agentName: "REBECA QUINTANILLA",
     agentPhone: "525512345678",
     precio: "$14,500,000 MXN",
-    fotoPortada: "/fotospropiedades/caratula.JPEG",
+    fotoPortada: "/fotospropiedades/caratula.jpeg",
     detalles: {
       terreno: "1,200 m²",
       construccion: "450 m²",
@@ -16,11 +16,11 @@ export const catalogoPropiedades = {
       descripcion: "Residencia de lujo con acabados naturales y diseño de iluminación inteligente."
     },
     rooms: [
-      { id: 1, name: "Estancia Principal", before: "/fotospropiedades/Estancia1A.JPEG", after: "/fotospropiedades/estanciab2.JPEG", video: "/fotospropiedades/estancia.mp4" },
-      { id: 2, name: "Recámara", before: "/fotospropiedades/recamarab1.JPG", after: "/fotospropiedades/recamarab2.JPEG", video: "/fotospropiedades/recamara.mp4" },
-      { id: 3, name: "Terraza", before: "/fotospropiedades/Terraza1.JPG", after: "/fotospropiedades/Terraza2.JPEG", video: "/fotospropiedades/terraza.mp4" },
-      { id: 4, name: "Exteriores", before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", video: "/fotospropiedades/estancia.mp4" },
-      { id: 5, name: "Cocina", before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", video: "/fotospropiedades/estancia.mp4" }
+      { id: 1, name: "Estancia Principal", before: "/fotospropiedades/estancia1a.jpeg", after: "/fotospropiedades/estanciab2.jpeg", video: "/fotospropiedades/estancia.mp4" },
+      { id: 2, name: "Recámara", before: "/fotospropiedades/recamarab1.jpeg", after: "/fotospropiedades/recamarab2.jpeg", video: "/fotospropiedades/recamara.mp4" },
+      { id: 3, name: "Terraza", before: "/fotospropiedades/terraza1.jpeg", after: "/fotospropiedades/terraza2.jpeg", video: "/fotospropiedades/terraza.mp4" },
+      { id: 4, name: "Exteriores", before: "/fotospropiedades/estancia1a.jpeg", after: "/fotospropiedades/estanciab2.jpeg", video: "/fotospropiedades/estancia.mp4" },
+      { id: 5, name: "Cocina", before: "/fotospropiedades/estancia1a.jpeg", after: "/fotospropiedades/estanciab2.jpeg", video: "/fotospropiedades/estancia.mp4" }
     ]
   },
   "rancho": {
@@ -30,7 +30,7 @@ export const catalogoPropiedades = {
     agentName: "MARIANA HAGERMAN",
     agentPhone: "525500000000",
     precio: "$22,000,000 MXN",
-    fotoPortada: "/fotospropiedades/caratula.JPEG", 
+    fotoPortada: "/fotospropiedades/caratula.jpeg", 
     detalles: {
       terreno: "5,000 m²",
       construccion: "800 m²",
@@ -39,7 +39,7 @@ export const catalogoPropiedades = {
       descripcion: "Espectacular rancho con caballerizas y vistas al lago."
     },
     rooms: [
-      { id: 1, name: "Sala Principal", before: "/fotospropiedades/Estancia1A.JPEG", after: "/fotospropiedades/estanciab2.JPEG", video: "/fotospropiedades/estancia.mp4" }
+      { id: 1, name: "Sala Principal", before: "/fotospropiedades/estancia1a.jpeg", after: "/fotospropiedades/estanciab2.jpeg", video: "/fotospropiedades/estancia.mp4" }
     ]
   }
 };
