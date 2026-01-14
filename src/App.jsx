@@ -7,7 +7,7 @@ function App() {
   const [mostrarVisualizador, setMostrarVisualizador] = useState(false);
 
   // ESTA ES LA URL DE LA CABAÑA NUEVA (Verificada)
-  const fotoPortada = "https://images.unsplash.com/photo-1449156001437-3a1661dcda2e?q=80&w=2070&auto=format&v=10";
+  const fotoPortada = "/fotospropiedad/caratula.JPEG";
 
   const infoPropiedad = {
     titulo: "Casa en el Bosque",
