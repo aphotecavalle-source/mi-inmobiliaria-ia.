@@ -89,7 +89,7 @@ const PropertyVisualizer = ({ alRegresar }) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleWhatsApp}
-        style={{ backgroundColor: 'var(--color-arena)', borderRadius: '0px' }}
+        style={{ backgroundColor: '#c5b097', borderRadius: '0px' }}
         className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100] flex items-center justify-center gap-3 text-white p-4 md:px-8 md:py-5 shadow-2xl"
       >
         <MessageCircle size={22} fill="currentColor" />
@@ -105,7 +105,7 @@ const PropertyVisualizer = ({ alRegresar }) => {
             <button onClick={alRegresar} className="flex items-center gap-2 text-stone-400 hover:text-black transition-all">
               <ArrowLeft size={12} /> VOLVER
             </button>
-            <div className="flex items-center" style={{ color: 'var(--color-arena)' }}><User size={12} className="mr-2" /> {brandConfig.agentName}</div>
+            <div className="flex items-center" style={{ color: '#c5b097' }}><User size={12} className="mr-2" /> {brandConfig.agentName}</div>
             <div className="flex items-center text-stone-400 ml-auto gap-4">
               <Info size={12} /> 
               <button onClick={() => setShowFicha(true)} className="hover:text-black">FICHA TÉCNICA</button>
@@ -121,8 +121,8 @@ const PropertyVisualizer = ({ alRegresar }) => {
             </div>
             
             <div className="flex bg-stone-100 p-1 border border-stone-200">
-              <button onClick={() => setViewMode('images')} className={`px-5 py-2 flex items-center text-[9px] tracking-widest ${viewMode === 'images' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'}`} style={{ color: viewMode === 'images' ? 'var(--color-arena)' : '' }}><ImageIcon size={14} className="mr-2" /> FOTOS</button>
-              <button onClick={() => setViewMode('video')} className={`px-5 py-2 flex items-center text-[9px] tracking-widest ${viewMode === 'video' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'}`} style={{ color: viewMode === 'video' ? 'var(--color-arena)' : '' }}><Play size={14} className="mr-2" /> VIDEO</button>
+              <button onClick={() => setViewMode('images')} className={`px-5 py-2 flex items-center text-[9px] tracking-widest ${viewMode === 'images' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'}`} style={{ color: viewMode === 'images' ? '#c5b097' : '' }}><ImageIcon size={14} className="mr-2" /> FOTOS</button>
+              <button onClick={() => setViewMode('video')} className={`px-5 py-2 flex items-center text-[9px] tracking-widest ${viewMode === 'video' ? 'bg-white shadow-sm font-bold' : 'font-medium text-stone-400'}`} style={{ color: viewMode === 'video' ? '#c5b097' : '' }}><Play size={14} className="mr-2" /> VIDEO</button>
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@ const PropertyVisualizer = ({ alRegresar }) => {
                 className={`w-full text-left p-4 transition-all border-b border-stone-200 ${activeRoom.id === room.id ? 'bg-white shadow-sm' : 'bg-transparent'}`}
               >
                 <div className="flex justify-between items-center">
-                  <span className={`text-[9px] tracking-widest uppercase ${activeRoom.id === room.id ? 'font-bold' : 'font-medium text-stone-400'}`} style={{ color: activeRoom.id === room.id ? 'var(--color-arena)' : '' }}>{room.name}</span>
+                  <span className={`text-[9px] tracking-widest uppercase ${activeRoom.id === room.id ? 'font-bold' : 'font-medium text-stone-400'}`} style={{ color: activeRoom.id === room.id ? '#c5b097' : '' }}>{room.name}</span>
                   <ChevronRight size={12} />
                 </div>
               </button>
@@ -154,4 +154,37 @@ const PropertyVisualizer = ({ alRegresar }) => {
         <section className="order-1 lg:order-2 lg:col-span-3">
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
-              <motion.div key={activeRoom.id + "-img
+              <motion.div key={activeRoom.id + "-img"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white p-2 shadow-xl border border-stone-100">
+                <div className="mb-4 text-center">
+                  <p className="text-[9px] font-bold tracking-[0.3em] text-stone-400 uppercase italic">
+                    Desliza para ver el estado actual de la propiedad
+                  </p>
+                </div>
+                
+                <div className="relative overflow-hidden aspect-video w-full bg-[#f8f8f8]">
+                  <ReactCompareSlider 
+                    position={0} 
+                    itemOne={<ReactCompareSliderImage src={activeRoom.before} style={{ objectFit: 'contain' }} />} 
+                    itemTwo={<ReactCompareSliderImage src={activeRoom.after} style={{ objectFit: 'contain' }} />} 
+                    className="h-full w-full" 
+                  />
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div key={activeRoom.id + "-vid"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-stone-950 shadow-xl overflow-hidden aspect-video border-[10px] border-white">
+                <video key={activeRoom.videoUrl} controls autoPlay muted playsInline className="w-full h-full object-contain" src={activeRoom.videoUrl} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </section>
+      </main>
+
+      {/* FIRMA FINAL */}
+      <footer className="mt-20 text-center opacity-30 pb-12">
+        <p className="text-[9px] tracking-[0.8em] uppercase font-bold">Curated interior design by M Hagerman</p>
+      </footer>
+    </div>
+  );
+};
+
+export default PropertyVisualizer;
