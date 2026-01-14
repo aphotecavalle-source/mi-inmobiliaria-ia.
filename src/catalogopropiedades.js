@@ -16,9 +16,13 @@ export const catalogoPropiedades = {
       baños: "4.5",
       descripcion: "Residencia de lujo con acabados naturales y diseño de iluminación inteligente."
     },
+    // AQUÍ ESTÁN TUS 5 ESPACIOS RECUPERADOS:
     rooms: [
       { id: 1, name: "Estancia Principal", before: "/fotospropiedades/Estancia1A.JPEG", after: "/fotospropiedades/estanciab2.JPEG", videoUrl: "/fotospropiedades/estancia.mp4" },
-      { id: 2, name: "Recámara", before: "/fotospropiedades/recamarab1.JPG", after: "/fotospropiedades/recamarab2.JPEG", videoUrl: "/fotopropiedades/recamara.mp4" }
+      { id: 2, name: "Recámara", before: "/fotospropiedades/recamarab1.JPG", after: "/fotospropiedades/recamarab2.JPEG", videoUrl: "/fotopropiedades/recamara.mp4" },
+      { id: 3, name: "Terraza", before: "/fotospropiedades/Terraza1.JPG", after: "/fotospropiedades/Terraza2.JPEG", videoUrl: "/fotospropiedades/terraza.mp4" },
+      { id: 4, name: "Exteriores", before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", videoUrl: "/fotospropiedades/family.mp4" },
+      { id: 5, name: "Cocina", before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", videoUrl: "/fotospropiedades/family.mp4" }
     ]
   },
 
@@ -29,7 +33,6 @@ export const catalogoPropiedades = {
     agentName: "MARIANA HAGERMAN",
     agentPhone: "525500000000",
     precio: "$22,000,000 MXN",
-    // ! RECUERDA: Cambia esta foto por la del rancho cuando la subas a GitHub
     fotoPortada: "/fotospropiedades/caratula.JPEG", 
     detalles: {
       terreno: "5,000 m²",
@@ -38,7 +41,6 @@ export const catalogoPropiedades = {
       baños: "6",
       descripcion: "Espectacular rancho con caballerizas y vistas al lago."
     },
-    // ! IMPORTANTE: Añadí esta lista de fotos para que el visualizador funcione
     rooms: [
       { 
         id: 1, 
@@ -48,5 +50,5 @@ export const catalogoPropiedades = {
         videoUrl: "/fotospropiedades/estancia.mp4" 
       }
     ]
-  } // <-- Esta llave cierra el rancho
-}; // <-- Esta llave cierra todo el catálogo
+  }
+};
