@@ -7,7 +7,7 @@ function App() {
   const [mostrarVisualizador, setMostrarVisualizador] = useState(false);
 
   // ESTA ES LA URL DE LA CABAÑA NUEVA (Verificada)
-  const fotoPortada = "/fotospropiedad/caratula.JPEG";
+  const fotoPortada = "/fotospropiedades/caratula.JPEG";
 
   const infoPropiedad = {
     titulo: "Casa en el Bosque",
@@ -43,7 +43,7 @@ function App() {
                   alt={infoPropiedad.titulo} 
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   onError={(e) => { 
-                    e.target.src = "/fotospropiedad/caratula.JPEG"; 
+                    e.target.src = "/fotospropiedades/caratula.JPEG"; 
                   }}
                 />
               </div>
