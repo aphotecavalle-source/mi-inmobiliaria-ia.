@@ -43,7 +43,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white p-6 md:p-8 max-w-lg w-full shadow-2xl relative rounded-none text-center" onClick={(e) => e.stopPropagation()}>
               <button onClick={() => setShowPlanta(false)} className="absolute top-4 right-4 text-stone-300 hover:text-black transition-colors"><X size={24} /></button>
               <h2 className="editorial-text text-xl mb-1 tracking-tight">Plano de Distribución</h2>
-              <p className="text-[7px] tracking-[0.3em] text-stone-400 uppercase mb-6 font-bold">Toca un área para ver el resultado final</p>
+              <p className="text-[7px] tracking-[0.3em] text-stone-400 uppercase mb-6 font-bold">Selecciona un área para ver el resultado final</p>
               
               <div className="relative inline-block border border-stone-100 bg-white shadow-sm cursor-crosshair" onClick={handlePlantaClick}>
                 <img src={propertyData.plantaImagen} alt="Planta" className="max-w-full max-h-[50vh] w-auto opacity-95" />
@@ -168,20 +168,22 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               <motion.div key={activeRoom.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }} className="bg-white p-2 shadow-2xl border border-stone-50 relative">
                 <button onClick={() => setShowZoomModal(true)} className="absolute top-14 left-6 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}><Maximize2 size={16} /></button>
                 
-                {/* --- FRASE NUEVA CON ANIMACIÓN --- */}
-                <div className="flex items-center justify-center gap-3 mb-4">
+                {/* --- FRASE EDITORIAL MEJORADA --- */}
+                <div className="flex items-center justify-center gap-4 mb-6 pt-2">
                   <motion.div
-                    animate={{ x: [0, -8, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    animate={{ x: [0, -10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    className="flex items-center"
                   >
-                    <ArrowLeft size={14} style={{ color: mainColor }} strokeWidth={3} />
+                    <ArrowLeft size={16} style={{ color: mainColor }} strokeWidth={1.5} />
                   </motion.div>
+                  
                   <motion.p 
-                    animate={{ opacity: [0.6, 1, 0.6] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                    className="text-[10px] font-bold tracking-[0.35em] uppercase text-stone-500"
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                    className="editorial-text italic text-lg md:text-xl text-stone-500 lowercase tracking-wide"
                   >
-                    Creando un estilo de vida en cada espacio
+                    “creando un estilo de vida en cada espacio”
                   </motion.p>
                 </div>
 
