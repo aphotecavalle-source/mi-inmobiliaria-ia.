@@ -44,7 +44,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               <button onClick={() => setShowPlanta(false)} className="absolute top-4 right-4 text-stone-300 hover:text-black transition-colors"><X size={24} /></button>
               <h2 className="editorial-text text-xl mb-1 tracking-tight">Plano de Distribución</h2>
               <p className="text-[7px] tracking-[0.3em] text-stone-400 uppercase mb-6 font-bold">Selecciona un área para ver el resultado final</p>
-              
               <div className="relative inline-block border border-stone-100 bg-white shadow-sm cursor-crosshair" onClick={handlePlantaClick}>
                 <img src={propertyData.plantaImagen} alt="Planta" className="max-w-full max-h-[50vh] w-auto opacity-95" />
                 {propertyData.rooms.map((room) => (
@@ -117,7 +116,17 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                 <span className="text-stone-200">|</span>
                 <span className="flex items-center gap-1.5"><Tag size={11} /> ID: {propertyData.refId}</span>
                 <span className="text-stone-200">|</span>
-                <span style={{ color: mainColor }}>Agente: {propertyData.agentName}</span>
+                
+                {/* BOTÓN AGENTE INTEGRADO */}
+                <button 
+                  onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }}
+                  className="flex items-center gap-2 group/agent transition-all hover:opacity-80 active:scale-95"
+                  style={{ color: mainColor }}
+                >
+                  <span className="text-stone-400">Agente:</span> 
+                  <span className="border-b border-transparent group-hover/agent:border-current">{propertyData.agentName}</span>
+                  <MessageCircle size={14} className="ml-1 fill-current opacity-70 group-hover/agent:opacity-100 transition-opacity" />
+                </button>
               </div>
             </div>
 
@@ -168,21 +177,11 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               <motion.div key={activeRoom.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }} className="bg-white p-2 shadow-2xl border border-stone-50 relative">
                 <button onClick={() => setShowZoomModal(true)} className="absolute top-14 left-6 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}><Maximize2 size={16} /></button>
                 
-                {/* --- FRASE EDITORIAL MEJORADA --- */}
                 <div className="flex items-center justify-center gap-4 mb-6 pt-2">
-                  <motion.div
-                    animate={{ x: [0, -10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="flex items-center"
-                  >
-                    <ArrowLeft size={16} style={{ color: mainColor }} strokeWidth={1.5} />
+                  <motion.div animate={{ x: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="flex items-center">
+                    <ArrowLeft size={16} style={{ color: mainColor }} strokeWidth={1.2} />
                   </motion.div>
-                  
-                  <motion.p 
-                    animate={{ opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                    className="editorial-text italic text-lg md:text-xl text-stone-500 lowercase tracking-wide"
-                  >
+                  <motion.p animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 4, repeat: Infinity }} className="editorial-text italic text-lg md:text-xl text-stone-500 lowercase tracking-wide">
                     “creando un estilo de vida en cada espacio”
                   </motion.p>
                 </div>
@@ -199,12 +198,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
           </AnimatePresence>
         </section>
       </main>
-
-      {/* BOTÓN WHATSAPP */}
-      <button onClick={handleWhatsApp} style={{ backgroundColor: mainColor }} className="fixed bottom-6 right-6 z-[100] text-white py-2 px-5 shadow-lg flex items-center gap-2 active:scale-95 transition-all hover:brightness-95 tracking-[0.3em] font-medium text-[8px] uppercase rounded-none">
-        <MessageCircle size={12} fill="currentColor" /> <span className="hidden md:inline">Contactar Agente</span>
-      </button>
-
     </div>
   );
 };
