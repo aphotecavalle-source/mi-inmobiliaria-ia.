@@ -21,7 +21,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
     alert(`Coordenadas:\ntop: "${y.toFixed(1)}%", left: "${x.toFixed(1)}%"`);
   };
 
-  // CORRECCIÓN: Quitamos el setShowPlanta(false) para que el plano se quede atrás
+  // El plano se queda abierto, el zoom se abre encima
   const seleccionarDesdePlanta = (room) => {
     setActiveRoom(room);
     setShowZoomModal(true);
@@ -69,7 +69,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* MODAL ZOOM (Z-700 - ENCIMA DE LA PLANTA) */}
+      {/* MODAL ZOOM (Z-700 - SIEMPRE ENCIMA) */}
       <AnimatePresence>
         {showZoomModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[700] bg-black/95 flex items-center justify-center p-4" onClick={() => setShowZoomModal(false)}>
@@ -82,7 +82,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* MODAL FICHA TÉCNICA (Z-500) */}
+      {/* MODAL FICHA TÉCNICA */}
       <AnimatePresence>
         {showFicha && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowFicha(false)}>
@@ -122,7 +122,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               </div>
             </div>
 
-            {/* BOTONES CON ANIMACIÓN MÁS FUERTE */}
             <div className="flex gap-8">
               <motion.button 
                 onClick={() => setShowPlanta(true)} 
@@ -168,4 +167,28 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
               <motion.div key={activeRoom.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }} className="bg-white p-2 shadow-2xl border border-stone-50 relative">
-                <button onClick={() => setShowZoomModal(true)} className="absolute top-14 left-6 z-20 bg-
+                <button onClick={() => setShowZoomModal(true)} className="absolute top-14 left-6 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}><Maximize2 size={16} /></button>
+                <p className="text-[10px] text-center mb-4 font-bold tracking-[0.4em] uppercase" style={{ color: mainColor }}>← Desliza para descubrir</p>
+                <div className="relative aspect-video w-full bg-[#f8f8f8] overflow-hidden">
+                  <ReactCompareSlider position={100} handle={<div className="relative h-full w-1 bg-white cursor-ew-resize"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2.5 shadow-2xl flex items-center justify-center"><ChevronLeft size={22} className="text-stone-300" /><ChevronRight size={22} className="text-stone-300" /></div></div>} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} />
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div key={activeRoom.id + "vid"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-black aspect-video border-[8px] border-white shadow-2xl">
+                <video key={activeRoom.video} src={activeRoom.video} controls autoPlay muted playsInline className="w-full h-full object-contain" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </section>
+      </main>
+
+      {/* BOTÓN WHATSAPP */}
+      <button onClick={handleWhatsApp} style={{ backgroundColor: mainColor }} className="fixed bottom-6 right-6 z-[100] text-white py-2 px-5 shadow-lg flex items-center gap-2 active:scale-95 transition-all hover:brightness-95 tracking-[0.3em] font-medium text-[8px] uppercase rounded-none">
+        <MessageCircle size={12} fill="currentColor" /> <span className="hidden md:inline">Contactar Agente</span>
+      </button>
+
+    </div>
+  );
+};
+
+export default PropertyVisualizer;
