@@ -9,7 +9,7 @@ export const catalogoPropiedades = {
     agentPhone: "525512345678", // Pon aquí el cel del agente (solo números)
     precio: "$14,500,000 MXN",
     // COPIA Y PEGA EL LINK DE GOOGLE MAPS AQUÍ:
-    googleMapsLink: "https://www.google.com/maps/@19.1897,-100.1264,303m/data=!3m1!1e3", 
+    googleMapsLink: "https://maps.app.goo.gl/oe3SXwVTgi2vXxj79", 
     fotoPortada: "/fotospropiedades/caratula.JPEG",
     plantaImagen: "/fotospropiedades/planta.JPEG",
     detalles: {
