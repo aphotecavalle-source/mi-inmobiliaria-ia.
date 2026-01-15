@@ -12,7 +12,8 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   const [viewMode, setViewMode] = useState('images');
   const [activeRoom, setActiveRoom] = useState(propertyData?.rooms?.[0] || null);
 
-  const mainColor = "#87947c"; // Sage Muted
+  const mainColor = "#87947c"; // Sage Muted (Tu color de marca)
+  const softBg = "#f2f5f0";    // Nuevo fondo: Pale Sage Bone
 
   const handlePlantaClick = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -34,7 +35,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   if (!activeRoom) return <div className="p-20 text-center text-stone-400 font-bold uppercase tracking-widest">Cargando...</div>;
 
   return (
-    <div className="min-h-screen bg-[#f8faf9] text-[#2a2a2a] pb-32 relative text-left" style={{ fontFamily: 'var(--fuente-sans)' }}>
+    <div className="min-h-screen pb-40 relative text-left" style={{ backgroundColor: softBg, fontFamily: 'var(--fuente-sans)' }}>
       
       {/* MODAL PLANTA INTERACTIVA */}
       <AnimatePresence>
@@ -117,13 +118,12 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                 <span className="flex items-center gap-1.5"><Tag size={11} /> ID: {propertyData.refId}</span>
                 <span className="text-stone-200">|</span>
                 
-                {/* BOTÓN AGENTE INTEGRADO - "AGENTE" EN MAYÚSCULAS */}
                 <button 
                   onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }}
                   className="flex items-center gap-2 group/agent transition-all hover:opacity-80 active:scale-95"
                   style={{ color: mainColor }}
                 >
-                  <span className="text-stone-400">AGENTE:</span> 
+                  <span className="text-stone-400 font-bold uppercase tracking-widest">AGENTE:</span> 
                   <span className="border-b border-transparent group-hover/agent:border-current">{propertyData.agentName}</span>
                   <MessageCircle size={14} className="ml-1 fill-current opacity-70 group-hover/agent:opacity-100 transition-opacity" />
                 </button>
@@ -159,7 +159,8 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
       </header>
 
       {/* CONTENIDO PRINCIPAL */}
-      <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-12 mt-8">
+      <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-12 mt-12 mb-20">
+        
         <aside className="order-2 lg:order-1 lg:col-span-1">
           <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-100 pb-2">Espacios</h3>
           <div className="grid grid-cols-1 gap-1">
@@ -171,13 +172,20 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
           </div>
         </aside>
 
-        <section className="order-1 lg:order-2 lg:col-span-4">
+        <section className="order-1 lg:order-2 lg:col-span-4 px-0 md:px-8">
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
-              <motion.div key={activeRoom.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }} className="bg-white p-2 shadow-2xl border border-stone-50 relative">
-                <button onClick={() => setShowZoomModal(true)} className="absolute top-14 left-6 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}><Maximize2 size={16} /></button>
+              <motion.div 
+                key={activeRoom.id} 
+                initial={{ opacity: 0, scale: 0.98 }} 
+                animate={{ opacity: 1, scale: 1 }} 
+                exit={{ opacity: 0 }} 
+                transition={{ duration: 0.8 }} 
+                className="bg-white p-4 shadow-xl border border-stone-50 relative"
+              >
+                <button onClick={() => setShowZoomModal(true)} className="absolute top-16 left-8 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}><Maximize2 size={16} /></button>
                 
-                <div className="flex items-center justify-center gap-4 mb-6 pt-2">
+                <div className="flex items-center justify-center gap-4 mb-8 pt-4">
                   <motion.div animate={{ x: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="flex items-center">
                     <ArrowLeft size={16} style={{ color: mainColor }} strokeWidth={1.2} />
                   </motion.div>
@@ -186,7 +194,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                   </motion.p>
                 </div>
 
-                <div className="relative aspect-video w-full bg-[#f8f8f8] overflow-hidden">
+                <div className="relative aspect-video w-full bg-[#f1f3f0] overflow-hidden shadow-inner border border-stone-50">
                   <ReactCompareSlider position={100} handle={<div className="relative h-full w-1 bg-white cursor-ew-resize"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2.5 shadow-2xl flex items-center justify-center"><ChevronLeft size={22} className="text-stone-300" /><ChevronRight size={22} className="text-stone-300" /></div></div>} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} />
                 </div>
               </motion.div>
