@@ -45,7 +45,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   return (
     <div className="min-h-screen pb-40 relative text-left" style={{ backgroundColor: softBg, fontFamily: 'var(--fuente-sans)' }}>
       
-      {/* MODAL PLANTA INTERACTIVA (Z-600) */}
+      {/* MODAL PLANTA INTERACTIVA */}
       <AnimatePresence>
         {showPlanta && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowPlanta(false)}>
@@ -53,7 +53,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               <button onClick={() => setShowPlanta(false)} className="absolute top-4 right-4 text-stone-300 hover:text-black transition-colors"><X size={24} /></button>
               <h2 className="editorial-text text-xl mb-1 tracking-tight">Plano de Distribución</h2>
               <p className="text-[7px] tracking-[0.3em] text-stone-400 uppercase mb-6 font-bold">Selecciona un área para ver el resultado final</p>
-              
               <div className="relative inline-block border border-stone-100 bg-white shadow-sm cursor-crosshair" onClick={handlePlantaClick}>
                 <img src={propertyData.plantaImagen} alt="Planta" className="max-w-full max-h-[50vh] w-auto opacity-95" />
                 {propertyData.rooms.map((room) => (
@@ -77,7 +76,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* MODAL ZOOM (Z-700 - ENCIMA DE LA PLANTA) */}
+      {/* MODAL ZOOM */}
       <AnimatePresence>
         {showZoomModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[700] bg-black/95 flex items-center justify-center p-4" onClick={() => setShowZoomModal(false)}>
@@ -96,7 +95,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowFicha(false)}>
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white p-12 max-w-lg w-full shadow-2xl relative rounded-none border-t-4" style={{ borderColor: mainColor }} onClick={(e) => e.stopPropagation()}>
               <button onClick={() => setShowFicha(false)} className="absolute top-6 right-6 text-stone-300 hover:text-black"><X size={24} /></button>
-              <p className="text-[10px] tracking-[0.3em] text-stone-400 uppercase mb-4 font-bold">Especificaciones Técnicas</p>
               <h2 className="editorial-text text-4xl mb-2 tracking-tight">{propertyData.title}</h2>
               <p style={{ color: mainColor }} className="font-bold text-2xl mb-8">{propertyData.precio}</p>
               <div className="grid grid-cols-2 gap-y-8 gap-x-12 mb-10 border-y border-stone-100 py-8">
@@ -111,75 +109,60 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* HEADER */}
-      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 p-6 md:px-12 md:py-10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
-          <div className="flex-1">
-            <div className="mb-6">
-              <img src="/fotospropiedades/logo.png" alt="Logo" className="h-10 md:h-12 w-auto object-contain opacity-90" onError={(e) => e.target.style.display = 'none'} />
-            </div>
+      {/* --- HEADER CENTRADO --- */}
+      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 p-6 md:px-12 md:py-8">
+        <div className="max-w-7xl mx-auto">
+          
+          <div className="flex justify-center mb-10 pt-2">
+            <img 
+              src="/fotospropiedades/logo.png" 
+              alt="Logo" 
+              className="h-12 md:h-14 w-auto object-contain opacity-90" 
+              onError={(e) => e.target.style.display = 'none'} 
+            />
+          </div>
 
-            <div onClick={alRegresar} className="cursor-pointer group mb-4">
-              <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-3">{propertyData.title}</h1>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] md:text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+            <div className="flex-1">
+              <div onClick={alRegresar} className="cursor-pointer group mb-4">
+                <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-3">{propertyData.title}</h1>
                 
-                {/* BOTÓN UBICACIÓN MAPA */}
-                <button 
-                  onClick={(e) => { e.stopPropagation(); handleMapsClick(); }}
-                  className="flex items-center gap-1.5 group/loc transition-all hover:text-stone-800"
-                >
-                  <MapPin size={11} className="group-hover/loc:scale-110 transition-transform" /> 
-                  <span className="border-b border-stone-200 group-hover/loc:border-stone-800">{propertyData.location}</span>
-                </button>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] md:text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500">
+                  <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group/loc transition-all hover:text-black">
+                    <MapPin size={11} style={{ color: mainColor }} strokeWidth={1.5} /> 
+                    <span className="border-b border-transparent group-hover/loc:border-black">{propertyData.location}</span>
+                  </button>
+                  <span className="text-stone-200">|</span>
+                  <span className="flex items-center gap-1.5"><Tag size={11} className="text-stone-300" strokeWidth={1.5} /> <span>ID: {propertyData.refId}</span></span>
+                  <span className="text-stone-200">|</span>
+                  <button onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }} className="flex items-center gap-2 group/agent transition-all hover:text-black">
+                    <span className="text-stone-300 font-bold uppercase tracking-widest">AGENTE:</span> 
+                    <span className="border-b border-transparent group-hover/agent:border-black">{propertyData.agentName}</span>
+                    <MessageCircle size={15} style={{ color: mainColor }} strokeWidth={1.5} fill="none" className="ml-1 opacity-70 group-hover/agent:opacity-100 transition-opacity" />
+                  </button>
+                </div>
+              </div>
 
-                <span className="text-stone-200">|</span>
-                <span className="flex items-center gap-1.5"><Tag size={11} /> ID: {propertyData.refId}</span>
-                <span className="text-stone-200">|</span>
-                
-                {/* BOTÓN AGENTE INTEGRADO */}
-                <button 
-                  onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }}
-                  className="flex items-center gap-2 group/agent transition-all hover:opacity-80 active:scale-95"
-                  style={{ color: mainColor }}
-                >
-                  <span className="text-stone-400 font-bold tracking-widest">AGENTE:</span> 
-                  <span className="border-b border-transparent group-hover/agent:border-current">{propertyData.agentName}</span>
-                  <MessageCircle size={14} className="ml-1 fill-current opacity-70 group-hover/agent:opacity-100 transition-opacity" />
-                </button>
+              <div className="flex gap-8">
+                <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500 hover:text-black transition-colors">
+                   <Layout size={14} strokeWidth={1.5} /> Ver Planta
+                </motion.button>
+                <motion.button onClick={() => setShowFicha(true)} animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500 hover:text-black transition-colors">
+                   <Info size={14} strokeWidth={1.5} /> Ficha Técnica
+                </motion.button>
               </div>
             </div>
 
-            <div className="flex gap-8">
-              <motion.button 
-                onClick={() => setShowPlanta(true)} 
-                animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500 hover:text-black transition-colors"
-              >
-                 <Layout size={14} /> Ver Planta
-              </motion.button>
-              
-              <motion.button 
-                onClick={() => setShowFicha(true)} 
-                animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-                className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500 hover:text-black transition-colors"
-              >
-                 <Info size={14} /> Ficha Técnica
-              </motion.button>
+            <div className="flex bg-stone-100 p-1 border border-stone-200 w-full md:w-auto shadow-sm">
+              <button onClick={() => setViewMode('images')} className={`flex-1 md:flex-none px-8 py-2.5 text-[10px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold' : 'text-stone-400'}`} style={viewMode === 'images' ? { color: mainColor } : {}}>FOTOS</button>
+              <button onClick={() => setViewMode('video')} className={`flex-1 md:flex-none px-8 py-2.5 text-[10px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold' : 'text-stone-400'}`} style={viewMode === 'video' ? { color: mainColor } : {}}>VIDEO</button>
             </div>
-          </div>
-
-          <div className="flex bg-stone-100 p-1 border border-stone-200 w-full md:w-auto">
-            <button onClick={() => setViewMode('images')} className={`flex-1 md:flex-none px-8 py-2.5 text-[10px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold' : 'text-stone-400'}`} style={viewMode === 'images' ? { color: mainColor } : {}}>FOTOS</button>
-            <button onClick={() => setViewMode('video')} className={`flex-1 md:flex-none px-8 py-2.5 text-[10px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold' : 'text-stone-400'}`} style={viewMode === 'video' ? { color: mainColor } : {}}>VIDEO</button>
           </div>
         </div>
       </header>
 
       {/* CONTENIDO PRINCIPAL */}
       <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-12 mt-12 mb-20">
-        
         <aside className="order-2 lg:order-1 lg:col-span-1">
           <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-100 pb-2">Espacios</h3>
           <div className="grid grid-cols-1 gap-1">
@@ -194,26 +177,12 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         <section className="order-1 lg:order-2 lg:col-span-4 px-0 md:px-8">
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
-              <motion.div 
-                key={activeRoom.id} 
-                initial={{ opacity: 0, scale: 0.98 }} 
-                animate={{ opacity: 1, scale: 1 }} 
-                exit={{ opacity: 0 }} 
-                transition={{ duration: 0.8 }} 
-                className="bg-white p-4 shadow-xl border border-stone-50 relative"
-              >
+              <motion.div key={activeRoom.id} initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="bg-white p-4 shadow-xl border border-stone-50 relative">
                 <button onClick={() => setShowZoomModal(true)} className="absolute top-16 left-8 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}><Maximize2 size={16} /></button>
-                
-                {/* FRASE EDITORIAL ITÁLICA */}
                 <div className="flex items-center justify-center gap-4 mb-8 pt-4">
-                  <motion.div animate={{ x: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="flex items-center">
-                    <ArrowLeft size={16} style={{ color: mainColor }} strokeWidth={1.2} />
-                  </motion.div>
-                  <motion.p animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 4, repeat: Infinity }} className="editorial-text italic text-lg md:text-xl text-stone-500 lowercase tracking-wide">
-                    “creando un estilo de vida en cada espacio”
-                  </motion.p>
+                  <motion.div animate={{ x: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="flex items-center"><ArrowLeft size={16} style={{ color: mainColor }} strokeWidth={1.2} /></motion.div>
+                  <motion.p animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 4, repeat: Infinity }} className="editorial-text italic text-lg md:text-xl text-stone-500 lowercase tracking-wide">“creando un estilo de vida en cada espacio”</motion.p>
                 </div>
-
                 <div className="relative aspect-video w-full bg-[#f1f3f0] overflow-hidden shadow-inner border border-stone-50">
                   <ReactCompareSlider position={100} handle={<div className="relative h-full w-1 bg-white cursor-ew-resize"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2.5 shadow-2xl flex items-center justify-center"><ChevronLeft size={22} className="text-stone-300" /><ChevronRight size={22} className="text-stone-300" /></div></div>} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} />
                 </div>
