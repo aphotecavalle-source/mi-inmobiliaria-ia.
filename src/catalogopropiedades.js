@@ -9,7 +9,7 @@ export const catalogoPropiedades = {
     agentPhone: "525512345678",
     precio: "$14,500,000 MXN",
     fotoPortada: "/fotospropiedades/caratula.JPEG",
-    plantaImagen: "/fotospropiedades/planta.JPEG", // Línea vital para el plano
+    plantaImagen: "/fotospropiedades/planta.JPEG", // Asegúrate de que se llame así en GitHub
     detalles: {
       terreno: "1,200 m²",
       construccion: "450 m²",
@@ -19,29 +19,44 @@ export const catalogoPropiedades = {
     },
     rooms: [
       { 
-        id: 1, name: "Estancia Principal", 
-        before: "/fotospropiedades/Estancia1A.JPEG", after: "/fotospropiedades/estanciab2.JPEG", video: "/fotospropiedades/estancia.mp4",
-        posPlanta: { top: "25%", left: "30%", width: "12%", height: "12%" } // Coordenadas para calibrar
+        id: 1, 
+        name: "Estancia Principal", 
+        before: "/fotospropiedades/Estancia1A.JPEG", 
+        after: "/fotospropiedades/estanciab2.JPEG", 
+        video: "/fotospropiedades/estancia.mp4",
+        posPlanta: { top: "25%", left: "30%", width: "12%", height: "12%" } 
       },
       { 
-        id: 2, name: "Recámara", 
-        before: "/fotospropiedades/recamarab1.JPG", after: "/fotospropiedades/recamarab2.JPEG", video: "/fotospropiedades/recamara.mp4",
+        id: 2, 
+        name: "Recámara", 
+        before: "/fotospropiedades/recamarab1.JPG", 
+        after: "/fotospropiedades/recamarab2.JPEG", 
+        video: "/fotospropiedades/recamara.mp4",
         posPlanta: { top: "25%", left: "50%", width: "12%", height: "12%" }
       },
       { 
-        id: 3, name: "Terraza", 
-        before: "/fotospropiedades/Terraza1.JPG", after: "/fotospropiedades/Terraza2.JPEG", video: "/fotospropiedades/terraza.mp4",
+        id: 3, 
+        name: "Terraza", 
+        before: "/fotospropiedades/Terraza1.JPG", 
+        after: "/fotospropiedades/Terraza2.JPEG", 
+        video: "/fotospropiedades/terraza.mp4",
         posPlanta: { top: "25%", left: "70%", width: "12%", height: "12%" }
       },
       { 
-        id: 4, name: "Exteriores", 
-        before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", video: "/fotospropiedades/estancia.mp4",
-        posPlanta: { top: "55%", left: "30%", width: "12%", height: "12%" }
+        id: 4, 
+        name: "Exteriores", 
+        before: "/fotospropiedades/exteriores1.JPEG", 
+        after: "/fotospropiedades/exteriores2.JPEG", 
+        video: "/fotospropiedades/estancia.mp4", // Placeholder
+        posPlanta: { top: "60%", left: "30%", width: "12%", height: "12%" }
       },
       { 
-        id: 5, name: "Cocina", 
-        before: "/fotospropiedades/exteriores1.JPEG", after: "/fotospropiedades/exteriores2.JPEG", video: "/fotospropiedades/estancia.mp4",
-        posPlanta: { top: "55%", left: "50%", width: "12%", height: "12%" }
+        id: 5, 
+        name: "Cocina", 
+        before: "/fotospropiedades/exteriores1.JPEG", 
+        after: "/fotospropiedades/exteriores2.JPEG", 
+        video: "/fotospropiedades/estancia.mp4", // Placeholder
+        posPlanta: { top: "60%", left: "50%", width: "12%", height: "12%" }
       }
     ]
   },
@@ -54,6 +69,7 @@ export const catalogoPropiedades = {
     agentPhone: "525500000000",
     precio: "$22,000,000 MXN",
     fotoPortada: "/fotospropiedades/caratula.JPEG", 
+    plantaImagen: "/fotospropiedades/planta.JPEG", 
     detalles: {
       terreno: "5,000 m²",
       construccion: "800 m²",
@@ -63,8 +79,11 @@ export const catalogoPropiedades = {
     },
     rooms: [
       { 
-        id: 1, name: "Sala Principal", 
-        before: "/fotospropiedades/Estancia1A.JPEG", after: "/fotospropiedades/estanciab2.JPEG", video: "/fotospropiedades/estancia.mp4",
+        id: 1, 
+        name: "Sala Principal", 
+        before: "/fotospropiedades/Estancia1A.JPEG", 
+        after: "/fotospropiedades/estanciab2.JPEG", 
+        video: "/fotospropiedades/estancia.mp4",
         posPlanta: { top: "50%", left: "50%", width: "15%", height: "15%" }
       }
     ]
