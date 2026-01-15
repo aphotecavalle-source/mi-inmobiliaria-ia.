@@ -1,224 +1,93 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  MessageCircle, MapPin, ChevronRight, ChevronLeft, Info, X, Maximize2, Tag, Layout, ArrowLeft
-} from 'lucide-react';
-import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
+// src/catalogopropiedades.js
+export const catalogoPropiedades = {
+  
+  "bosque": {
+    title: "Casa en el Bosque",
+    location: "VALLE DE BRAVO",
+    refId: "VDB-10524",
+    agentName: "REBECA QUINTANILLA",
+    agentPhone: "525512345678",
+    precio: "$14,500,000 MXN",
+    googleMapsLink: "https://maps.app.goo.gl/oe3SXwVTgi2vXxj79", 
+    fotoPortada: "/fotospropiedades/caratula.JPEG",
+    plantaImagen: "/fotospropiedades/planta.JPEG",
+    detalles: {
+      terreno: "1,200 m²",
+      construccion: "450 m²",
+      recamaras: "4",
+      baños: "4.5",
+      descripcion: "Residencia de lujo con acabados naturales y diseño de iluminación inteligente."
+    },
+    rooms: [
+      { 
+        id: 1, 
+        name: "Estancia Principal", 
+        before: "/fotospropiedades/Estancia1A.JPEG", 
+        after: "/fotospropiedades/estanciab2.JPEG", 
+        video: "/fotospropiedades/estancia.mp4",
+        posPlanta: { top: "25.5%", left: "49.4%", width: "10%", height: "10%" } 
+      },
+      { 
+        id: 2, 
+        name: "Recámara", 
+        before: "/fotospropiedades/recamarab1.JPG", 
+        after: "/fotospropiedades/recamarab2.JPEG", 
+        video: "/fotospropiedades/recamara.mp4",
+        posPlanta: { top: "58.2%", left: "22.1%", width: "10%", height: "10%" }
+      },
+      { 
+        id: 3, 
+        name: "Terraza", 
+        before: "/fotospropiedades/Terraza1.JPG", 
+        after: "/fotospropiedades/Terraza2.JPEG", 
+        video: "/fotospropiedades/terraza.mp4",
+        posPlanta: { top: "29.8%", left: "11.1%", width: "10%", height: "10%" }
+      },
+      { 
+        id: 4, 
+        name: "Exteriores", 
+        before: "/fotospropiedades/exteriores1.JPEG", 
+        after: "/fotospropiedades/exteriores2.JPEG", 
+        video: "/fotospropiedades/estancia.mp4",
+        posPlanta: { top: "8.4%", left: "47.1%", width: "12%", height: "12%" }
+      },
+      { 
+        id: 5, 
+        name: "Cocina", 
+        before: "/fotospropiedades/exteriores1.JPEG", 
+        after: "/fotospropiedades/exteriores2.JPEG", 
+        video: "/fotospropiedades/estancia.mp4",
+        posPlanta: { top: "47.4%", left: "34.6%", width: "10%", height: "10%" }
+      }
+    ]
+  },
 
-const PropertyVisualizer = ({ propertyData, alRegresar }) => {
-  const [showFicha, setShowFicha] = useState(false);
-  const [showPlanta, setShowPlanta] = useState(false);
-  const [showZoomModal, setShowZoomModal] = useState(false);
-  const [viewMode, setViewMode] = useState('images');
-  const [activeRoom, setActiveRoom] = useState(propertyData?.rooms?.[0] || null);
-
-  const mainColor = "#87947c"; // Sage Muted
-  const softBg = "#f2f5f0";    // Pale Sage Bone
-
-  const handlePlantaClick = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    alert(`Coordenadas:\ntop: "${y.toFixed(1)}%", left: "${x.toFixed(1)}%"`);
-  };
-
-  const seleccionarDesdePlanta = (room) => {
-    setActiveRoom(room);
-    setShowZoomModal(true);
-  };
-
-  const handleWhatsApp = () => {
-    const message = encodeURIComponent(`Hola, me interesa la propiedad "${propertyData.title}" (ID: ${propertyData.refId}).`);
-    window.open(`https://wa.me/${propertyData.agentPhone}?text=${message}`, '_blank');
-  };
-
-  const handleMapsClick = () => {
-    if (propertyData.googleMapsLink) {
-      window.open(propertyData.googleMapsLink, '_blank');
-    } else {
-      alert("Enlace de mapa no disponible.");
-    }
-  };
-
-  if (!activeRoom) return <div className="p-20 text-center text-stone-400 font-bold uppercase tracking-widest">Cargando...</div>;
-
-  return (
-    <div className="min-h-screen pb-40 relative text-left" style={{ backgroundColor: softBg, fontFamily: 'var(--fuente-sans)' }}>
-      
-      {/* --- MODALES --- */}
-      <AnimatePresence>
-        {showPlanta && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowPlanta(false)}>
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white p-6 md:p-8 max-w-lg w-full shadow-2xl relative rounded-none text-center" onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => setShowPlanta(false)} className="absolute top-4 right-4 text-stone-300 hover:text-black transition-colors"><X size={24} /></button>
-              <h2 className="editorial-text text-xl mb-1 tracking-tight">Plano de Distribución</h2>
-              <p className="text-[7px] tracking-[0.3em] text-stone-400 uppercase mb-6 font-bold">Selecciona un área para ver el resultado final</p>
-              <div className="relative inline-block border border-stone-100 bg-white shadow-sm cursor-crosshair" onClick={handlePlantaClick}>
-                <img src={propertyData.plantaImagen} alt="Planta" className="max-w-full max-h-[50vh] w-auto opacity-95" />
-                {propertyData.rooms.map((room) => (
-                  <div
-                    key={`map-${room.id}`}
-                    onClick={(e) => { e.stopPropagation(); seleccionarDesdePlanta(room); }}
-                    className="absolute cursor-pointer group flex items-center justify-center border border-dashed border-stone-200 hover:border-solid hover:bg-black/10 transition-all"
-                    style={{
-                      top: room.posPlanta?.top || '0%',
-                      left: room.posPlanta?.left || '0%',
-                      width: room.posPlanta?.width || '15%',
-                      height: room.posPlanta?.height || '15%',
-                    }}
-                  >
-                    <span className="opacity-0 group-hover:opacity-100 bg-white text-[7px] px-1.5 py-0.5 font-bold shadow-md z-10 pointer-events-none uppercase border border-stone-100 whitespace-nowrap">{room.name}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {showZoomModal && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[700] bg-black/95 flex items-center justify-center p-4" onClick={() => setShowZoomModal(false)}>
-            <button className="absolute top-8 right-8 text-white"><X size={36} /></button>
-            <motion.div initial={{ scale: 0.8, y: 20 }} animate={{ scale: 1, y: 0 }} className="relative" onClick={(e) => e.stopPropagation()}>
-              <p className="absolute -top-10 left-0 text-white/70 text-[10px] tracking-[0.4em] uppercase font-bold">{activeRoom.name}</p>
-              <img src={activeRoom.after} className="max-h-[85vh] max-w-[90vw] object-contain shadow-2xl border border-white/10" alt="Zoom" />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {showFicha && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowFicha(false)}>
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white p-12 max-w-lg w-full shadow-2xl relative rounded-none border-t-4" style={{ borderColor: mainColor }} onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => setShowFicha(false)} className="absolute top-6 right-6 text-stone-300 hover:text-black"><X size={24} /></button>
-              <h2 className="editorial-text text-4xl mb-2 tracking-tight">{propertyData.title}</h2>
-              <p style={{ color: mainColor }} className="font-bold text-2xl mb-8">{propertyData.precio}</p>
-              <div className="grid grid-cols-2 gap-y-8 gap-x-12 mb-10 border-y border-stone-100 py-8">
-                <div className="border-l border-stone-100 pl-4"><p className="text-[9px] font-bold text-stone-300 mb-1 tracking-widest uppercase">Terreno</p><span className="text-stone-700 font-medium">{propertyData.detalles?.terreno}</span></div>
-                <div className="border-l border-stone-100 pl-4"><p className="text-[9px] font-bold text-stone-300 mb-1 tracking-widest uppercase">Construcción</p><span className="text-stone-700 font-medium">{propertyData.detalles?.construccion}</span></div>
-                <div className="border-l border-stone-100 pl-4"><p className="text-[9px] font-bold text-stone-300 mb-1 tracking-widest uppercase">Recámaras</p><span className="text-stone-700 font-medium">{propertyData.detalles?.recamaras}</span></div>
-                <div className="border-l border-stone-100 pl-4"><p className="text-[9px] font-bold text-stone-300 mb-1 tracking-widest uppercase">Baños</p><span className="text-stone-700 font-medium">{propertyData.detalles?.baños}</span></div>
-              </div>
-              <p className="text-[13px] text-stone-500 italic leading-relaxed font-light">"{propertyData.detalles?.descripcion}"</p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* --- HEADER CENTRADO --- */}
-      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 p-6 md:px-12 md:py-8">
-        <div className="max-w-7xl mx-auto">
-          
-          {/* LOGO CENTRADO ARRIBA */}
-          <div className="flex justify-center mb-10 pt-2">
-            <img 
-              src="/fotospropiedades/logo.png" 
-              alt="Hagerman Home Staging" 
-              className="h-12 md:h-14 w-auto object-contain opacity-90" 
-              onError={(e) => e.target.style.display = 'none'} 
-            />
-          </div>
-
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
-            <div className="flex-1">
-              <div onClick={alRegresar} className="cursor-pointer group mb-4">
-                <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-3">{propertyData.title}</h1>
-                
-                {/* META DATA CON ICONOS EN TRAZO */}
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] md:text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500">
-                  
-                  {/* UBICACIÓN */}
-                  <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group/loc transition-all hover:text-black">
-                    <MapPin size={11} style={{ color: mainColor }} strokeWidth={1.5} /> 
-                    <span className="border-b border-transparent group-hover/loc:border-black">{propertyData.location}</span>
-                  </button>
-
-                  <span className="text-stone-200">|</span>
-                  
-                  {/* ID */}
-                  <span className="flex items-center gap-1.5">
-                    <Tag size={11} className="text-stone-300" strokeWidth={1.5} /> 
-                    <span>ID: {propertyData.refId}</span>
-                  </span>
-
-                  <span className="text-stone-200">|</span>
-                  
-                  {/* AGENTE (ICONO WHATSAPP EN TRAZO) */}
-                  <button onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }} className="flex items-center gap-2 group/agent transition-all hover:text-black">
-                    <span className="text-stone-300">AGENTE:</span> 
-                    <span className="border-b border-transparent group-hover/agent:border-black">{propertyData.agentName}</span>
-                    <MessageCircle 
-                      size={15} 
-                      style={{ color: mainColor }} 
-                      strokeWidth={1.5}
-                      fill="none"
-                      className="ml-1 opacity-70 group-hover/agent:opacity-100 transition-opacity" 
-                    />
-                  </button>
-                </div>
-              </div>
-
-              {/* BOTONES INTERACTIVOS */}
-              <div className="flex gap-8">
-                <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500 hover:text-black transition-colors">
-                   <Layout size={14} strokeWidth={1.5} /> Ver Planta
-                </motion.button>
-                <motion.button onClick={() => setShowFicha(true)} animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500 hover:text-black transition-colors">
-                   <Info size={14} strokeWidth={1.5} /> Ficha Técnica
-                </motion.button>
-              </div>
-            </div>
-
-            <div className="flex bg-stone-100 p-1 border border-stone-200 w-full md:w-auto shadow-sm">
-              <button onClick={() => setViewMode('images')} className={`flex-1 md:flex-none px-8 py-2.5 text-[10px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold' : 'text-stone-400'}`} style={viewMode === 'images' ? { color: mainColor } : {}}>FOTOS</button>
-              <button onClick={() => setViewMode('video')} className={`flex-1 md:flex-none px-8 py-2.5 text-[10px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold' : 'text-stone-400'}`} style={viewMode === 'video' ? { color: mainColor } : {}}>VIDEO</button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* --- CONTENIDO PRINCIPAL --- */}
-      <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-12 mt-12 mb-20">
-        <aside className="order-2 lg:order-1 lg:col-span-1">
-          <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-100 pb-2">Espacios</h3>
-          <div className="grid grid-cols-1 gap-1">
-            {propertyData.rooms.map((room) => (
-              <button key={room.id} onClick={() => { setActiveRoom(room); setViewMode('images'); }} className={`w-full text-left p-4 transition-all duration-500 ${activeRoom.id === room.id ? 'bg-white shadow-md border-l-4' : 'text-stone-700 hover:text-stone-900 font-medium'}`} style={activeRoom.id === room.id ? { color: mainColor, borderColor: mainColor } : {}}>
-                <div className="flex justify-between items-center"><span className="text-[12px] tracking-widest uppercase">{room.name}</span><ChevronRight size={13} className={activeRoom.id === room.id ? 'opacity-100' : 'opacity-20'} /></div>
-              </button>
-            ))}
-          </div>
-        </aside>
-
-        <section className="order-1 lg:order-2 lg:col-span-4 px-0 md:px-8">
-          <AnimatePresence mode="wait">
-            {viewMode === 'images' ? (
-              <motion.div key={activeRoom.id} initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="bg-white p-4 shadow-xl border border-stone-50 relative">
-                <button onClick={() => setShowZoomModal(true)} className="absolute top-16 left-8 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}><Maximize2 size={16} /></button>
-                <div className="flex items-center justify-center gap-4 mb-8 pt-4">
-                  <motion.div animate={{ x: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="flex items-center">
-                    <ArrowLeft size={16} style={{ color: mainColor }} strokeWidth={1.2} />
-                  </motion.div>
-                  <motion.p animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 4, repeat: Infinity }} className="editorial-text italic text-lg md:text-xl text-stone-500 lowercase tracking-wide">
-                    “creando un estilo de vida en cada espacio”
-                  </motion.p>
-                </div>
-                <div className="relative aspect-video w-full bg-[#f1f3f0] overflow-hidden shadow-inner border border-stone-50">
-                  <ReactCompareSlider position={100} handle={<div className="relative h-full w-1 bg-white cursor-ew-resize"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2.5 shadow-2xl flex items-center justify-center"><ChevronLeft size={22} className="text-stone-300" /><ChevronRight size={22} className="text-stone-300" /></div></div>} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} />
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div key={activeRoom.id + "vid"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-black aspect-video border-[8px] border-white shadow-2xl">
-                <video key={activeRoom.video} src={activeRoom.video} controls autoPlay muted playsInline className="w-full h-full object-contain" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </section>
-      </main>
-    </div>
-  );
+  "rancho": {
+    title: "Rancho Avándaro",
+    location: "AVÁNDARO",
+    refId: "AV-9988",
+    agentName: "MARIANA HAGERMAN",
+    agentPhone: "525500000000",
+    precio: "$22,000,000 MXN",
+    googleMapsLink: "", 
+    fotoPortada: "/fotospropiedades/caratula.JPEG", 
+    plantaImagen: "/fotospropiedades/planta.JPEG", 
+    detalles: {
+      terreno: "5,000 m²",
+      construccion: "800 m²",
+      recamaras: "6",
+      baños: "6",
+      descripcion: "Espectacular rancho con caballerizas y vistas al lago."
+    },
+    rooms: [
+      { 
+        id: 1, 
+        name: "Sala Principal", 
+        before: "/fotospropiedades/Estancia1A.JPEG", 
+        after: "/fotospropiedades/estanciab2.JPEG", 
+        video: "/fotospropiedades/estancia.mp4",
+        posPlanta: { top: "50%", left: "50%", width: "15%", height: "15%" }
+      }
+    ]
+  }
 };
-
-export default PropertyVisualizer;
