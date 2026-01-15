@@ -6,8 +6,10 @@ export const catalogoPropiedades = {
     location: "VALLE DE BRAVO",
     refId: "VDB-10524",
     agentName: "REBECA QUINTANILLA",
-    agentPhone: "525512345678",
+    agentPhone: "525512345678", // Pon aquí el cel del agente (solo números)
     precio: "$14,500,000 MXN",
+    // COPIA Y PEGA EL LINK DE GOOGLE MAPS AQUÍ:
+    googleMapsLink: "https://www.google.com/maps/@19.1897,-100.1264,303m/data=!3m1!1e3", 
     fotoPortada: "/fotospropiedades/caratula.JPEG",
     plantaImagen: "/fotospropiedades/planta.JPEG",
     detalles: {
@@ -40,7 +42,7 @@ export const catalogoPropiedades = {
         before: "/fotospropiedades/Terraza1.JPG", 
         after: "/fotospropiedades/Terraza2.JPEG", 
         video: "/fotospropiedades/terraza.mp4",
-        posPlanta: { top: "29.8%", left: "11.1%", width: "10%", height: "10%" } // Actualizado
+        posPlanta: { top: "29.8%", left: "11.1%", width: "10%", height: "10%" }
       },
       { 
         id: 4, 
@@ -48,7 +50,7 @@ export const catalogoPropiedades = {
         before: "/fotospropiedades/exteriores1.JPEG", 
         after: "/fotospropiedades/exteriores2.JPEG", 
         video: "/fotospropiedades/estancia.mp4",
-        posPlanta: { top: "8.4%", left: "47.1%", width: "12%", height: "12%" } // Actualizado
+        posPlanta: { top: "8.4%", left: "47.1%", width: "12%", height: "12%" }
       },
       { 
         id: 5, 
@@ -68,6 +70,7 @@ export const catalogoPropiedades = {
     agentName: "MARIANA HAGERMAN",
     agentPhone: "525500000000",
     precio: "$22,000,000 MXN",
+    googleMapsLink: "", 
     fotoPortada: "/fotospropiedades/caratula.JPEG", 
     plantaImagen: "/fotospropiedades/planta.JPEG", 
     detalles: {
