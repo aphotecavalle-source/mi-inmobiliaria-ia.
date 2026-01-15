@@ -12,8 +12,8 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   const [viewMode, setViewMode] = useState('images');
   const [activeRoom, setActiveRoom] = useState(propertyData?.rooms?.[0] || null);
 
-  const mainColor = "#87947c"; // Sage Muted (Tu color de marca)
-  const softBg = "#f2f5f0";    // Nuevo fondo: Pale Sage Bone
+  const mainColor = "#87947c"; // Sage Muted
+  const softBg = "#f2f5f0";    // Pale Sage Bone
 
   const handlePlantaClick = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -32,12 +32,20 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
     window.open(`https://wa.me/${propertyData.agentPhone}?text=${message}`, '_blank');
   };
 
+  const handleMapsClick = () => {
+    if (propertyData.googleMapsLink) {
+      window.open(propertyData.googleMapsLink, '_blank');
+    } else {
+      alert("Enlace de mapa no disponible.");
+    }
+  };
+
   if (!activeRoom) return <div className="p-20 text-center text-stone-400 font-bold uppercase tracking-widest">Cargando...</div>;
 
   return (
     <div className="min-h-screen pb-40 relative text-left" style={{ backgroundColor: softBg, fontFamily: 'var(--fuente-sans)' }}>
       
-      {/* MODAL PLANTA INTERACTIVA */}
+      {/* MODAL PLANTA INTERACTIVA (Z-600) */}
       <AnimatePresence>
         {showPlanta && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowPlanta(false)}>
@@ -45,6 +53,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               <button onClick={() => setShowPlanta(false)} className="absolute top-4 right-4 text-stone-300 hover:text-black transition-colors"><X size={24} /></button>
               <h2 className="editorial-text text-xl mb-1 tracking-tight">Plano de Distribución</h2>
               <p className="text-[7px] tracking-[0.3em] text-stone-400 uppercase mb-6 font-bold">Selecciona un área para ver el resultado final</p>
+              
               <div className="relative inline-block border border-stone-100 bg-white shadow-sm cursor-crosshair" onClick={handlePlantaClick}>
                 <img src={propertyData.plantaImagen} alt="Planta" className="max-w-full max-h-[50vh] w-auto opacity-95" />
                 {propertyData.rooms.map((room) => (
@@ -68,7 +77,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* MODAL ZOOM */}
+      {/* MODAL ZOOM (Z-700 - ENCIMA DE LA PLANTA) */}
       <AnimatePresence>
         {showZoomModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[700] bg-black/95 flex items-center justify-center p-4" onClick={() => setShowZoomModal(false)}>
@@ -113,17 +122,27 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
             <div onClick={alRegresar} className="cursor-pointer group mb-4">
               <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-3">{propertyData.title}</h1>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] md:text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400">
-                <span className="flex items-center gap-1.5"><MapPin size={11} /> {propertyData.location}</span>
+                
+                {/* BOTÓN UBICACIÓN MAPA */}
+                <button 
+                  onClick={(e) => { e.stopPropagation(); handleMapsClick(); }}
+                  className="flex items-center gap-1.5 group/loc transition-all hover:text-stone-800"
+                >
+                  <MapPin size={11} className="group-hover/loc:scale-110 transition-transform" /> 
+                  <span className="border-b border-stone-200 group-hover/loc:border-stone-800">{propertyData.location}</span>
+                </button>
+
                 <span className="text-stone-200">|</span>
                 <span className="flex items-center gap-1.5"><Tag size={11} /> ID: {propertyData.refId}</span>
                 <span className="text-stone-200">|</span>
                 
+                {/* BOTÓN AGENTE INTEGRADO */}
                 <button 
                   onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }}
                   className="flex items-center gap-2 group/agent transition-all hover:opacity-80 active:scale-95"
                   style={{ color: mainColor }}
                 >
-                  <span className="text-stone-400 font-bold uppercase tracking-widest">AGENTE:</span> 
+                  <span className="text-stone-400 font-bold tracking-widest">AGENTE:</span> 
                   <span className="border-b border-transparent group-hover/agent:border-current">{propertyData.agentName}</span>
                   <MessageCircle size={14} className="ml-1 fill-current opacity-70 group-hover/agent:opacity-100 transition-opacity" />
                 </button>
@@ -185,6 +204,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               >
                 <button onClick={() => setShowZoomModal(true)} className="absolute top-16 left-8 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}><Maximize2 size={16} /></button>
                 
+                {/* FRASE EDITORIAL ITÁLICA */}
                 <div className="flex items-center justify-center gap-4 mb-8 pt-4">
                   <motion.div animate={{ x: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="flex items-center">
                     <ArrowLeft size={16} style={{ color: mainColor }} strokeWidth={1.2} />
