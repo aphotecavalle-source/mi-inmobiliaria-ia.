@@ -37,21 +37,16 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   return (
     <div className="min-h-screen bg-[#f8faf9] text-[#2a2a2a] pb-32 relative text-left" style={{ fontFamily: 'var(--fuente-sans)' }}>
       
-      {/* --- MODAL PLANTA INTERACTIVA (ULTRA PEQUEÑA Y ELEGANTE) --- */}
+      {/* MODAL PLANTA INTERACTIVA */}
       <AnimatePresence>
         {showPlanta && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowPlanta(false)}>
-            {/* max-w-lg lo hace mucho más pequeño */}
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white p-6 md:p-8 max-w-lg w-full shadow-2xl relative rounded-none text-center" onClick={(e) => e.stopPropagation()}>
               <button onClick={() => setShowPlanta(false)} className="absolute top-4 right-4 text-stone-300 hover:text-black transition-colors"><X size={24} /></button>
-              
               <h2 className="editorial-text text-xl mb-1 tracking-tight">PLANO DE DISTRIBUCIÓN</h2>
               <p className="text-[7px] tracking-[0.3em] text-stone-400 uppercase mb-6 font-bold">Selecciona un área para visualizar</p>
-              
               <div className="relative inline-block border border-stone-100 bg-white shadow-sm cursor-crosshair" onClick={handlePlantaClick}>
-                {/* max-h-[50vh] asegura que no crezca demasiado hacia abajo */}
                 <img src={propertyData.plantaImagen} alt="Planta" className="max-w-full max-h-[50vh] w-auto opacity-95" />
-                
                 {propertyData.rooms.map((room) => (
                   <div
                     key={`map-${room.id}`}
@@ -73,7 +68,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* MODAL FICHA TÉCNICA (Se mantiene igual) */}
+      {/* MODAL FICHA TÉCNICA */}
       <AnimatePresence>
         {showFicha && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowFicha(false)}>
@@ -127,12 +122,22 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
 
       {/* CONTENIDO PRINCIPAL */}
       <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-8 mt-6">
+        
+        {/* COLUMNA ESPACIOS (MEJORADA) */}
         <aside className="order-2 lg:order-1 lg:col-span-1">
-          <h3 className="editorial-text text-xl mb-6 text-stone-800">Espacios</h3>
+          <h3 className="editorial-text text-2xl mb-8 text-stone-900">Espacios</h3>
           <div className="grid grid-cols-1 gap-1">
             {propertyData.rooms.map((room) => (
-              <button key={room.id} onClick={() => { setActiveRoom(room); setViewMode('images'); }} className={`w-full text-left p-4 border-b border-stone-100 transition-all ${activeRoom.id === room.id ? 'bg-white shadow-md' : 'text-stone-400 hover:text-stone-900'}`} style={activeRoom.id === room.id ? { color: mainColor, borderLeft: `3px solid ${mainColor}`, fontWeight: '600' } : {}}>
-                <div className="flex justify-between items-center"><span className="text-[11px] tracking-widest uppercase">{room.name}</span><ChevronRight size={12} /></div>
+              <button 
+                key={room.id} 
+                onClick={() => { setActiveRoom(room); setViewMode('images'); }} 
+                className={`w-full text-left p-4 border-b border-stone-100 transition-all ${activeRoom.id === room.id ? 'bg-white shadow-md' : 'text-stone-700 hover:text-stone-900 font-medium'}`} 
+                style={activeRoom.id === room.id ? { color: mainColor, borderLeft: `4px solid ${mainColor}`, fontWeight: '700' } : {}}
+              >
+                <div className="flex justify-between items-center">
+                  <span className="text-[12px] tracking-widest uppercase">{room.name}</span>
+                  <ChevronRight size={13} />
+                </div>
               </button>
             ))}
           </div>
@@ -157,7 +162,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </section>
       </main>
 
-      {/* BOTÓN CONTACTAR - ULTRA FINO Y DISCRETO */}
+      {/* BOTÓN CONTACTAR - DISEÑO FINO */}
       <button 
         onClick={handleWhatsApp} 
         style={{ backgroundColor: mainColor }} 
