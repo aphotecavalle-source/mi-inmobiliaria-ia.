@@ -43,7 +43,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowPlanta(false)}>
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white p-6 md:p-8 max-w-lg w-full shadow-2xl relative rounded-none text-center" onClick={(e) => e.stopPropagation()}>
               <button onClick={() => setShowPlanta(false)} className="absolute top-4 right-4 text-stone-300 hover:text-black transition-colors"><X size={24} /></button>
-              <h2 className="editorial-text text-xl mb-1 tracking-tight">PLANO DE DISTRIBUCIÓN</h2>
+              <h2 className="editorial-text text-xl mb-1 tracking-tight">Plano de Distribución</h2>
               <p className="text-[7px] tracking-[0.3em] text-stone-400 uppercase mb-6 font-bold">Selecciona un área para visualizar</p>
               <div className="relative inline-block border border-stone-100 bg-white shadow-sm cursor-crosshair" onClick={handlePlantaClick}>
                 <img src={propertyData.plantaImagen} alt="Planta" className="max-w-full max-h-[50vh] w-auto opacity-95" />
@@ -74,7 +74,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowFicha(false)}>
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white p-10 max-w-lg w-full shadow-2xl relative rounded-none" onClick={(e) => e.stopPropagation()}>
               <button onClick={() => setShowFicha(false)} className="absolute top-4 right-4 text-stone-400 hover:text-black"><X size={24} /></button>
-              <h2 className="editorial-text text-3xl mb-2 uppercase tracking-tight">{propertyData.title}</h2>
+              <h2 className="editorial-text text-3xl mb-2 tracking-tight">{propertyData.title}</h2>
               <p style={{ color: mainColor }} className="font-bold text-xl mb-6">{propertyData.precio}</p>
               <div className="grid grid-cols-2 gap-6 mb-8 border-y border-stone-100 py-6 text-[10px] uppercase tracking-wider">
                 <div><p className="text-[8px] font-bold text-stone-300 mb-1 tracking-widest uppercase">Terreno</p>{propertyData.detalles?.terreno}</div>
@@ -88,28 +88,30 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* HEADER */}
+      {/* HEADER - TÍTULO CON AIRE EDITORIAL */}
       <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 p-6 md:px-12 md:py-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div className="flex-1">
             <div onClick={alRegresar} className="cursor-pointer group mb-4">
-              <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity uppercase tracking-tight leading-tight mb-2">
+              {/* QUITAMOS EL UPPERCASE PARA DAR MÁS AIRE */}
+              <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-3">
                 {propertyData.title}
               </h1>
+              
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] md:text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400">
                 <span className="flex items-center gap-1.5"><MapPin size={11} /> {propertyData.location}</span>
                 <span className="text-stone-200">|</span>
                 <span className="flex items-center gap-1.5"><Tag size={11} /> ID: {propertyData.refId}</span>
                 <span className="text-stone-200">|</span>
-                <span style={{ color: mainColor }}>AGENTE: {propertyData.agentName}</span>
+                <span style={{ color: mainColor }}>Agente: {propertyData.agentName}</span>
               </div>
             </div>
             <div className="flex gap-6">
               <button onClick={() => setShowPlanta(true)} className="flex items-center gap-2 text-[9px] font-bold tracking-[0.2em] uppercase text-stone-500 hover:text-black transition-colors">
-                 <Layout size={13} /> VER PLANTA
+                 <Layout size={13} /> Ver Planta
               </button>
               <button onClick={() => setShowFicha(true)} className="flex items-center gap-2 text-[9px] font-bold tracking-[0.2em] uppercase text-stone-500 hover:text-black transition-colors">
-                 <Info size={13} /> FICHA TÉCNICA
+                 <Info size={13} /> Ficha Técnica
               </button>
             </div>
           </div>
@@ -122,8 +124,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
 
       {/* CONTENIDO PRINCIPAL */}
       <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-8 mt-6">
-        
-        {/* COLUMNA ESPACIOS (MEJORADA) */}
         <aside className="order-2 lg:order-1 lg:col-span-1">
           <h3 className="editorial-text text-2xl mb-8 text-stone-900">Espacios</h3>
           <div className="grid grid-cols-1 gap-1">
