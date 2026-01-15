@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  MessageCircle, MapPin, ChevronRight, Info, X, Maximize2, Tag, Layout
+  MessageCircle, MapPin, ChevronRight, ChevronLeft, Info, X, Maximize2, Tag, Layout
 } from 'lucide-react';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
 
@@ -37,7 +37,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   return (
     <div className="min-h-screen bg-[#f8faf9] text-[#2a2a2a] pb-32 relative text-left" style={{ fontFamily: 'var(--fuente-sans)' }}>
       
-      {/* MODAL PLANTA INTERACTIVA */}
+      {/* --- MODAL PLANTA INTERACTIVA --- */}
       <AnimatePresence>
         {showPlanta && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowPlanta(false)}>
@@ -68,7 +68,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* MODAL FICHA TÉCNICA */}
+      {/* --- MODAL FICHA TÉCNICA --- */}
       <AnimatePresence>
         {showFicha && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowFicha(false)}>
@@ -88,16 +88,14 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* HEADER - TÍTULO CON AIRE EDITORIAL */}
+      {/* --- HEADER --- */}
       <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 p-6 md:px-12 md:py-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div className="flex-1">
             <div onClick={alRegresar} className="cursor-pointer group mb-4">
-              {/* QUITAMOS EL UPPERCASE PARA DAR MÁS AIRE */}
               <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-3">
                 {propertyData.title}
               </h1>
-              
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] md:text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400">
                 <span className="flex items-center gap-1.5"><MapPin size={11} /> {propertyData.location}</span>
                 <span className="text-stone-200">|</span>
@@ -122,7 +120,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </div>
       </header>
 
-      {/* CONTENIDO PRINCIPAL */}
+      {/* --- CONTENIDO PRINCIPAL --- */}
       <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-8 mt-6">
         <aside className="order-2 lg:order-1 lg:col-span-1">
           <h3 className="editorial-text text-2xl mb-8 text-stone-900">Espacios</h3>
@@ -149,8 +147,21 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               <motion.div key={activeRoom.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white p-2 shadow-2xl border border-stone-50 relative">
                 <button onClick={() => setShowZoomModal(true)} className="absolute top-14 left-6 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}><Maximize2 size={16} /></button>
                 <p className="text-[10px] text-center mb-4 font-bold tracking-[0.4em] uppercase" style={{ color: mainColor }}>← Un espacio pensado para ti</p>
+                
                 <div className="relative aspect-video w-full bg-[#f8f8f8] overflow-hidden">
-                  <ReactCompareSlider position={99} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} />
+                  <ReactCompareSlider 
+                    position={100} // Totalmente a la derecha (viendo el Antes)
+                    handle={
+                      <div className="relative h-full w-1 bg-white cursor-ew-resize">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2.5 shadow-xl flex items-center justify-center">
+                          <ChevronLeft size={22} className="text-stone-400" />
+                          <ChevronRight size={22} className="text-stone-400" />
+                        </div>
+                      </div>
+                    }
+                    itemOne={<ReactCompareSliderImage src={activeRoom.before} />} 
+                    itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} 
+                  />
                 </div>
               </motion.div>
             ) : (
@@ -162,7 +173,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </section>
       </main>
 
-      {/* BOTÓN CONTACTAR - DISEÑO FINO */}
+      {/* --- BOTÓN CONTACTAR --- */}
       <button 
         onClick={handleWhatsApp} 
         style={{ backgroundColor: mainColor }} 
@@ -172,7 +183,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         <span className="hidden md:inline">Contactar Agente</span>
       </button>
 
-      {/* ZOOM MODAL */}
+      {/* MODAL ZOOM */}
       <AnimatePresence>
         {showZoomModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/95 flex items-center justify-center p-4" onClick={() => setShowZoomModal(false)}>
