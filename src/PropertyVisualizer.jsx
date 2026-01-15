@@ -117,13 +117,13 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                 <span className="flex items-center gap-1.5"><Tag size={11} /> ID: {propertyData.refId}</span>
                 <span className="text-stone-200">|</span>
                 
-                {/* BOTÓN AGENTE INTEGRADO */}
+                {/* BOTÓN AGENTE INTEGRADO - "AGENTE" EN MAYÚSCULAS */}
                 <button 
                   onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }}
                   className="flex items-center gap-2 group/agent transition-all hover:opacity-80 active:scale-95"
                   style={{ color: mainColor }}
                 >
-                  <span className="text-stone-400">Agente:</span> 
+                  <span className="text-stone-400">AGENTE:</span> 
                   <span className="border-b border-transparent group-hover/agent:border-current">{propertyData.agentName}</span>
                   <MessageCircle size={14} className="ml-1 fill-current opacity-70 group-hover/agent:opacity-100 transition-opacity" />
                 </button>
