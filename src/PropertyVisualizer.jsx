@@ -37,18 +37,21 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   return (
     <div className="min-h-screen bg-[#f8faf9] text-[#2a2a2a] pb-32 relative text-left" style={{ fontFamily: 'var(--fuente-sans)' }}>
       
-      {/* MODAL PLANTA INTERACTIVA (MÁS PEQUEÑA) */}
+      {/* --- MODAL PLANTA INTERACTIVA (ULTRA PEQUEÑA Y ELEGANTE) --- */}
       <AnimatePresence>
         {showPlanta && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] bg-black/80 backdrop-blur-md flex items-center justify-center p-4" onClick={() => setShowPlanta(false)}>
-            {/* max-w-2xl para que la planta sea más pequeña y elegante */}
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white p-6 md:p-10 max-w-2xl w-full shadow-2xl relative rounded-none text-center" onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => setShowPlanta(false)} className="absolute top-4 right-4 text-stone-400 hover:text-black"><X size={28} /></button>
-              <h2 className="editorial-text text-xl mb-1">PLANO INTERACTIVO</h2>
-              <p className="text-[8px] tracking-[0.2em] text-stone-400 uppercase mb-6 font-bold">Haz clic para visualizar o calibrar espacios (incluyendo el jardín)</p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowPlanta(false)}>
+            {/* max-w-lg lo hace mucho más pequeño */}
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white p-6 md:p-8 max-w-lg w-full shadow-2xl relative rounded-none text-center" onClick={(e) => e.stopPropagation()}>
+              <button onClick={() => setShowPlanta(false)} className="absolute top-4 right-4 text-stone-300 hover:text-black transition-colors"><X size={24} /></button>
               
-              <div className="relative inline-block border border-stone-50 bg-white shadow-sm cursor-crosshair overflow-hidden" onClick={handlePlantaClick}>
-                <img src={propertyData.plantaImagen} alt="Planta" className="max-w-full h-auto opacity-95" />
+              <h2 className="editorial-text text-xl mb-1 tracking-tight">PLANO DE DISTRIBUCIÓN</h2>
+              <p className="text-[7px] tracking-[0.3em] text-stone-400 uppercase mb-6 font-bold">Selecciona un área para visualizar</p>
+              
+              <div className="relative inline-block border border-stone-100 bg-white shadow-sm cursor-crosshair" onClick={handlePlantaClick}>
+                {/* max-h-[50vh] asegura que no crezca demasiado hacia abajo */}
+                <img src={propertyData.plantaImagen} alt="Planta" className="max-w-full max-h-[50vh] w-auto opacity-95" />
+                
                 {propertyData.rooms.map((room) => (
                   <div
                     key={`map-${room.id}`}
@@ -70,7 +73,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* MODAL FICHA TÉCNICA */}
+      {/* MODAL FICHA TÉCNICA (Se mantiene igual) */}
       <AnimatePresence>
         {showFicha && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowFicha(false)}>
@@ -154,13 +157,13 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </section>
       </main>
 
-      {/* BOTÓN WHATSAPP - ULTRA FINO Y DISCRETO */}
+      {/* BOTÓN CONTACTAR - ULTRA FINO Y DISCRETO */}
       <button 
         onClick={handleWhatsApp} 
         style={{ backgroundColor: mainColor }} 
-        className="fixed bottom-6 right-6 z-[100] text-white py-2 px-4 shadow-sm flex items-center gap-2 active:scale-95 transition-all hover:brightness-95 tracking-[0.3em] font-medium text-[8px] uppercase rounded-none"
+        className="fixed bottom-6 right-6 z-[100] text-white py-1.5 px-4 shadow-sm flex items-center gap-2 active:scale-95 transition-all hover:brightness-95 tracking-[0.3em] font-medium text-[7.5px] uppercase rounded-none"
       >
-        <MessageCircle size={14} fill="currentColor" /> 
+        <MessageCircle size={12} fill="currentColor" /> 
         <span className="hidden md:inline">Contactar Agente</span>
       </button>
 
