@@ -89,20 +89,27 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* HEADER */}
+      {/* HEADER CORREGIDO */}
       <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-100 p-6 md:px-12 md:py-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-          <div onClick={alRegresar} className="cursor-pointer group flex-1">
-            <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity uppercase tracking-tight leading-tight mb-4">{propertyData.title}</h1>
-            
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] md:text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400 mb-5">
-              <span className="flex items-center gap-1.5"><MapPin size={11} /> {propertyData.location}</span>
-              <span className="text-stone-200">|</span>
-              <span className="flex items-center gap-1.5"><Tag size={11} /> ID: {propertyData.refId}</span>
-              <span className="text-stone-200">|</span>
-              <span style={{ color: mainColor }}>AGENTE: {propertyData.agentName}</span>
+          
+          <div className="flex-1">
+            {/* Solo el título y los datos activan el regreso */}
+            <div onClick={alRegresar} className="cursor-pointer group mb-4">
+              <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity uppercase tracking-tight leading-tight mb-2">
+                {propertyData.title}
+              </h1>
+              
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] md:text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400">
+                <span className="flex items-center gap-1.5"><MapPin size={11} /> {propertyData.location}</span>
+                <span className="text-stone-200">|</span>
+                <span className="flex items-center gap-1.5"><Tag size={11} /> ID: {propertyData.refId}</span>
+                <span className="text-stone-200">|</span>
+                <span style={{ color: mainColor }}>AGENTE: {propertyData.agentName}</span>
+              </div>
             </div>
 
+            {/* BOTONES FUERA DEL ÁREA DE REGRESO PARA QUE NO FALLEN */}
             <div className="flex gap-6">
               <button onClick={() => setShowPlanta(true)} className="flex items-center gap-2 text-[9px] font-bold tracking-[0.2em] uppercase text-stone-500 hover:text-black transition-colors">
                  <Layout size={13} /> VER PLANTA
@@ -152,13 +159,13 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </section>
       </main>
 
-      {/* BOTÓN CONTACTAR - DISEÑO FINO Y DELGADO */}
+      {/* BOTÓN CONTACTAR - AÚN MÁS DELGADO Y REFINADO */}
       <button 
         onClick={handleWhatsApp} 
         style={{ backgroundColor: mainColor }} 
-        className="fixed bottom-6 right-6 z-[100] text-white py-2.5 px-6 shadow-lg flex items-center gap-2.5 active:scale-95 transition-all hover:brightness-95 tracking-[0.25em] font-medium text-[9px] uppercase rounded-none"
+        className="fixed bottom-6 right-6 z-[100] text-white py-2 px-5 shadow-lg flex items-center gap-2 active:scale-95 transition-all hover:brightness-95 tracking-[0.2em] font-medium text-[8.5px] uppercase rounded-none"
       >
-        <MessageCircle size={16} fill="currentColor" /> 
+        <MessageCircle size={14} fill="currentColor" /> 
         <span className="hidden md:inline">Contactar Agente</span>
       </button>
 
@@ -167,7 +174,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         {showZoomModal && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/95 flex items-center justify-center p-4" onClick={() => setShowZoomModal(false)}>
             <button className="absolute top-8 right-8 text-white"><X size={36} /></button>
-            <img src={activeRoom.after} className="max-h-[90vh] max-w-[90vw] object-contain shadow-2xl rounded-none" alt="Zoom" />
+            <img src={activeRoom.after} className="max-h-[90vh] max-w-[90vw] object-contain shadow-2xl" alt="Zoom" />
           </motion.div>
         )}
       </AnimatePresence>
