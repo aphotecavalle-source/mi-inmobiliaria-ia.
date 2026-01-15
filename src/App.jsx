@@ -52,7 +52,7 @@ function App() {
                     {data.location}
                   </p>
                   <p className="small-detail" style={{ fontSize: '0.7rem', opacity: 0.7 }}>
-                    AGENT: {data.agentName}
+                    AGENTE: {data.agentName}
                   </p>
                   <p className="small-detail" style={{ fontSize: '0.65rem', opacity: 0.5 }}>
                     ID: {data.refId}
