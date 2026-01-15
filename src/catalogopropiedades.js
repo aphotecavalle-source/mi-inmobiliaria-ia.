@@ -40,7 +40,7 @@ export const catalogoPropiedades = {
         before: "/fotospropiedades/Terraza1.JPG", 
         after: "/fotospropiedades/Terraza2.JPEG", 
         video: "/fotospropiedades/terraza.mp4",
-        posPlanta: { top: "36.5%", left: "17.4%", width: "10%", height: "10%" }
+        posPlanta: { top: "29.8%", left: "11.1%", width: "10%", height: "10%" } // Actualizado
       },
       { 
         id: 4, 
@@ -48,7 +48,7 @@ export const catalogoPropiedades = {
         before: "/fotospropiedades/exteriores1.JPEG", 
         after: "/fotospropiedades/exteriores2.JPEG", 
         video: "/fotospropiedades/estancia.mp4",
-        posPlanta: { top: "9.6%", left: "56.1%", width: "12%", height: "12%" }
+        posPlanta: { top: "8.4%", left: "47.1%", width: "12%", height: "12%" } // Actualizado
       },
       { 
         id: 5, 
