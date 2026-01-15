@@ -9,7 +9,7 @@ export const catalogoPropiedades = {
     agentPhone: "525512345678",
     precio: "$14,500,000 MXN",
     fotoPortada: "/fotospropiedades/caratula.JPEG",
-    plantaImagen: "/fotospropiedades/planta.JPEG", // Asegúrate de que se llame así en GitHub
+    plantaImagen: "/fotospropiedades/planta.JPEG",
     detalles: {
       terreno: "1,200 m²",
       construccion: "450 m²",
@@ -24,7 +24,7 @@ export const catalogoPropiedades = {
         before: "/fotospropiedades/Estancia1A.JPEG", 
         after: "/fotospropiedades/estanciab2.JPEG", 
         video: "/fotospropiedades/estancia.mp4",
-        posPlanta: { top: "25%", left: "30%", width: "12%", height: "12%" } 
+        posPlanta: { top: "25.5%", left: "49.4%", width: "10%", height: "10%" } 
       },
       { 
         id: 2, 
@@ -32,7 +32,7 @@ export const catalogoPropiedades = {
         before: "/fotospropiedades/recamarab1.JPG", 
         after: "/fotospropiedades/recamarab2.JPEG", 
         video: "/fotospropiedades/recamara.mp4",
-        posPlanta: { top: "25%", left: "50%", width: "12%", height: "12%" }
+        posPlanta: { top: "58.2%", left: "22.1%", width: "10%", height: "10%" }
       },
       { 
         id: 3, 
@@ -40,23 +40,23 @@ export const catalogoPropiedades = {
         before: "/fotospropiedades/Terraza1.JPG", 
         after: "/fotospropiedades/Terraza2.JPEG", 
         video: "/fotospropiedades/terraza.mp4",
-        posPlanta: { top: "25%", left: "70%", width: "12%", height: "12%" }
+        posPlanta: { top: "36.5%", left: "17.4%", width: "10%", height: "10%" }
       },
       { 
         id: 4, 
         name: "Exteriores", 
         before: "/fotospropiedades/exteriores1.JPEG", 
         after: "/fotospropiedades/exteriores2.JPEG", 
-        video: "/fotospropiedades/estancia.mp4", // Placeholder
-        posPlanta: { top: "60%", left: "30%", width: "12%", height: "12%" }
+        video: "/fotospropiedades/estancia.mp4",
+        posPlanta: { top: "9.6%", left: "56.1%", width: "12%", height: "12%" }
       },
       { 
         id: 5, 
         name: "Cocina", 
         before: "/fotospropiedades/exteriores1.JPEG", 
         after: "/fotospropiedades/exteriores2.JPEG", 
-        video: "/fotospropiedades/estancia.mp4", // Placeholder
-        posPlanta: { top: "60%", left: "50%", width: "12%", height: "12%" }
+        video: "/fotospropiedades/estancia.mp4",
+        posPlanta: { top: "47.4%", left: "34.6%", width: "10%", height: "10%" }
       }
     ]
   },
