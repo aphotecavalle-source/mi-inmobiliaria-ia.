@@ -45,7 +45,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   return (
     <div className="min-h-screen pb-40 relative text-left" style={{ backgroundColor: softBg, fontFamily: 'var(--fuente-sans)' }}>
       
-      {/* MODAL PLANTA INTERACTIVA */}
+      {/* MODAL PLANTA */}
       <AnimatePresence>
         {showPlanta && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowPlanta(false)}>
@@ -127,41 +127,64 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               <div onClick={alRegresar} className="cursor-pointer group mb-4">
                 <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-3">{propertyData.title}</h1>
                 
+                {/* META DATA MEJORADA */}
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] md:text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500">
-                  <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group/loc transition-all hover:text-black">
-                    <MapPin size={11} style={{ color: mainColor }} strokeWidth={1.5} /> 
-                    <span className="border-b border-transparent group-hover/loc:border-black">{propertyData.location}</span>
+                  
+                  {/* UBICACIÓN */}
+                  <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group/loc transition-all" style={{ color: 'inherit' }}>
+                    <MapPin size={12} style={{ color: mainColor }} strokeWidth={2} /> 
+                    <span className="border-b border-stone-200 group-hover/loc:border-[#87947c] group-hover/loc:text-[#87947c] transition-all">
+                      {propertyData.location}
+                    </span>
                   </button>
+
                   <span className="text-stone-200">|</span>
-                  <span className="flex items-center gap-1.5"><Tag size={11} className="text-stone-300" strokeWidth={1.5} /> <span>ID: {propertyData.refId}</span></span>
+                  
+                  {/* ID */}
+                  <span className="flex items-center gap-1.5">
+                    <Tag size={12} className="text-stone-400" strokeWidth={2} /> 
+                    <span>ID: {propertyData.refId}</span>
+                  </span>
+
                   <span className="text-stone-200">|</span>
-                  <button onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }} className="flex items-center gap-2 group/agent transition-all hover:text-black">
-                    <span className="text-stone-300 font-bold uppercase tracking-widest">AGENTE:</span> 
-                    <span className="border-b border-transparent group-hover/agent:border-black">{propertyData.agentName}</span>
-                    <MessageCircle size={15} style={{ color: mainColor }} strokeWidth={1.5} fill="none" className="ml-1 opacity-70 group-hover/agent:opacity-100 transition-opacity" />
+                  
+                  {/* AGENTE */}
+                  <button onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }} className="flex items-center gap-2 group/agent transition-all">
+                    <span className="text-stone-500">AGENTE:</span> 
+                    <span className="border-b border-transparent group-hover/agent:border-[#87947c] group-hover/agent:text-[#87947c] transition-all">
+                      {propertyData.agentName}
+                    </span>
+                    <MessageCircle 
+                      size={16} 
+                      style={{ color: mainColor }} 
+                      strokeWidth={2}
+                      fill="none"
+                      className="ml-0.5 transition-transform group-hover/agent:scale-110" 
+                    />
                   </button>
                 </div>
               </div>
 
+              {/* BOTONES INTERACTIVOS */}
               <div className="flex gap-8">
-                <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500 hover:text-black transition-colors">
-                   <Layout size={14} strokeWidth={1.5} /> Ver Planta
+                <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500 hover:text-black transition-colors">
+                   <Layout size={14} strokeWidth={2} /> Ver Planta
                 </motion.button>
-                <motion.button onClick={() => setShowFicha(true)} animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500 hover:text-black transition-colors">
-                   <Info size={14} strokeWidth={1.5} /> Ficha Técnica
+                <motion.button onClick={() => setShowFicha(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500 hover:text-black transition-colors">
+                   <Info size={14} strokeWidth={2} /> Ficha Técnica
                 </motion.button>
               </div>
             </div>
 
             <div className="flex bg-stone-100 p-1 border border-stone-200 w-full md:w-auto shadow-sm">
-              <button onClick={() => setViewMode('images')} className={`flex-1 md:flex-none px-8 py-2.5 text-[10px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold' : 'text-stone-400'}`} style={viewMode === 'images' ? { color: mainColor } : {}}>FOTOS</button>
-              <button onClick={() => setViewMode('video')} className={`flex-1 md:flex-none px-8 py-2.5 text-[10px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold' : 'text-stone-400'}`} style={viewMode === 'video' ? { color: mainColor } : {}}>VIDEO</button>
+              <button onClick={() => setViewMode('images')} className={`flex-1 md:flex-none px-8 py-2.5 text-[10px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-400 hover:text-stone-700'}`}>FOTOS</button>
+              <button onClick={() => setViewMode('video')} className={`flex-1 md:flex-none px-8 py-2.5 text-[10px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-400 hover:text-stone-700'}`}>VIDEO</button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* CONTENIDO PRINCIPAL */}
+      {/* --- CONTENIDO PRINCIPAL --- */}
       <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-12 mt-12 mb-20">
         <aside className="order-2 lg:order-1 lg:col-span-1">
           <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-100 pb-2">Espacios</h3>
