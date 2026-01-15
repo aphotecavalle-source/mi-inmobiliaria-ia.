@@ -14,7 +14,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
 
   const mainColor = "#87947c"; // Sage Muted
 
-  // Función para obtener coordenadas (herramienta de calibración)
   const handlePlantaClick = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -22,14 +21,10 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
     alert(`Coordenadas:\ntop: "${y.toFixed(1)}%", left: "${x.toFixed(1)}%"`);
   };
 
-  // NUEVA FUNCIÓN: Al tocar el plano, abre el ZOOM directamente
+  // CORRECCIÓN: Quitamos el setShowPlanta(false) para que el plano se quede atrás
   const seleccionarDesdePlanta = (room) => {
     setActiveRoom(room);
-    setShowPlanta(false);
-    // Un pequeño delay para que la transición se sienta fluida
-    setTimeout(() => {
-      setShowZoomModal(true);
-    }, 100);
+    setShowZoomModal(true);
   };
 
   const handleWhatsApp = () => {
@@ -42,7 +37,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   return (
     <div className="min-h-screen bg-[#f8faf9] text-[#2a2a2a] pb-32 relative text-left" style={{ fontFamily: 'var(--fuente-sans)' }}>
       
-      {/* MODAL PLANTA INTERACTIVA */}
+      {/* MODAL PLANTA INTERACTIVA (Z-600) */}
       <AnimatePresence>
         {showPlanta && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowPlanta(false)}>
@@ -74,7 +69,20 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* MODAL FICHA TÉCNICA */}
+      {/* MODAL ZOOM (Z-700 - ENCIMA DE LA PLANTA) */}
+      <AnimatePresence>
+        {showZoomModal && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[700] bg-black/95 flex items-center justify-center p-4" onClick={() => setShowZoomModal(false)}>
+            <button className="absolute top-8 right-8 text-white"><X size={36} /></button>
+            <motion.div initial={{ scale: 0.8, y: 20 }} animate={{ scale: 1, y: 0 }} className="relative" onClick={(e) => e.stopPropagation()}>
+              <p className="absolute -top-10 left-0 text-white/70 text-[10px] tracking-[0.4em] uppercase font-bold">{activeRoom.name}</p>
+              <img src={activeRoom.after} className="max-h-[85vh] max-w-[90vw] object-contain shadow-2xl border border-white/10" alt="Zoom" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* MODAL FICHA TÉCNICA (Z-500) */}
       <AnimatePresence>
         {showFicha && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setShowFicha(false)}>
@@ -104,9 +112,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
             </div>
 
             <div onClick={alRegresar} className="cursor-pointer group mb-4">
-              <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-3">
-                {propertyData.title}
-              </h1>
+              <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-3">{propertyData.title}</h1>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] md:text-[10px] font-bold tracking-[0.25em] uppercase text-stone-400">
                 <span className="flex items-center gap-1.5"><MapPin size={11} /> {propertyData.location}</span>
                 <span className="text-stone-200">|</span>
@@ -116,24 +122,24 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               </div>
             </div>
 
-            {/* BOTONES CON ANIMACIÓN DE PULSO */}
-            <div className="flex gap-6">
+            {/* BOTONES CON ANIMACIÓN MÁS FUERTE */}
+            <div className="flex gap-8">
               <motion.button 
                 onClick={() => setShowPlanta(true)} 
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="flex items-center gap-2 text-[9px] font-bold tracking-[0.2em] uppercase text-stone-400 hover:text-black transition-colors"
+                animate={{ scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500 hover:text-black transition-colors"
               >
-                 <Layout size={13} /> Ver Planta
+                 <Layout size={14} /> Ver Planta
               </motion.button>
               
               <motion.button 
                 onClick={() => setShowFicha(true)} 
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="flex items-center gap-2 text-[9px] font-bold tracking-[0.2em] uppercase text-stone-400 hover:text-black transition-colors"
+                animate={{ scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 1.25 }}
+                className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-500 hover:text-black transition-colors"
               >
-                 <Info size={13} /> Ficha Técnica
+                 <Info size={14} /> Ficha Técnica
               </motion.button>
             </div>
           </div>
@@ -151,7 +157,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
           <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-100 pb-2">Espacios</h3>
           <div className="grid grid-cols-1 gap-1">
             {propertyData.rooms.map((room) => (
-              <button key={room.id} onClick={() => { setActiveRoom(room); setViewMode('images'); }} className={`w-full text-left p-4 transition-all duration-500 ${activeRoom.id === room.id ? 'bg-white shadow-md' : 'text-stone-700 hover:text-stone-900'}`} style={activeRoom.id === room.id ? { color: mainColor, borderLeft: `4px solid ${mainColor}`, fontWeight: '700' } : {}}>
+              <button key={room.id} onClick={() => { setActiveRoom(room); setViewMode('images'); }} className={`w-full text-left p-4 transition-all duration-500 ${activeRoom.id === room.id ? 'bg-white shadow-md border-l-4' : 'text-stone-700 hover:text-stone-900 font-medium'}`} style={activeRoom.id === room.id ? { color: mainColor, borderColor: mainColor } : {}}>
                 <div className="flex justify-between items-center"><span className="text-[12px] tracking-widest uppercase">{room.name}</span><ChevronRight size={13} className={activeRoom.id === room.id ? 'opacity-100' : 'opacity-20'} /></div>
               </button>
             ))}
@@ -162,40 +168,4 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
               <motion.div key={activeRoom.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }} className="bg-white p-2 shadow-2xl border border-stone-50 relative">
-                <button onClick={() => setShowZoomModal(true)} className="absolute top-14 left-6 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}><Maximize2 size={16} /></button>
-                <p className="text-[10px] text-center mb-4 font-bold tracking-[0.4em] uppercase" style={{ color: mainColor }}>← Un espacio pensado para ti</p>
-                <div className="relative aspect-video w-full bg-[#f8f8f8] overflow-hidden">
-                  <ReactCompareSlider position={100} handle={<div className="relative h-full w-1 bg-white cursor-ew-resize"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2.5 shadow-2xl flex items-center justify-center"><ChevronLeft size={22} className="text-stone-300" /><ChevronRight size={22} className="text-stone-300" /></div></div>} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} />
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div key={activeRoom.id + "vid"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-black aspect-video border-[8px] border-white shadow-2xl">
-                <video key={activeRoom.video} src={activeRoom.video} controls autoPlay muted playsInline className="w-full h-full object-contain" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </section>
-      </main>
-
-      {/* BOTÓN WHATSAPP */}
-      <button onClick={handleWhatsApp} style={{ backgroundColor: mainColor }} className="fixed bottom-6 right-6 z-[100] text-white py-2 px-5 shadow-lg flex items-center gap-2 active:scale-95 transition-all hover:brightness-95 tracking-[0.3em] font-medium text-[8px] uppercase rounded-none">
-        <MessageCircle size={12} fill="currentColor" /> <span className="hidden md:inline">Contactar Agente</span>
-      </button>
-
-      {/* MODAL ZOOM / VISTA DESPUÉS (Se usa al tocar el plano) */}
-      <AnimatePresence>
-        {showZoomModal && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[700] bg-black/95 flex items-center justify-center p-4" onClick={() => setShowZoomModal(false)}>
-            <button className="absolute top-8 right-8 text-white"><X size={36} /></button>
-            <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} className="relative">
-              <p className="absolute -top-10 left-0 text-white/50 text-[10px] tracking-[0.3em] uppercase">{activeRoom.name}</p>
-              <img src={activeRoom.after} className="max-h-[85vh] max-w-[90vw] object-contain shadow-2xl" alt="Zoom" />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
-
-export default PropertyVisualizer;
+                <button onClick={() => setShowZoomModal(true)} className="absolute top-14 left-6 z-20 bg-
