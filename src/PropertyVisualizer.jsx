@@ -97,11 +97,11 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* --- HEADER ADELGAZADO --- */}
-      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-4 md:px-12 md:py-6">
+      {/* --- HEADER CON 1CM MÁS DE AIRE ARRIBA (md:pt-14) --- */}
+      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-4 md:px-12 md:pt-14 md:pb-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           
-          {/* LADO IZQUIERDO: Título, Metadata y Botones de acción */}
+          {/* LADO IZQUIERDO: Título, Metadata y Botones */}
           <div className="flex-1 flex flex-col gap-4">
             <div onClick={alRegresar} className="cursor-pointer group">
               <h1 className="editorial-text text-3xl md:text-4xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-2 text-stone-900">{propertyData.title}</h1>
@@ -121,7 +121,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               </div>
             </div>
 
-            {/* BOTONES DE ACCIÓN LADO IZQUIERDO */}
             <div className="flex gap-8">
               <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
                  <Layout size={15} strokeWidth={2} /> Ver Planta
@@ -132,7 +131,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
             </div>
           </div>
 
-          {/* LADO DERECHO: Selector FOTOS/VIDEO únicamente */}
+          {/* LADO DERECHO: Selector FOTOS/VIDEO */}
           <div className="flex bg-stone-200/50 p-1 border border-stone-200 shadow-sm">
             <button onClick={() => setViewMode('images')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>FOTOS</button>
             <button onClick={() => setViewMode('video')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>VIDEO</button>
@@ -166,6 +165,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                   transition={{ duration: 0.8 }} 
                   className="bg-white shadow-2xl border border-stone-200/50 relative w-full max-w-4xl mx-auto"
                 >
+                  {/* SECCIÓN SUPERIOR: Frase centrada verticalmente */}
                   <div className="flex items-center justify-center px-12 py-10 relative">
                     <button onClick={() => setShowZoomModal(true)} className="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-stone-50/80 p-2 rounded-full shadow-sm transition-all hover:scale-110 hover:bg-white" style={{ color: mainColor }}>
                       <Maximize2 size={16} />
