@@ -43,7 +43,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   if (!activeRoom) return <div className="p-20 text-center text-stone-400 font-bold uppercase tracking-widest">Cargando...</div>;
 
   return (
-    <div className="min-h-screen pb-40 relative text-left" style={{ backgroundColor: softBg, fontFamily: 'var(--fuente-sans)' }}>
+    <div className="min-h-screen relative text-left flex flex-col" style={{ backgroundColor: softBg, fontFamily: 'var(--fuente-sans)' }}>
       
       {/* --- MODALES --- */}
       <AnimatePresence>
@@ -118,7 +118,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                 </button>
               </div>
             </div>
-
             <div className="flex gap-8">
               <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
                  <Layout size={15} strokeWidth={2} /> Ver Planta
@@ -128,68 +127,72 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               </motion.button>
             </div>
           </div>
-
-          <div className="flex bg-stone-200/50 p-1 border border-stone-200 w-full md:w-auto shadow-sm">
-            <button onClick={() => setViewMode('images')} className={`flex-1 md:flex-none px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>FOTOS</button>
-            <button onClick={() => setViewMode('video')} className={`flex-1 md:flex-none px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>VIDEO</button>
-          </div>
         </div>
       </header>
 
-      {/* --- CONTENIDO PRINCIPAL --- */}
-      <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-12 mt-12 mb-20">
-        <aside className="order-2 lg:order-1 lg:col-span-1">
-          <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-300 pb-2">Espacios</h3>
-          <div className="grid grid-cols-1 gap-1">
-            {propertyData.rooms.map((room) => (
-              <button key={room.id} onClick={() => { setActiveRoom(room); setViewMode('images'); }} className={`w-full text-left p-5 transition-all duration-500 ${activeRoom.id === room.id ? 'bg-white shadow-md border-l-4' : 'text-stone-800 hover:text-stone-900 font-medium hover:bg-white/40'}`} style={activeRoom.id === room.id ? { color: mainColor, borderColor: mainColor } : {}}>
-                <div className="flex justify-between items-center"><span className="text-[13px] tracking-widest uppercase">{room.name}</span><ChevronRight size={14} className={activeRoom.id === room.id ? 'opacity-100' : 'opacity-30'} /></div>
-              </button>
-            ))}
-          </div>
-        </aside>
-
-        <section className="order-1 lg:order-2 lg:col-span-4 px-0 md:px-8">
-          <AnimatePresence mode="wait">
-            {viewMode === 'images' ? (
-              // CUADRO BLANCO CON MARCO SUPERIOR DELGADO (pt-8 pb-8 es aprox 2cm de aire)
-              <motion.div 
-                key={activeRoom.id} 
-                initial={{ opacity: 0, scale: 0.98 }} 
-                animate={{ opacity: 1, scale: 1 }} 
-                exit={{ opacity: 0 }} 
-                transition={{ duration: 0.8 }} 
-                className="bg-white p-4 md:p-5 shadow-2xl border border-stone-200/50 relative"
-              >
-                {/* Contenedor de la frase: EQUILIBRIO TOTAL (pt-6 pb-6) */}
-                <div className="flex flex-col items-center justify-center pt-6 pb-6">
-                  <div className="flex items-center gap-5">
-                    <motion.div animate={{ x: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="flex items-center">
-                      <ArrowLeft size={16} style={{ color: mainColor }} strokeWidth={1.5} />
-                    </motion.div>
-                    <motion.p animate={{ opacity: [0.8, 1, 0.8] }} transition={{ duration: 4, repeat: Infinity }} className="editorial-text italic text-lg md:text-xl text-stone-600 lowercase tracking-wide">
-                      “creando un estilo de vida en cada espacio”
-                    </motion.p>
-                  </div>
-                </div>
-
-                {/* Botón Zoom flotando sutilmente */}
-                <button onClick={() => setShowZoomModal(true)} className="absolute top-4 left-4 z-20 bg-stone-50/80 p-2 rounded-full shadow-sm transition-all hover:scale-110 hover:bg-white" style={{ color: mainColor }}>
-                  <Maximize2 size={16} />
+      {/* --- CONTENIDO PRINCIPAL CENTRADO --- */}
+      <main className="flex-1 flex items-center justify-center p-6 lg:p-12 overflow-hidden">
+        <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+          
+          <aside className="lg:col-span-1 hidden lg:block">
+            <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-300 pb-2">Espacios</h3>
+            <div className="grid grid-cols-1 gap-1">
+              {propertyData.rooms.map((room) => (
+                <button key={room.id} onClick={() => { setActiveRoom(room); setViewMode('images'); }} className={`w-full text-left p-5 transition-all duration-500 ${activeRoom.id === room.id ? 'bg-white shadow-md border-l-4' : 'text-stone-800 hover:text-stone-900 font-medium hover:bg-white/40'}`} style={activeRoom.id === room.id ? { color: mainColor, borderColor: mainColor } : {}}>
+                  <div className="flex justify-between items-center"><span className="text-[13px] tracking-widest uppercase">{room.name}</span><ChevronRight size={14} className={activeRoom.id === room.id ? 'opacity-100' : 'opacity-30'} /></div>
                 </button>
-                
-                {/* Foto / Slider */}
-                <div className="relative aspect-video w-full bg-stone-100 overflow-hidden shadow-inner border border-stone-200/50">
-                  <ReactCompareSlider position={100} handle={<div className="relative h-full w-1 bg-white cursor-ew-resize"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2.5 shadow-2xl flex items-center justify-center"><ChevronLeft size={22} className="text-stone-400" /><ChevronRight size={22} className="text-stone-400" /></div></div>} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} />
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div key={activeRoom.id + "vid"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-black aspect-video border-[8px] border-white shadow-2xl">
-                <video key={activeRoom.video} src={activeRoom.video} controls autoPlay muted playsInline className="w-full h-full object-contain" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </section>
+              ))}
+            </div>
+          </aside>
+
+          <section className="lg:col-span-4 flex flex-col items-center justify-center">
+            <AnimatePresence mode="wait">
+              {viewMode === 'images' ? (
+                <motion.div 
+                  key={activeRoom.id} 
+                  initial={{ opacity: 0, scale: 0.98 }} 
+                  animate={{ opacity: 1, scale: 1 }} 
+                  exit={{ opacity: 0 }} 
+                  transition={{ duration: 0.8 }} 
+                  className="bg-white shadow-2xl border border-stone-200/50 relative w-full max-w-5xl"
+                >
+                  {/* SECCIÓN SUPERIOR: Frase centrada verticalmente con aire equilibrado */}
+                  <div className="flex items-center justify-center px-12 py-10 relative">
+                    <button onClick={() => setShowZoomModal(true)} className="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-stone-50/80 p-2 rounded-full shadow-sm transition-all hover:scale-110 hover:bg-white" style={{ color: mainColor }}>
+                      <Maximize2 size={16} />
+                    </button>
+
+                    <div className="flex items-center gap-5">
+                      <motion.div animate={{ x: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="flex items-center">
+                        <ArrowLeft size={18} style={{ color: mainColor }} strokeWidth={1.5} />
+                      </motion.div>
+                      <motion.p animate={{ opacity: [0.8, 1, 0.8] }} transition={{ duration: 4, repeat: Infinity }} className="editorial-text italic text-lg md:text-xl lg:text-2xl text-stone-600 lowercase tracking-wide text-center">
+                        “creando un estilo de vida en cada espacio”
+                      </motion.p>
+                    </div>
+                  </div>
+                  
+                  {/* SLIDER / FOTO con padding lateral y base delgado para el look Polaroid */}
+                  <div className="px-5 pb-5 md:px-6 md:pb-6">
+                    <div className="relative aspect-video w-full bg-stone-100 overflow-hidden shadow-inner border border-stone-200/50">
+                      <ReactCompareSlider position={100} handle={<div className="relative h-full w-1 bg-white cursor-ew-resize"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2.5 shadow-2xl flex items-center justify-center"><ChevronLeft size={22} className="text-stone-400" /><ChevronRight size={22} className="text-stone-400" /></div></div>} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} />
+                    </div>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div key={activeRoom.id + "vid"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-black aspect-video border-[8px] border-white shadow-2xl w-full max-w-5xl">
+                  <video key={activeRoom.video} src={activeRoom.video} controls autoPlay muted playsInline className="w-full h-full object-contain" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* CONTROLES MÓVILES (FOTOS/VIDEO) ABAJO DEL VISUALIZADOR */}
+            <div className="mt-8 flex bg-stone-200/50 p-1 border border-stone-200 shadow-sm rounded-none">
+              <button onClick={() => setViewMode('images')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>FOTOS</button>
+              <button onClick={() => setViewMode('video')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>VIDEO</button>
+            </div>
+          </section>
+        </div>
       </main>
     </div>
   );
