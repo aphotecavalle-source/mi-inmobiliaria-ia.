@@ -149,17 +149,20 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </div>
       </header>
 
-      {/* --- CONTENIDO PRINCIPAL (Centrado verticalmente con items-center) --- */}
-      <main className="flex-1 p-6 lg:p-12 overflow-y-auto flex items-center">
-        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+      {/* --- CONTENIDO PRINCIPAL --- */}
+      <main className="flex-1 p-6 lg:p-12 overflow-y-auto flex items-center justify-center">
+        {/* Grid sin items-center (para que el aside se centre solo) */}
+        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12">
           
-          {/* BARRA LATERAL CENTRADA VERTICALMENTE RESPECTO AL VISUALIZADOR */}
-          <aside className="lg:col-span-1 hidden lg:block">
-            <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-300 pb-2">Espacios</h3>
+          {/* ASIDE: Flex column y justify-center para centrado vertical independiente */}
+          <aside className="lg:col-span-1 hidden lg:flex flex-col justify-center h-full">
+            {/* Título centrado horizontalmente */}
+            <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-300 pb-2 text-center">Espacios</h3>
             <div className="grid grid-cols-1 gap-1">
               {propertyData.rooms.map((room) => (
-                <button key={room.id} onClick={() => { setActiveRoom(room); setViewMode('images'); }} className={`w-full text-left p-5 transition-all duration-500 ${activeRoom.id === room.id ? 'bg-white shadow-md border-l-4' : 'text-stone-800 hover:text-stone-900 font-medium hover:bg-white/40'}`} style={activeRoom.id === room.id ? { color: mainColor, borderColor: mainColor } : {}}>
-                  <div className="flex justify-between items-center"><span className="text-[13px] tracking-widest uppercase">{room.name}</span><ChevronRight size={14} className={activeRoom.id === room.id ? 'opacity-100' : 'opacity-30'} /></div>
+                // Botones con justify-center para centrar texto y flecha horizontalmente
+                <button key={room.id} onClick={() => { setActiveRoom(room); setViewMode('images'); }} className={`w-full p-5 transition-all duration-500 ${activeRoom.id === room.id ? 'bg-white shadow-md border-l-4' : 'text-stone-800 hover:text-stone-900 font-medium hover:bg-white/40'}`} style={activeRoom.id === room.id ? { color: mainColor, borderColor: mainColor } : {}}>
+                  <div className="flex justify-center items-center gap-4"><span className="text-[13px] tracking-widest uppercase">{room.name}</span><ChevronRight size={14} className={activeRoom.id === room.id ? 'opacity-100' : 'opacity-30'} /></div>
                 </button>
               ))}
             </div>
