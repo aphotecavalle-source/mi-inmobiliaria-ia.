@@ -97,18 +97,17 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* --- HEADER CON TÍTULO GRANDE Y METADATA PEQUEÑA --- */}
-      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-4 md:px-12 md:pt-16 md:pb-8">
+      {/* --- HEADER ADELGAZADO (md:pt-12 md:pb-6) --- */}
+      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-4 md:px-12 md:pt-12 md:pb-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           
-          <div className="flex-1 flex flex-col gap-5">
+          <div className="flex-1 flex flex-col gap-4">
             <div onClick={alRegresar} className="cursor-pointer group">
-              {/* TÍTULO MÁS GRANDE */}
-              <h1 className="editorial-text text-4xl md:text-6xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-3 text-stone-900">
+              {/* TÍTULO LIGERAMENTE MÁS PEQUEÑO (text-5xl) */}
+              <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-2 text-stone-900">
                 {propertyData.title}
               </h1>
               
-              {/* METADATA MÁS PEQUEÑA */}
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[8.5px] md:text-[9.5px] font-bold tracking-[0.3em] uppercase text-stone-700/80">
                 <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group/loc transition-all hover:text-[#87947c]">
                   <MapPin size={12} style={{ color: mainColor }} strokeWidth={2} /> 
@@ -125,7 +124,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               </div>
             </div>
 
-            <div className="flex gap-10">
+            <div className="flex gap-8">
               <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
                  <Layout size={15} strokeWidth={2} /> Ver Planta
               </motion.button>
