@@ -14,7 +14,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
 
   const mainColor = "#87947c"; // Sage Muted
   const softBg = "#e9ede6";    // Earthy Sage profundo
-  const darkGray = "#292524";  // stone-800 para máxima legibilidad
+  const darkGray = "#292524";  // stone-800
 
   const handlePlantaClick = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -107,7 +107,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                 {propertyData.title}
               </h1>
               
-              {/* METADATA GRIS OSCURO -> VERDE AL MOVER */}
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-stone-800">
                 <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group transition-all hover:text-[#87947c]">
                   <MapPin size={12} strokeWidth={2} /> 
@@ -126,7 +125,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               </div>
             </div>
 
-            {/* BOTONES ACCIÓN GRIS OSCURO -> VERDE AL MOVER */}
             <div className="flex gap-10">
               <motion.button 
                 onClick={() => setShowPlanta(true)} 
@@ -147,9 +145,28 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
             </div>
           </div>
 
+          {/* SELECTOR FOTOS/VIDEO CON HOVER SAGE */}
           <div className="flex bg-stone-200/50 p-1 border border-stone-200 shadow-sm">
-            <button onClick={() => setViewMode('images')} className={`px-10 py-3 text-[10px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>FOTOS</button>
-            <button onClick={() => setViewMode('video')} className={`px-10 py-3 text-[10px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>VIDEO</button>
+            <button 
+              onClick={() => setViewMode('images')} 
+              className={`px-10 py-3 text-[10px] tracking-widest transition-all ${
+                viewMode === 'images' 
+                  ? 'bg-white shadow-sm font-bold text-[#87947c]' 
+                  : 'text-stone-500 hover:text-[#87947c]'
+              }`}
+            >
+              FOTOS
+            </button>
+            <button 
+              onClick={() => setViewMode('video')} 
+              className={`px-10 py-3 text-[10px] tracking-widest transition-all ${
+                viewMode === 'video' 
+                  ? 'bg-white shadow-sm font-bold text-[#87947c]' 
+                  : 'text-stone-500 hover:text-[#87947c]'
+              }`}
+            >
+              VIDEO
+            </button>
           </div>
         </div>
       </header>
