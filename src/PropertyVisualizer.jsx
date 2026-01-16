@@ -118,13 +118,20 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                 </button>
               </div>
             </div>
-            <div className="flex gap-8">
-              <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
-                 <Layout size={15} strokeWidth={2} /> Ver Planta
-              </motion.button>
-              <motion.button onClick={() => setShowFicha(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
-                 <Info size={15} strokeWidth={2} /> Ficha Técnica
-              </motion.button>
+            
+            <div className="flex flex-col items-end gap-6">
+              <div className="flex bg-stone-200/50 p-1 border border-stone-200 shadow-sm">
+                <button onClick={() => setViewMode('images')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>FOTOS</button>
+                <button onClick={() => setViewMode('video')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>VIDEO</button>
+              </div>
+              <div className="flex gap-8">
+                <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
+                   <Layout size={15} strokeWidth={2} /> Ver Planta
+                </motion.button>
+                <motion.button onClick={() => setShowFicha(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
+                   <Info size={15} strokeWidth={2} /> Ficha Técnica
+                </motion.button>
+              </div>
             </div>
           </div>
         </div>
@@ -132,8 +139,10 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
 
       {/* --- CONTENIDO PRINCIPAL --- */}
       <main className="flex-1 flex items-center justify-center p-6 lg:p-12 overflow-hidden">
+        {/* GRID PRINCIPAL CON items-center PARA ALINEAR SIDEBAR Y VISUALIZADOR */}
         <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
           
+          {/* ASIDE ALINEADO VERTICALMENTE AL CENTRO */}
           <aside className="lg:col-span-1 hidden lg:block">
             <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-300 pb-2">Espacios</h3>
             <div className="grid grid-cols-1 gap-1">
@@ -145,7 +154,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
             </div>
           </aside>
 
-          {/* VISUALIZADOR REDUCIDO AL 85% (max-w-4xl) */}
+          {/* ÁREA CENTRAL DEL VISUALIZADOR */}
           <section className="lg:col-span-4 flex flex-col items-center justify-center w-full">
             <AnimatePresence mode="wait">
               {viewMode === 'images' ? (
@@ -155,10 +164,9 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                   animate={{ opacity: 1, scale: 1 }} 
                   exit={{ opacity: 0 }} 
                   transition={{ duration: 0.8 }} 
-                  // AQUÍ ESTÁ EL CAMBIO DE TAMAÑO: max-w-4xl es un 15% menos que 5xl
                   className="bg-white shadow-2xl border border-stone-200/50 relative w-full max-w-4xl mx-auto"
                 >
-                  {/* SECCIÓN SUPERIOR: Frase centrada con aire simétrico */}
+                  {/* SECCIÓN SUPERIOR: Frase con aire simétrico (py-10) */}
                   <div className="flex items-center justify-center px-12 py-10 relative">
                     <button onClick={() => setShowZoomModal(true)} className="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-stone-50/80 p-2 rounded-full shadow-sm transition-all hover:scale-110 hover:bg-white" style={{ color: mainColor }}>
                       <Maximize2 size={16} />
@@ -166,7 +174,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
 
                     <div className="flex items-center gap-5">
                       <motion.div animate={{ x: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="flex items-center">
-                        <ArrowLeft size={18} style={{ color: mainColor }} strokeWidth={1.5} />
+                        <ArrowLeft size={16} style={{ color: mainColor }} strokeWidth={1.5} />
                       </motion.div>
                       <motion.p animate={{ opacity: [0.8, 1, 0.8] }} transition={{ duration: 4, repeat: Infinity }} className="editorial-text italic text-lg md:text-xl lg:text-2xl text-stone-600 lowercase tracking-wide text-center">
                         “creando un estilo de vida en cada espacio”
@@ -187,12 +195,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                 </motion.div>
               )}
             </AnimatePresence>
-
-            {/* SELECTOR DE MODO */}
-            <div className="mt-8 flex bg-stone-200/50 p-1 border border-stone-200 shadow-sm">
-              <button onClick={() => setViewMode('images')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>FOTOS</button>
-              <button onClick={() => setViewMode('video')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>VIDEO</button>
-            </div>
           </section>
         </div>
       </main>
