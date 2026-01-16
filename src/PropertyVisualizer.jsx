@@ -110,7 +110,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                     <span className="border-b border-stone-300 group-hover/loc:border-[#87947c] transition-all">{propertyData.location}</span>
                   </button>
                   <span className="text-stone-300">|</span>
-                  <span className="flex items-center gap-1.5"><Tag size={13} className="text-stone-500" strokeWidth={2} /> <span>ID: {propertyData.refId}</span></span>
+                  <span className="flex items-center gap-1.5"><Tag size={13} className="text-stone-400" strokeWidth={2} /> <span>ID: {propertyData.refId}</span></span>
                   <span className="text-stone-300">|</span>
                   <button onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }} className="flex items-center gap-2 group/agent transition-all hover:text-[#87947c]">
                     <span className="text-stone-500 font-bold">AGENTE:</span> 
@@ -154,31 +154,33 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         <section className="order-1 lg:order-2 lg:col-span-4 px-0 md:px-8">
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
-              // MARCO ASIMÉTRICO: pt-16 arriba, pb-6 abajo, px-6 lados
+              // Cuadro blanco con marco lateral fino (p-4) y sección superior equilibrada
               <motion.div 
                 key={activeRoom.id} 
                 initial={{ opacity: 0, scale: 0.98 }} 
                 animate={{ opacity: 1, scale: 1 }} 
                 exit={{ opacity: 0 }} 
                 transition={{ duration: 0.8 }} 
-                className="bg-white pt-16 pb-6 px-6 shadow-2xl border border-stone-200/50 relative"
+                className="bg-white p-4 md:p-5 shadow-2xl border border-stone-200/50 relative"
               >
-                {/* BOTÓN ZOOM REUBICADO EN EL MARCO SUPERIOR */}
-                <button onClick={() => setShowZoomModal(true)} className="absolute top-14 left-6 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}>
+                {/* Contenedor de la frase: Aquí manejamos el "aire" arriba y abajo */}
+                <div className="flex flex-col items-center justify-center pt-8 pb-10 md:pt-10 md:pb-12">
+                  <div className="flex items-center gap-5">
+                    <motion.div animate={{ x: [0, -12, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="flex items-center">
+                      <ArrowLeft size={18} style={{ color: mainColor }} strokeWidth={1.5} />
+                    </motion.div>
+                    <motion.p animate={{ opacity: [0.7, 1, 0.7] }} transition={{ duration: 4, repeat: Infinity }} className="editorial-text italic text-xl md:text-2xl text-stone-600 lowercase tracking-wide">
+                      “creando un estilo de vida en cada espacio”
+                    </motion.p>
+                  </div>
+                </div>
+
+                {/* Botón Zoom integrado sutilmente */}
+                <button onClick={() => setShowZoomModal(true)} className="absolute top-4 left-4 z-20 bg-stone-50/80 p-2 rounded-full shadow-sm transition-all hover:scale-110 hover:bg-white" style={{ color: mainColor }}>
                   <Maximize2 size={16} />
                 </button>
-
-                {/* FRASE EDITORIAL DENTRO DEL MARCO SUPERIOR */}
-                <div className="flex items-center justify-center gap-5 mb-8">
-                  <motion.div animate={{ x: [0, -12, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="flex items-center">
-                    <ArrowLeft size={18} style={{ color: mainColor }} strokeWidth={1.5} />
-                  </motion.div>
-                  <motion.p animate={{ opacity: [0.7, 1, 0.7] }} transition={{ duration: 4, repeat: Infinity }} className="editorial-text italic text-xl md:text-2xl text-stone-600 lowercase tracking-wide">
-                    “creando un estilo de vida en cada espacio”
-                  </motion.p>
-                </div>
                 
-                {/* LA FOTO / SLIDER */}
+                {/* Foto / Slider */}
                 <div className="relative aspect-video w-full bg-stone-100 overflow-hidden shadow-inner border border-stone-200/50">
                   <ReactCompareSlider position={100} handle={<div className="relative h-full w-1 bg-white cursor-ew-resize"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2.5 shadow-2xl flex items-center justify-center"><ChevronLeft size={22} className="text-stone-400" /><ChevronRight size={22} className="text-stone-400" /></div></div>} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} />
                 </div>
