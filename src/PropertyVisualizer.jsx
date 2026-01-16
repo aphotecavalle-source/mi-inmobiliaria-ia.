@@ -14,6 +14,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
 
   const mainColor = "#87947c"; // Sage Muted
   const softBg = "#e9ede6";    // Earthy Sage profundo
+  const darkGray = "#292524";  // stone-800 para máxima legibilidad
 
   const handlePlantaClick = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -106,36 +107,40 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                 {propertyData.title}
               </h1>
               
+              {/* METADATA GRIS OSCURO -> VERDE AL MOVER */}
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-stone-800">
-                <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group/loc transition-all hover:text-[#87947c]">
-                  <MapPin size={12} style={{ color: mainColor }} strokeWidth={2} /> 
-                  <span className="border-b border-stone-300 group-hover/loc:border-[#87947c] transition-all">{propertyData.location}</span>
+                <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group transition-all hover:text-[#87947c]">
+                  <MapPin size={12} strokeWidth={2} /> 
+                  <span className="border-b border-stone-300 group-hover:border-[#87947c] transition-all">{propertyData.location}</span>
                 </button>
                 <span className="text-stone-300">|</span>
-                <span className="flex items-center gap-1.5"><Tag size={12} className="text-stone-500" strokeWidth={2} /> <span>ID: {propertyData.refId}</span></span>
+                <span className="flex items-center gap-1.5 group transition-all hover:text-[#87947c]">
+                  <Tag size={12} strokeWidth={2} /> <span>ID: {propertyData.refId}</span>
+                </span>
                 <span className="text-stone-300">|</span>
-                <button onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }} className="flex items-center gap-2 group/agent transition-all hover:text-[#87947c]">
-                  <span className="text-stone-500 font-bold">AGENTE:</span> 
-                  <span className="border-b border-stone-300 group-hover/agent:border-[#87947c] transition-all">{propertyData.agentName}</span>
-                  <MessageCircle size={15} style={{ color: mainColor }} strokeWidth={2} fill="none" className="ml-1 transition-transform group-hover/agent:scale-110" />
+                <button onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }} className="flex items-center gap-2 group transition-all hover:text-[#87947c]">
+                  <span className="font-bold">AGENTE:</span> 
+                  <span className="border-b border-stone-300 group-hover:border-[#87947c] transition-all">{propertyData.agentName}</span>
+                  <MessageCircle size={15} strokeWidth={2} fill="none" className="ml-1 transition-transform group-hover:scale-110" />
                 </button>
               </div>
             </div>
 
+            {/* BOTONES ACCIÓN GRIS OSCURO -> VERDE AL MOVER */}
             <div className="flex gap-10">
               <motion.button 
                 onClick={() => setShowPlanta(true)} 
-                animate={{ scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] }} 
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }} 
-                className="flex items-center gap-2 text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors"
+                animate={{ scale: [1, 1.1, 1], opacity: [1, 0.7, 1] }} 
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} 
+                className="flex items-center gap-2 text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-stone-800 hover:text-[#87947c] transition-colors"
               >
                  <Layout size={15} strokeWidth={2} /> Ver Planta
               </motion.button>
               <motion.button 
                 onClick={() => setShowFicha(true)} 
-                animate={{ scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] }} 
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 1.25 }} 
-                className="flex items-center gap-2 text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors"
+                animate={{ scale: [1, 1.1, 1], opacity: [1, 0.7, 1] }} 
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} 
+                className="flex items-center gap-2 text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-stone-800 hover:text-[#87947c] transition-colors"
               >
                  <Info size={15} strokeWidth={2} /> Ficha Técnica
               </motion.button>
@@ -149,11 +154,10 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </div>
       </header>
 
-      {/* --- CONTENIDO PRINCIPAL (Anclado arriba con items-start) --- */}
-      <main className="flex-1 p-6 lg:p-12 overflow-y-auto">
+      {/* --- CONTENIDO PRINCIPAL --- */}
+      <main className="flex-1 p-6 lg:p-12 overflow-y-auto flex items-start">
         <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12 items-start mt-10">
           
-          {/* BARRA LATERAL: Alineación izquierda para texto y derecha para flechas */}
           <aside className="lg:col-span-1 hidden lg:block sticky top-0">
             <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-300 pb-2 text-left">Espacios</h3>
             <div className="grid grid-cols-1 gap-1">
@@ -164,7 +168,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                   className={`w-full p-5 transition-all duration-500 ${activeRoom.id === room.id ? 'bg-white shadow-md border-l-4' : 'text-stone-800 hover:text-stone-900 font-medium hover:bg-white/40'}`} 
                   style={activeRoom.id === room.id ? { color: mainColor, borderColor: mainColor } : {}}
                 >
-                  {/* FLEX JUSTIFY-BETWEEN: Esto alinea las flechas perfectamente a la derecha */}
                   <div className="flex justify-between items-center w-full">
                     <span className="text-[13px] tracking-widest uppercase text-left">{room.name}</span>
                     <ChevronRight size={14} className={activeRoom.id === room.id ? 'opacity-100' : 'opacity-30'} />
@@ -174,7 +177,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
             </div>
           </aside>
 
-          {/* VISUALIZADOR */}
           <section className="lg:col-span-4 flex flex-col items-center w-full">
             <AnimatePresence mode="wait">
               {viewMode === 'images' ? (
@@ -187,7 +189,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                   className="bg-white shadow-2xl border border-stone-200/50 relative w-full max-w-4xl"
                 >
                   <div className="flex items-center justify-center px-12 py-10 relative">
-                    <button onClick={() => setShowZoomModal(true)} className="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-stone-50/80 p-2 rounded-full shadow-sm transition-all hover:scale-110 hover:bg-white" style={{ color: mainColor }}>
+                    <button onClick={() => setShowZoomModal(true)} className="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-stone-50/80 p-2 rounded-full shadow-sm transition-all hover:scale-110 hover:bg-white" style={{ color: darkGray }}>
                       <Maximize2 size={16} />
                     </button>
 
