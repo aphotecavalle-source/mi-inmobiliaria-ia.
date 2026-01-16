@@ -12,9 +12,9 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   const [viewMode, setViewMode] = useState('images');
   const [activeRoom, setActiveRoom] = useState(propertyData?.rooms?.[0] || null);
 
-  const mainColor = "#87947c"; // Sage Muted
-  const softBg = "#e9ede6";    // Earthy Sage profundo
-  const darkGray = "#292524";  // stone-800
+  const mainColor = "#87947c"; 
+  const softBg = "#e9ede6";    
+  const darkGray = "#292524";  
 
   const handlePlantaClick = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -103,8 +103,9 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex-1 flex flex-col gap-4">
             <div onClick={alRegresar} className="cursor-pointer group">
+              {/* TÍTULO CON PUNTO FINAL AÑADIDO */}
               <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-5 text-stone-900">
-                {propertyData.title}
+                {propertyData.title}.
               </h1>
               
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-stone-800">
@@ -145,7 +146,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
             </div>
           </div>
 
-          {/* SELECTOR FOTOS/VIDEO CON HOVER SAGE */}
           <div className="flex bg-stone-200/50 p-1 border border-stone-200 shadow-sm">
             <button 
               onClick={() => setViewMode('images')} 
@@ -162,7 +162,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               className={`px-10 py-3 text-[10px] tracking-widest transition-all ${
                 viewMode === 'video' 
                   ? 'bg-white shadow-sm font-bold text-[#87947c]' 
-                  : 'text-stone-500 hover:text-[#87947c]'
+                  : 'text-stone- stone-500 hover:text-[#87947c]'
               }`}
             >
               VIDEO
