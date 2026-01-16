@@ -130,7 +130,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </div>
       </header>
 
-      {/* --- CONTENIDO PRINCIPAL CENTRADO --- */}
+      {/* --- CONTENIDO PRINCIPAL --- */}
       <main className="flex-1 flex items-center justify-center p-6 lg:p-12 overflow-hidden">
         <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
           
@@ -145,7 +145,8 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
             </div>
           </aside>
 
-          <section className="lg:col-span-4 flex flex-col items-center justify-center">
+          {/* VISUALIZADOR REDUCIDO AL 85% (max-w-4xl) */}
+          <section className="lg:col-span-4 flex flex-col items-center justify-center w-full">
             <AnimatePresence mode="wait">
               {viewMode === 'images' ? (
                 <motion.div 
@@ -154,9 +155,10 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                   animate={{ opacity: 1, scale: 1 }} 
                   exit={{ opacity: 0 }} 
                   transition={{ duration: 0.8 }} 
-                  className="bg-white shadow-2xl border border-stone-200/50 relative w-full max-w-5xl"
+                  // AQUÍ ESTÁ EL CAMBIO DE TAMAÑO: max-w-4xl es un 15% menos que 5xl
+                  className="bg-white shadow-2xl border border-stone-200/50 relative w-full max-w-4xl mx-auto"
                 >
-                  {/* SECCIÓN SUPERIOR: Frase centrada verticalmente con aire equilibrado */}
+                  {/* SECCIÓN SUPERIOR: Frase centrada con aire simétrico */}
                   <div className="flex items-center justify-center px-12 py-10 relative">
                     <button onClick={() => setShowZoomModal(true)} className="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-stone-50/80 p-2 rounded-full shadow-sm transition-all hover:scale-110 hover:bg-white" style={{ color: mainColor }}>
                       <Maximize2 size={16} />
@@ -172,7 +174,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                     </div>
                   </div>
                   
-                  {/* SLIDER / FOTO con padding lateral y base delgado para el look Polaroid */}
+                  {/* SLIDER / FOTO */}
                   <div className="px-5 pb-5 md:px-6 md:pb-6">
                     <div className="relative aspect-video w-full bg-stone-100 overflow-hidden shadow-inner border border-stone-200/50">
                       <ReactCompareSlider position={100} handle={<div className="relative h-full w-1 bg-white cursor-ew-resize"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2.5 shadow-2xl flex items-center justify-center"><ChevronLeft size={22} className="text-stone-400" /><ChevronRight size={22} className="text-stone-400" /></div></div>} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} />
@@ -180,14 +182,14 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                   </div>
                 </motion.div>
               ) : (
-                <motion.div key={activeRoom.id + "vid"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-black aspect-video border-[8px] border-white shadow-2xl w-full max-w-5xl">
+                <motion.div key={activeRoom.id + "vid"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-black aspect-video border-[8px] border-white shadow-2xl w-full max-w-4xl mx-auto">
                   <video key={activeRoom.video} src={activeRoom.video} controls autoPlay muted playsInline className="w-full h-full object-contain" />
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* CONTROLES MÓVILES (FOTOS/VIDEO) ABAJO DEL VISUALIZADOR */}
-            <div className="mt-8 flex bg-stone-200/50 p-1 border border-stone-200 shadow-sm rounded-none">
+            {/* SELECTOR DE MODO */}
+            <div className="mt-8 flex bg-stone-200/50 p-1 border border-stone-200 shadow-sm">
               <button onClick={() => setViewMode('images')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>FOTOS</button>
               <button onClick={() => setViewMode('video')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>VIDEO</button>
             </div>
