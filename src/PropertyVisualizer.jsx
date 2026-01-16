@@ -97,17 +97,18 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* --- HEADER ADELGAZADO (md:pt-12 md:pb-6) --- */}
+      {/* --- HEADER FINAL --- */}
       <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-4 md:px-12 md:pt-12 md:pb-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           
           <div className="flex-1 flex flex-col gap-4">
             <div onClick={alRegresar} className="cursor-pointer group">
-              {/* TÍTULO LIGERAMENTE MÁS PEQUEÑO (text-5xl) */}
-              <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-2 text-stone-900">
+              {/* TÍTULO Y AIRE (mb-5) */}
+              <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-5 text-stone-900">
                 {propertyData.title}
               </h1>
               
+              {/* METADATA PEQUEÑA */}
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[8.5px] md:text-[9.5px] font-bold tracking-[0.3em] uppercase text-stone-700/80">
                 <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group/loc transition-all hover:text-[#87947c]">
                   <MapPin size={12} style={{ color: mainColor }} strokeWidth={2} /> 
@@ -134,6 +135,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
             </div>
           </div>
 
+          {/* SELECTOR DERECHO */}
           <div className="flex bg-stone-200/50 p-1 border border-stone-200 shadow-sm">
             <button onClick={() => setViewMode('images')} className={`px-10 py-3 text-[10px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>FOTOS</button>
             <button onClick={() => setViewMode('video')} className={`px-10 py-3 text-[10px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>VIDEO</button>
