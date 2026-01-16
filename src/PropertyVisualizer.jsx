@@ -97,44 +97,47 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* --- HEADER CON 1CM MÁS DE AIRE ARRIBA (md:pt-14) --- */}
-      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-4 md:px-12 md:pt-14 md:pb-6">
+      {/* --- HEADER CON TÍTULO GRANDE Y METADATA PEQUEÑA --- */}
+      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-4 md:px-12 md:pt-16 md:pb-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           
-          {/* LADO IZQUIERDO: Título, Metadata y Botones */}
-          <div className="flex-1 flex flex-col gap-4">
+          <div className="flex-1 flex flex-col gap-5">
             <div onClick={alRegresar} className="cursor-pointer group">
-              <h1 className="editorial-text text-3xl md:text-4xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-2 text-stone-900">{propertyData.title}</h1>
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-stone-700">
+              {/* TÍTULO MÁS GRANDE */}
+              <h1 className="editorial-text text-4xl md:text-6xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-3 text-stone-900">
+                {propertyData.title}
+              </h1>
+              
+              {/* METADATA MÁS PEQUEÑA */}
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[8.5px] md:text-[9.5px] font-bold tracking-[0.3em] uppercase text-stone-700/80">
                 <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group/loc transition-all hover:text-[#87947c]">
-                  <MapPin size={13} style={{ color: mainColor }} strokeWidth={2} /> 
+                  <MapPin size={12} style={{ color: mainColor }} strokeWidth={2} /> 
                   <span className="border-b border-stone-300 group-hover/loc:border-[#87947c] transition-all">{propertyData.location}</span>
                 </button>
                 <span className="text-stone-300">|</span>
-                <span className="flex items-center gap-1.5"><Tag size={13} className="text-stone-400" strokeWidth={2} /> <span>ID: {propertyData.refId}</span></span>
+                <span className="flex items-center gap-1.5"><Tag size={12} className="text-stone-400" strokeWidth={2} /> <span>ID: {propertyData.refId}</span></span>
                 <span className="text-stone-300">|</span>
                 <button onClick={(e) => { e.stopPropagation(); handleWhatsApp(); }} className="flex items-center gap-2 group/agent transition-all hover:text-[#87947c]">
                   <span className="text-stone-500 font-bold">AGENTE:</span> 
                   <span className="border-b border-stone-300 group-hover/agent:border-[#87947c] transition-all">{propertyData.agentName}</span>
-                  <MessageCircle size={17} style={{ color: mainColor }} strokeWidth={2} fill="none" className="ml-1 transition-transform group-hover/agent:scale-110" />
+                  <MessageCircle size={15} style={{ color: mainColor }} strokeWidth={2} fill="none" className="ml-1 transition-transform group-hover/agent:scale-110" />
                 </button>
               </div>
             </div>
 
-            <div className="flex gap-8">
-              <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
+            <div className="flex gap-10">
+              <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
                  <Layout size={15} strokeWidth={2} /> Ver Planta
               </motion.button>
-              <motion.button onClick={() => setShowFicha(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
+              <motion.button onClick={() => setShowFicha(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
                  <Info size={15} strokeWidth={2} /> Ficha Técnica
               </motion.button>
             </div>
           </div>
 
-          {/* LADO DERECHO: Selector FOTOS/VIDEO */}
           <div className="flex bg-stone-200/50 p-1 border border-stone-200 shadow-sm">
-            <button onClick={() => setViewMode('images')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>FOTOS</button>
-            <button onClick={() => setViewMode('video')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>VIDEO</button>
+            <button onClick={() => setViewMode('images')} className={`px-10 py-3 text-[10px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>FOTOS</button>
+            <button onClick={() => setViewMode('video')} className={`px-10 py-3 text-[10px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>VIDEO</button>
           </div>
         </div>
       </header>
@@ -165,7 +168,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                   transition={{ duration: 0.8 }} 
                   className="bg-white shadow-2xl border border-stone-200/50 relative w-full max-w-4xl mx-auto"
                 >
-                  {/* SECCIÓN SUPERIOR: Frase centrada verticalmente */}
                   <div className="flex items-center justify-center px-12 py-10 relative">
                     <button onClick={() => setShowZoomModal(true)} className="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-stone-50/80 p-2 rounded-full shadow-sm transition-all hover:scale-110 hover:bg-white" style={{ color: mainColor }}>
                       <Maximize2 size={16} />
