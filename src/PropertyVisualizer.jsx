@@ -43,7 +43,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
   if (!activeRoom) return <div className="p-20 text-center text-stone-400 font-bold uppercase tracking-widest">Cargando...</div>;
 
   return (
-    <div className="min-h-screen pb-40 relative text-left" style={{ backgroundColor: softBg, fontFamily: 'var(--fuente-sans)' }}>
+    <div className="min-h-screen pb-20 relative text-left" style={{ backgroundColor: softBg, fontFamily: 'var(--fuente-sans)' }}>
       
       {/* --- MODALES --- */}
       <AnimatePresence>
@@ -97,16 +97,18 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* --- HEADER --- */}
-      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-6 md:px-12 md:py-8">
+      {/* --- HEADER COMPACTO --- */}
+      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-4 md:px-12 md:py-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-center mb-10 pt-2">
+          {/* Menor margen inferior del logo */}
+          <div className="flex justify-center mb-4 pt-2">
             <img src="/fotospropiedades/logo.png" alt="Logo" className="h-12 md:h-14 w-auto object-contain" />
           </div>
 
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
             <div className="flex-1">
-              <div onClick={alRegresar} className="cursor-pointer group mb-4">
+              {/* Menor margen inferior del título */}
+              <div onClick={alRegresar} className="cursor-pointer group mb-2">
                 <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-3 text-stone-900">{propertyData.title}</h1>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[9px] md:text-[10px] font-bold tracking-[0.25em] uppercase text-stone-700">
                   <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group/loc transition-all hover:text-[#87947c]">
@@ -124,7 +126,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                 </div>
               </div>
 
-              {/* BOTONES HEADER CON HOVER EN VERDE */}
               <div className="flex gap-8">
                 <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
                    <Layout size={14} strokeWidth={2} /> Ver Planta
@@ -143,8 +144,8 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </div>
       </header>
 
-      {/* --- CONTENIDO PRINCIPAL --- */}
-      <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-12 mt-12 mb-20">
+      {/* --- CONTENIDO PRINCIPAL (Subido con mt-6 en lugar de mt-12) --- */}
+      <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-12 mt-6 mb-20">
         <aside className="order-2 lg:order-1 lg:col-span-1">
           <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-300 pb-2">Espacios</h3>
           <div className="grid grid-cols-1 gap-1">
@@ -158,8 +159,7 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
 
         <section className="order-1 lg:order-2 lg:col-span-4 px-0 md:px-8">
           
-          {/* FRASE EDITORIAL FUERA DEL CUADRO */}
-          <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="flex items-center justify-center gap-4 mb-6">
             <motion.div animate={{ x: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} className="flex items-center">
               <ArrowLeft size={16} style={{ color: mainColor }} strokeWidth={1.5} />
             </motion.div>
@@ -170,8 +170,10 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
 
           <AnimatePresence mode="wait">
             {viewMode === 'images' ? (
-              <motion.div key={activeRoom.id} initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="bg-white p-4 md:p-6 shadow-2xl border border-stone-200/50 relative">
-                <button onClick={() => setShowZoomModal(true)} className="absolute top-8 left-8 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}><Maximize2 size={16} /></button>
+              // Marco blanco mucho más delgado (p-2)
+              <motion.div key={activeRoom.id} initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="bg-white p-2 shadow-2xl border border-stone-200/50 relative">
+                {/* Botón zoom reubicado */}
+                <button onClick={() => setShowZoomModal(true)} className="absolute top-4 left-4 z-20 bg-white/95 p-2 rounded-full shadow-md transition-all hover:scale-110" style={{ color: mainColor }}><Maximize2 size={16} /></button>
                 
                 <div className="relative aspect-video w-full bg-stone-100 overflow-hidden shadow-inner border border-stone-200/50">
                   <ReactCompareSlider position={100} handle={<div className="relative h-full w-1 bg-white cursor-ew-resize"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2.5 shadow-2xl flex items-center justify-center"><ChevronLeft size={22} className="text-stone-400" /><ChevronRight size={22} className="text-stone-400" /></div></div>} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} />
