@@ -100,13 +100,13 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
       {/* --- HEADER --- */}
       <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-4 md:px-12 md:pt-12 md:pb-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex-1 flex flex-col gap-4">
+          <div className="flex-1 flex flex-col gap-5">
             <div onClick={alRegresar} className="cursor-pointer group">
               <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-5 text-stone-900">
                 {propertyData.title}
               </h1>
               
-              {/* METADATA MÁS VISIBLE (stone-800 y tamaño aumentado) */}
+              {/* METADATA VISIBLE */}
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-stone-800">
                 <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group/loc transition-all hover:text-[#87947c]">
                   <MapPin size={12} style={{ color: mainColor }} strokeWidth={2} /> 
@@ -123,11 +123,22 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
               </div>
             </div>
 
-            <div className="flex gap-8">
-              <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
+            {/* BOTONES ACCIÓN CON TAMAÑO UNIFICADO Y MÁS MOVIMIENTO */}
+            <div className="flex gap-10">
+              <motion.button 
+                onClick={() => setShowPlanta(true)} 
+                animate={{ scale: [1, 1.08, 1], opacity: [0.7, 1, 0.7] }} 
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} 
+                className="flex items-center gap-2 text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors"
+              >
                  <Layout size={15} strokeWidth={2} /> Ver Planta
               </motion.button>
-              <motion.button onClick={() => setShowFicha(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
+              <motion.button 
+                onClick={() => setShowFicha(true)} 
+                animate={{ scale: [1, 1.08, 1], opacity: [0.7, 1, 0.7] }} 
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} 
+                className="flex items-center gap-2 text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors"
+              >
                  <Info size={15} strokeWidth={2} /> Ficha Técnica
               </motion.button>
             </div>
@@ -140,11 +151,10 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         </div>
       </header>
 
-      {/* --- CONTENIDO PRINCIPAL (Alineado arriba con items-start) --- */}
+      {/* --- CONTENIDO PRINCIPAL --- */}
       <main className="flex-1 p-6 lg:p-12 overflow-y-auto">
         <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
           
-          {/* BARRA LATERAL ALINEADA AL MARGEN SUPERIOR DEL VISUALIZADOR */}
           <aside className="lg:col-span-1 hidden lg:block sticky top-0">
             <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-300 pb-2">Espacios</h3>
             <div className="grid grid-cols-1 gap-1">
@@ -156,7 +166,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
             </div>
           </aside>
 
-          {/* VISUALIZADOR (Foco central) */}
           <section className="lg:col-span-4 flex flex-col items-center w-full">
             <AnimatePresence mode="wait">
               {viewMode === 'images' ? (
