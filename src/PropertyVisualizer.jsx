@@ -97,12 +97,14 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
         )}
       </AnimatePresence>
 
-      {/* --- HEADER --- */}
-      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-6 md:px-12 md:py-10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
-          <div className="flex-1">
-            <div onClick={alRegresar} className="cursor-pointer group mb-6">
-              <h1 className="editorial-text text-3xl md:text-5xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-4 text-stone-900">{propertyData.title}</h1>
+      {/* --- HEADER ADELGAZADO --- */}
+      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-stone-200 p-4 md:px-12 md:py-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+          
+          {/* LADO IZQUIERDO: Título, Metadata y Botones de acción */}
+          <div className="flex-1 flex flex-col gap-4">
+            <div onClick={alRegresar} className="cursor-pointer group">
+              <h1 className="editorial-text text-3xl md:text-4xl group-hover:opacity-60 transition-opacity tracking-tight leading-tight mb-2 text-stone-900">{propertyData.title}</h1>
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-stone-700">
                 <button onClick={(e) => { e.stopPropagation(); handleMapsClick(); }} className="flex items-center gap-1.5 group/loc transition-all hover:text-[#87947c]">
                   <MapPin size={13} style={{ color: mainColor }} strokeWidth={2} /> 
@@ -118,31 +120,30 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                 </button>
               </div>
             </div>
-            
-            <div className="flex flex-col items-end gap-6">
-              <div className="flex bg-stone-200/50 p-1 border border-stone-200 shadow-sm">
-                <button onClick={() => setViewMode('images')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>FOTOS</button>
-                <button onClick={() => setViewMode('video')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>VIDEO</button>
-              </div>
-              <div className="flex gap-8">
-                <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
-                   <Layout size={15} strokeWidth={2} /> Ver Planta
-                </motion.button>
-                <motion.button onClick={() => setShowFicha(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
-                   <Info size={15} strokeWidth={2} /> Ficha Técnica
-                </motion.button>
-              </div>
+
+            {/* BOTONES DE ACCIÓN LADO IZQUIERDO */}
+            <div className="flex gap-8">
+              <motion.button onClick={() => setShowPlanta(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
+                 <Layout size={15} strokeWidth={2} /> Ver Planta
+              </motion.button>
+              <motion.button onClick={() => setShowFicha(true)} animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase text-stone-600 hover:text-[#87947c] transition-colors">
+                 <Info size={15} strokeWidth={2} /> Ficha Técnica
+              </motion.button>
             </div>
+          </div>
+
+          {/* LADO DERECHO: Selector FOTOS/VIDEO únicamente */}
+          <div className="flex bg-stone-200/50 p-1 border border-stone-200 shadow-sm">
+            <button onClick={() => setViewMode('images')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'images' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>FOTOS</button>
+            <button onClick={() => setViewMode('video')} className={`px-10 py-3 text-[11px] tracking-widest transition-all ${viewMode === 'video' ? 'bg-white shadow-sm font-bold text-[#87947c]' : 'text-stone-500 hover:text-stone-800'}`}>VIDEO</button>
           </div>
         </div>
       </header>
 
       {/* --- CONTENIDO PRINCIPAL --- */}
       <main className="flex-1 flex items-center justify-center p-6 lg:p-12 overflow-hidden">
-        {/* GRID PRINCIPAL CON items-center PARA ALINEAR SIDEBAR Y VISUALIZADOR */}
         <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
           
-          {/* ASIDE ALINEADO VERTICALMENTE AL CENTRO */}
           <aside className="lg:col-span-1 hidden lg:block">
             <h3 className="editorial-text text-2xl mb-8 text-stone-900 border-b border-stone-300 pb-2">Espacios</h3>
             <div className="grid grid-cols-1 gap-1">
@@ -154,7 +155,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
             </div>
           </aside>
 
-          {/* ÁREA CENTRAL DEL VISUALIZADOR */}
           <section className="lg:col-span-4 flex flex-col items-center justify-center w-full">
             <AnimatePresence mode="wait">
               {viewMode === 'images' ? (
@@ -166,7 +166,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                   transition={{ duration: 0.8 }} 
                   className="bg-white shadow-2xl border border-stone-200/50 relative w-full max-w-4xl mx-auto"
                 >
-                  {/* SECCIÓN SUPERIOR: Frase con aire simétrico (py-10) */}
                   <div className="flex items-center justify-center px-12 py-10 relative">
                     <button onClick={() => setShowZoomModal(true)} className="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-stone-50/80 p-2 rounded-full shadow-sm transition-all hover:scale-110 hover:bg-white" style={{ color: mainColor }}>
                       <Maximize2 size={16} />
@@ -182,7 +181,6 @@ const PropertyVisualizer = ({ propertyData, alRegresar }) => {
                     </div>
                   </div>
                   
-                  {/* SLIDER / FOTO */}
                   <div className="px-5 pb-5 md:px-6 md:pb-6">
                     <div className="relative aspect-video w-full bg-stone-100 overflow-hidden shadow-inner border border-stone-200/50">
                       <ReactCompareSlider position={100} handle={<div className="relative h-full w-1 bg-white cursor-ew-resize"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2.5 shadow-2xl flex items-center justify-center"><ChevronLeft size={22} className="text-stone-400" /><ChevronRight size={22} className="text-stone-400" /></div></div>} itemOne={<ReactCompareSliderImage src={activeRoom.before} />} itemTwo={<ReactCompareSliderImage src={activeRoom.after} />} />
